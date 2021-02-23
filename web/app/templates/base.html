@@ -1,0 +1,21 @@
+{% extends 'bootstrap/base.html' %}
+
+<html>
+    <head>
+      <title>{{ title }}</title>
+    </head>
+	{% block navbar %}
+	    {{super()}} 
+		<a href="/home"><img border="0" alt="SankLogo" src="/static/assets/Sank_Chew_Air_E_color.png" width="85" height="85"></a>
+	{% endblock %}
+	
+	{% block styles %}
+		{{super()}} 
+		<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
+	{% endblock %}
+
+    <body>
+		{% block content %}
+		{% endblock %}
+    </body>
+</html>
