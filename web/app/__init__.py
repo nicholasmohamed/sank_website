@@ -1,13 +1,16 @@
+from config import Config
+from datetime import datetime
+from dominate.tags import img
 import logging
 from logging.handlers import RotatingFileHandler
 import os
 from flask import Flask, current_app
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_graphql import GraphQLView
-from datetime import datetime
-from config import Config
+from flask_migrate import Migrate
+from flask_nav import Nav
+from flask_nav.elements import *
+from flask_sqlalchemy import SQLAlchemy
 
 
 # Connect to database
@@ -16,6 +19,19 @@ from config import Config
 migrate = Migrate()
 # add bootstrap for aesthetics
 bootstrap = Bootstrap()
+
+logo_height = "50"
+logo_weight = "50"
+style = "margin-top: -15px"
+logo = img(src=Config.LOGO, height=logo_height, width=logo_weight, style=style)
+# define menu items
+topbar = Navbar(Link(logo, '/'),
+                View('About', 'main.about')
+                )
+
+# registers the "top" menubar
+nav = Nav()
+nav.register_element('top', topbar)
 
 
 def create_app(config_class=Config):
@@ -32,6 +48,9 @@ def create_app(config_class=Config):
     # register blueprints for different modules
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    # configure navigation bar
+    nav.init_app(app)
 
     # configure app logging
     configure_logging(app)

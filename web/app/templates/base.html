@@ -6,7 +6,7 @@
     </head>
 	{% block navbar %}
 	    {{super()}} 
-		<a href="/home"><img border="0" alt="SankLogo" src="/static/assets/Sank_Chew_Air_E_color.png" width="85" height="85"></a>
+		{{nav.top.render()}}
 	{% endblock %}
 	
 	{% block styles %}

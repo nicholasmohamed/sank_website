@@ -15,3 +15,6 @@ class Config(object):
 
     # Echo db output
     SQLALCHEMY_ECHO = True
+
+    # Links for assets
+    LOGO = './static/assets/Sank_Chew_Air_E_color.png'

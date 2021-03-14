@@ -8,3 +8,10 @@ from app.main import bp
 def home():
     user = 'Nicholas'
     return render_template('home.html', title='SankChewAir-E', user=user)
+
+
+# about us page
+@bp.route('/about')
+def about():
+    user = 'Nicholas'
+    return render_template('about.html', title='SankChewAir-E', user=user)
