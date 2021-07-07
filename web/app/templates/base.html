@@ -1,20 +1,28 @@
-{% extends 'bootstrap/base.html' %}
-
 <html>
     <head>
-      <title>{{ title }}</title>
+		<title>{{ title }}</title>
+		<!-- TODO remove when not debugging -->
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="-1">
     </head>
-	{% block navbar %}
-	    {{super()}} 
-		{{nav.top.render()}}
-	{% endblock %}
-	
-	{% block styles %}
-		{{super()}} 
-		<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
-	{% endblock %}
-
+	<!-- url_for finds filepath for stylesheet -->
+	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='navbar.css')}}">
     <body>
+		<!-- creation of navigation bar -->
+		<div class="navigation-bar">
+			<!-- logo for quick home navigation -->
+			<a href="{{url_for('main.home')}}">
+				<img class="logo" src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}"
+					 width="50px" height="50px"/>
+			</a>
+			<ul>
+				<!-- list all pages on the website -->
+			{%for page in pages%}
+				<li><a href="{{url_for(page.link)}}">{{page.name}}</a></li>
+			{%endfor%}
+			</ul>
+		</div>
 		{% block content %}
 		{% endblock %}
     </body>

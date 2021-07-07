@@ -6,33 +6,16 @@ from logging.handlers import RotatingFileHandler
 import os
 from flask import Flask, current_app
 from flask_bootstrap import Bootstrap
-from flask_graphql import GraphQLView
 from flask_migrate import Migrate
-from flask_nav import Nav
-from flask_nav.elements import *
 from flask_sqlalchemy import SQLAlchemy
 
 
 # Connect to database
-#db = SQLAlchemy()
+db = SQLAlchemy()
 # set db migration
 migrate = Migrate()
 # add bootstrap for aesthetics
 bootstrap = Bootstrap()
-
-logo_height = "50"
-logo_weight = "50"
-style = "margin-top: -15px"
-logo = img(src=Config.LOGO, height=logo_height, width=logo_weight, style=style)
-# define menu items
-topbar = Navbar(Link(logo, '/'),
-                View('About', 'main.about')
-                )
-
-# registers the "top" menubar
-nav = Nav()
-nav.register_element('top', topbar)
-
 
 def create_app(config_class=Config):
     # Set application
@@ -40,8 +23,8 @@ def create_app(config_class=Config):
     # Get app configuration
     app.config.from_object(config_class)
 
-    #db.init_app(app)
-    #migrate.init_app(app, db)
+    db.init_app(app)
+    migrate.init_app(app, db)
     # Link bootstrap settings
     bootstrap.init_app(app)
 
@@ -49,8 +32,8 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
-    # configure navigation bar
-    nav.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     # configure app logging
     configure_logging(app)

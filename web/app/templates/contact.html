@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{links.twitch.link}}">
+        <img class="icon" src="{{url_for('static', filename=links.twitch.logo)}}"
+             width="50px" height="50px"/>
+    </a>
+    <a href="{{links.instagram.link}}">
+        <img class="icon" src="{{url_for('static', filename=links.instagram.logo)}}"
+             width="50px" height="50px"/>
+    </a>
+    <a href="{{links.discord.link}}">
+        <img class="icon" src="{{url_for('static', filename=links.discord.logo)}}"
+             width="50px" height="50px"/>
+    </a>
+{% endblock %}

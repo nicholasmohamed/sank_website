@@ -7,5 +7,5 @@ app = create_app()
 '''
 @app.shell_context_processors
 def make_shell_context():
-    return
+    return {'db': db, 'SankMerchDb': SankMerchDb}
 '''

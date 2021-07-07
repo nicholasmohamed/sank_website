@@ -7,3 +7,13 @@ h1 {
 	-webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+a,
+a img {
+    text-decoration: none;
+    outline: none;
+    border: 0px none transparent;
+}
+
+
+
