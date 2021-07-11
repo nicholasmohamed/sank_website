@@ -23,6 +23,10 @@ header{
     transition: margin-right .5s;
 }
 
+.heading a {
+    color: white;
+}
+
 /* The sidebar menu */
 .sidebar {
   height: 100%; /* 100% Full-height */
@@ -65,7 +69,7 @@ header{
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: #111;
+  background-color: black;
   color: white;
   padding: 10px 15px;
   border: none;
