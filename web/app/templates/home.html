@@ -1,5 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ user}}!</h1>
+<br><br>
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+  <!-- Images for the carousel -->
+    {% for slide in slides %}
+      <div class="homeSlides fade">
+          <a href="{{slide.link}}">
+              <img src="{{url_for('static', filename=slide.img)}}" class="carouselImage">
+          </a>
+      </div>
+    {% endfor %}
+
+
+  <!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+    {% for slide in slides %}
+      <span class="dot" onclick="currentSlide({{loop.index - 1}})"></span>
+    {% endfor %}
+</div>
+
+<script>showSlides(0);</script>
+
+<br>
+<div style="text-align:center">
+    <h3 class="homeDescription">SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, gaming events
+        and workshops held through the platform of discord.</h3>
+
+    <h1>LATEST YOUTUBE VIDEO</h1>
+    <iframe width="640" height="360" src="https://www.youtube.com/embed/zGKd_LJf4Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 {% endblock %}
+

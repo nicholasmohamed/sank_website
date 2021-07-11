@@ -1,11 +1,16 @@
-body {
-	background-color: #6B3186;
+@font-face { font-family: graphic; src: url('assets/fonts/Graphik/Graphik-Black.otf'); }
+@font-face { font-family: kuunari; src: url('assets/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf'); }
+
+h1{
+    font-family: kuunari;
 }
-	
-h1 {
-	background: -webkit-linear-gradient(#FFF192, #E94100);
-	-webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+h3{
+    font-family: graphic;
+}
+
+.homeDescription{
+    color: grey;
 }
 
 a,

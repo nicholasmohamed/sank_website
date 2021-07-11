@@ -4,25 +4,68 @@
 		<!-- TODO remove when not debugging -->
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="-1">
+		<!-- add scripts if needed -->
+		{% if slides %}
+			<script type="text/javascript" src="{{url_for('static', filename='carousel.js')}}"></script>
+		{% endif %}
     </head>
 	<!-- url_for finds filepath for stylesheet -->
 	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='navbar.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='sidebar.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='carousel.css')}}">
     <body>
-		<!-- creation of navigation bar -->
-		<div class="navigation-bar">
-			<!-- logo for quick home navigation -->
-			<a href="{{url_for('main.home')}}">
-				<img class="logo" src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}"
-					 width="50px" height="50px"/>
-			</a>
-			<ul>
+		<header class = "nav">
+			<!-- creation of navigation sidebar -->
+			<div id="leftSidebar" class="sidebar">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 				<!-- list all pages on the website -->
-			{%for page in pages%}
-				<li><a href="{{url_for(page.link)}}">{{page.name}}</a></li>
-			{%endfor%}
-			</ul>
-		</div>
+					{%for page in pages%}
+						<a href="{{url_for(page.link)}}">{{page.name}}</a>
+					{%endfor%}
+			</div>
+
+			<!-- button to open navigation sidebar -->
+			<div id="sidebarButton">
+				<button class="openbtn" onclick="openNav()">&#9776;</button>
+			</div>
+
+			<div class="heading">
+				<h1>SANKCHEWAIR-E</h1>
+			</div>
+
+			<!-- button to search site -->
+			<div id="searchButton">
+				<button class="searchbtn" onclick="openSearch()"><img src="{{url_for('static', filename='assets/search_icon.svg')}}">
+				</button>
+			</div>
+			<div id="searchBar" class="search">
+				<a href="javascript:void(0)" class="closeSearchBtn" onclick="closeSearch()">&times;</a>
+				<script async src="https://cse.google.com/cse.js?cx=ca2fb9a3c8d923fe9"></script>
+				<div class="gcse-searchbox-only"></div>
+			</div>
+		</header>
+
+		<!-- scripts for opening side menu -->
+		<script>
+			function openNav() {
+				document.getElementById("leftSidebar").style.width = "400px";
+			}
+
+			function closeNav() {
+				document.getElementById("leftSidebar").style.width = "0";
+			}
+
+			function openSearch(){
+				document.getElementById("searchButton").style.display = "none"
+				document.getElementById("searchBar").style.display = "flex"
+			}
+
+			function closeSearch(){
+				document.getElementById("searchButton").style.display = "block"
+				document.getElementById("searchBar").style.display = "none"
+			}
+		</script>
+
 		{% block content %}
 		{% endblock %}
     </body>

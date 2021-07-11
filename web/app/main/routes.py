@@ -25,7 +25,11 @@ endpoint_secret = 'whsec_RnZjMuCPxRLGnDxIMboPeDjgSerA2Dp0'
 # home page
 @bp.route('/home')
 def home():
-    return render_template('home.html', title='SankChewAir-E', pages=page_list)
+    slides = [{'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'img': 'assets/SANK_TV_LOGO.svg'},
+              {'link': 'https://www.twitch.tv/sankttv', 'img': 'assets/twitch_logo.svg'},
+              {'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'},
+              {'link': 'https://www.youtube.com/SankTtv', 'img': 'assets/youtube_logo.svg'}]
+    return render_template('home.html', title='SankChewAir-E', pages=page_list, slides=slides)
 
 
 # about us page
