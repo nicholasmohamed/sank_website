@@ -17,8 +17,9 @@ header{
     z-index: 1;
 }
 .heading {
-    font-size: 10px;
+    font-size: 15px;
     color: white;
+    margin-top: -14px;
     text-align: center;
     transition: margin-right .5s;
 }
@@ -54,6 +55,10 @@ header{
 /* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
   color: #f1f1f1;
+}
+
+.sidebarHeading{
+    font-family: kuunari;
 }
 
 /* Position and style the close button (top right corner) */
@@ -98,6 +103,10 @@ header{
     background-color: transparent;
     border-style: none;
     margin-top: 5px;
+}
+
+.searchbtn:hover{
+    background-color: grey;
 }
 
 .closeSearchBtn {

@@ -35,7 +35,7 @@ function showSlides(index) {
     var slides = document.getElementsByClassName("homeSlides");
     var dots = document.getElementsByClassName("dot");
     if (index >= slides.length) {index = 0}
-    if (index < 0) {index = slides.length}
+    if (index < 0) {index = slides.length - 1}
 
     //set display for all slides to none
     for (var i = 0; i < slides.length; i++) {

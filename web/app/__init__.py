@@ -8,7 +8,7 @@ from flask import Flask, current_app
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_mail import Mail
 
 # Connect to database
 db = SQLAlchemy()
@@ -16,6 +16,9 @@ db = SQLAlchemy()
 migrate = Migrate()
 # add bootstrap for aesthetics
 bootstrap = Bootstrap()
+# mail var for mailing receipts
+mail = None
+
 
 def create_app(config_class=Config):
     # Set application
@@ -23,15 +26,19 @@ def create_app(config_class=Config):
     # Get app configuration
     app.config.from_object(config_class)
 
+    # init database, bootstrap and mail
     db.init_app(app)
     migrate.init_app(app, db)
     # Link bootstrap settings
     bootstrap.init_app(app)
+    global mail
+    mail = Mail(app)
 
     # register blueprints for different modules
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    # create database
     with app.app_context():
         db.create_all()
 
@@ -54,6 +61,7 @@ def configure_logging(app):
         '%(asctime)s %(levelname)s: %(message)s '
         '[in %(pathname)s:%(lineno)d]'))
     file_handler.setLevel(logging.INFO)
+    app.logger = logging.getLogger('app_logger')
     app.logger.addHandler(file_handler)
 
     # initial log message
@@ -64,4 +72,5 @@ def configure_logging(app):
         # ... configure logging setup
         print('Test')
 
-#from app import models
+
+# from app import models

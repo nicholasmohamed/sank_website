@@ -1,5 +1,17 @@
-@font-face { font-family: graphic; src: url('assets/fonts/Graphik/Graphik-Black.otf'); }
-@font-face { font-family: kuunari; src: url('assets/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf'); }
+@font-face {
+    font-family: graphic;
+    src: url('/static/fonts/Graphik/Graphik-Black.otf') format('opentype');
+}
+@font-face {
+    font-family: graphic;
+    font-weight: light;
+    src: url('/static/fonts/Graphik/Graphik-Light.otf') format('opentype');
+}
+
+@font-face {
+    font-family: kuunari;
+    src: url('/static/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf') format('opentype');
+}
 
 h1{
     font-family: kuunari;
@@ -7,10 +19,15 @@ h1{
 
 h3{
     font-family: graphic;
+    font-weight: light;
 }
 
 .homeDescription{
     color: grey;
+}
+
+.videoHeading {
+    font-size: 40px;
 }
 
 a,

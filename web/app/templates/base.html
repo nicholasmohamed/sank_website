@@ -20,7 +20,7 @@
 				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 				<!-- list all pages on the website -->
 					{%for page in pages%}
-						<a href="{{url_for(page.link)}}">{{page.name}}</a>
+						<a href="{{url_for(page.link)}}" class="sidebarHeading">{{page.name}}</a>
 					{%endfor%}
 			</div>
 
@@ -48,7 +48,7 @@
 		<!-- scripts for opening side menu -->
 		<script>
 			function openNav() {
-				document.getElementById("leftSidebar").style.width = "400px";
+				document.getElementById("leftSidebar").style.width = "200px";
 			}
 
 			function closeNav() {

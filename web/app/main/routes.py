@@ -1,34 +1,32 @@
 # Stripe imports
 import stripe
 import sys
+import os
+import json
+import logging
 
 # Flask imports
-from flask import render_template, redirect, url_for
-from app import db
+from flask import render_template, redirect, url_for, current_app, jsonify, request
+from flask_mail import Message
+from app import db, mail
 from app.main import bp
 
-# Using Django
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+logger = logging.getLogger('app_logger')
 
 page_list = [{"name": "PROGRAMS", "link": "main.programs"},
              {"name": "ABOUT", "link": "main.about"},
              {"name": "STORE", "link": "main.store"},
              {"name": "CONTACT", "link": "main.contact"}]
 
-YOUR_DOMAIN = 'http://127.0.0.1:5000'
-stripe.api_key = 'sk_test_51J9ZCCBUeaWrljhjmzDSI7l72P1dbtRAW5Ro9griA0xs4Ymg3DmeDahi7M29njUANK1AYUvuAp0PxXWtapDDRgam00gzLucYR0'
-endpoint_secret = 'whsec_RnZjMuCPxRLGnDxIMboPeDjgSerA2Dp0'
-
 
 @bp.route('/')
 # home page
 @bp.route('/home')
 def home():
+    logger.info("Rendering homepage.")
     slides = [{'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'img': 'assets/SANK_TV_LOGO.svg'},
               {'link': 'https://www.twitch.tv/sankttv', 'img': 'assets/twitch_logo.svg'},
-              {'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'},
-              {'link': 'https://www.youtube.com/SankTtv', 'img': 'assets/youtube_logo.svg'}]
+              {'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'}]
     return render_template('home.html', title='SankChewAir-E', pages=page_list, slides=slides)
 
 
@@ -78,6 +76,8 @@ def contact():
 # Create stripe checkout page
 @bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
+    stripe.api_key = current_app.config['STRIPE_API_KEY']
+
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -100,43 +100,49 @@ def create_checkout_session():
                 },
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '/store',
-            cancel_url=YOUR_DOMAIN + '/store'
+            success_url=current_app.config['YOUR_DOMAIN'] + '/store',
+            cancel_url=current_app.config['YOUR_DOMAIN'] + '/store'
         )
         return redirect(checkout_session.url, code=303)
     except:
         # TODO handle errors
-        print("Unexpected error:", sys.exc_info()[0])
-        return redirect(YOUR_DOMAIN + '/home.html')
+        logger.error("Unexpected error:", sys.exc_info()[0])
+        return redirect(current_app.config['YOUR_DOMAIN'] + '/home.html')
 
 
-@csrf_exempt
-def my_webhook_view(request):
-    payload = request.body
-    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+# webhook to handle payment responses
+@bp.route('/webhook', methods=['POST'])
+def webhook():
     event = None
+    payload = request.data
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret)
-    except ValueError as e:
-        # Invalid payload
-        return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return HttpResponse(status=400)
+        event = json.loads(payload)
+    except:
+        logger.error('⚠️  Webhook error while parsing basic request.')
+        return jsonify(success=False)
 
-    # Handle the checkout.session.completed event
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-
-        # handle purchase...
-        handle_order(session)
-
-    # Passed signature verification
-    return HttpResponse(status=200)
+    # Handle the event
+    if event and event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
+        logger.info('Payment for {} succeeded'.format(payment_intent['amount']))
+        # Then define and call a method to handle the successful payment intent.
+        # handle_payment_intent_succeeded(payment_intent)
+        handle_order(payment_intent)
+    elif event['type'] == 'payment_method.attached':
+        payment_method = event['data']['object']  # contains a stripe.PaymentMethod
+        # Then define and call a method to handle the successful attachment of a PaymentMethod.
+        # handle_payment_method_attached(payment_method)
+    else:
+        # Unexpected event type
+        logger.error('Unhandled event type {}'.format(event['type']))
+    return jsonify(success=True)
 
 
 # save into database and send customer a receipt
 def handle_order(session):
-    # TODO: fill me in
-    print("Handling order")
+    recipient_email = session['charges']['data'][0]['billing_details']['email']
+    logger.info('Sending e-mail to ' + recipient_email)
+    msg = Message('Thank you for your purchase! We have attached your receipt.', sender=current_app.config['MAIL_USERNAME'],
+                  recipients=[recipient_email])
+    msg.body = "SankChewAir-E Order Confirmation"
+    mail.send(msg)
