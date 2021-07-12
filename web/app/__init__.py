@@ -9,6 +9,7 @@ from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_cors import CORS
 
 # Connect to database
 db = SQLAlchemy()
@@ -37,6 +38,10 @@ def create_app(config_class=Config):
     # register blueprints for different modules
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    from app.store import bp as store_bp
+    app.register_blueprint(store_bp)
+    cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     # create database
     with app.app_context():
@@ -73,4 +78,4 @@ def configure_logging(app):
         print('Test')
 
 
-# from app import models
+from app import models

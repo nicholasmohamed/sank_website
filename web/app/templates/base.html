@@ -5,6 +5,9 @@
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="-1">
 		<!-- add scripts if needed -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+		<script src="https://js.stripe.com/v3/"></script>
 		{% if slides %}
 			<script type="text/javascript" src="{{url_for('static', filename='carousel.js')}}"></script>
 		{% endif %}
