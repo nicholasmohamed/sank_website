@@ -2,7 +2,8 @@ import unittest
 import stripe
 from config import Config
 from app import create_app, db
-from app.models import SankMerchDb as Merch
+from app.models import SankMerch as Merch
+from app.store.shopping_cart import ShoppingCart
 
 
 class TestConfig(Config):
@@ -39,11 +40,30 @@ class SankMerchModel(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_hashing(self):
-        m = Merch(id=1, name='T-Shirt', price = 35, imageLink='./static/assets/Sank_Chew_Air_E_color.svg',
-                  description='Check out Sank Tees', quantity=5, isAvailable=True)
+        m = Merch(id=1, name='T-Shirt', price=35, imageLink='assets/Sank_Chew_Air_E_color.svg',
+                  description='Check out Sank Tees', quantity=5, isAvailable=True, tags="new")
         db.session.add(m)
         add_check = Merch.query.get(1)
         self.assertTrue(add_check == m)
+
+
+# Testing shopping cart
+class ShoppingCartTest(unittest.TestCase):
+    def test_add_to_cart(self):
+        item_id = 1
+        quantity = 2
+        cart = ShoppingCart()
+        cart.add_to_cart(item_id, quantity)
+        self.assertTrue(item_id == cart.items[0]['id'])
+        self.assertTrue(quantity == cart.items[0]['quantity'])
+
+    def test_remove_from_cart(self):
+        item_id = 1
+        quantity = 2
+        cart = ShoppingCart()
+        cart.add_to_cart(item_id, quantity)
+        cart.remove_from_cart(item_id)
+        self.assertFalse(cart.items)
 
 
 if __name__ == '__main__':

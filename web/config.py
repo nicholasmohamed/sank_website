@@ -1,14 +1,13 @@
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
     # Encryption key
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'EisforEveryone'
-
-    # Stripe API key
-    API_KEY = 'sk_test_51J9ZCCBUeaWrljhjmzDSI7l72P1dbtRAW5Ro9griA0xs4Ymg3DmeDahi7M29njUANK1AYUvuAp0PxXWtapDDRgam00gzLucYR0'
 
     # Retrieve location of database
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -21,13 +20,13 @@ class Config(object):
 
     # Stripe settings
     YOUR_DOMAIN = 'http://127.0.0.1:5000'
-    STRIPE_API_PUBLIC_KEY = 'pk_test_51J9ZCCBUeaWrljhjcNf4ePSp5fPvvJZz7byhPcmj0e4qBv99K12nJ5CZRsZXaREZVz0qCit9Mnu4H5NEi8NzTEfB00n4qY3CXN'
-    STRIPE_API_SECRET_KEY = 'sk_test_51J9ZCCBUeaWrljhjmzDSI7l72P1dbtRAW5Ro9griA0xs4Ymg3DmeDahi7M29njUANK1AYUvuAp0PxXWtapDDRgam00gzLucYR0'
-    STRIPE_ENDPOINT_SECRET = 'whsec_RnZjMuCPxRLGnDxIMboPeDjgSerA2Dp0'
+    STRIPE_API_PUBLIC_KEY = os.environ.get('STRIPE_API_PUBLIC_KEY')
+    STRIPE_API_SECRET_KEY = os.environ.get('STRIPE_API_SECRET_KEY')
+    STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
 
     # Mail settings
-    MAIL_USERNAME = 'test.user.sank@gmail.com'
-    MAIL_PASSWORD = 'DTAWAM1test*'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False

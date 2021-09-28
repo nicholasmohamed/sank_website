@@ -9,19 +9,21 @@ function clearCart(){
 
 // add item to cart
 function addToCart() {
-    var cartButton = document.getElementById("cartButton");
+    var addButton = document.getElementById("addButton");
+    var removeButton = document.getElementById("removeButton");
     var itemId = document.getElementById("itemId").textContent;
 
     // add to items array
     cartItems.push({id: itemId, quantity: 1})
-    // change button value and text
-    cartButton.setAttribute( "onclick", "javascript: removeFromCart();" );
-    cartButton.innerHTML = "Remove From Cart";
+    // change button image
+    addButton.style.display = "none"
+    removeButton.style.display = "block"
 }
 
 // remove item from cart
 function removeFromCart() {
-    var cartButton = document.getElementById("cartButton");
+    var addButton = document.getElementById("addButton");
+    var removeButton = document.getElementById("removeButton");
     var itemId = document.getElementById("itemId").textContent;
 
     // remove from items array
@@ -30,10 +32,9 @@ function removeFromCart() {
             cartItems.splice(i, 1)
         }
     }
-
-    // change button value and text
-    cartButton.setAttribute( "onclick", "javascript: addToCart();" );
-    cartButton.innerHTML = "Add To Cart";
+    // change button image
+    addButton.style.display = "block"
+    removeButton.style.display = "none"
 }
 
 function getStripePublishableKey() {

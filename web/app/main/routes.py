@@ -4,8 +4,13 @@ import logging
 from flask import render_template, redirect, url_for, current_app
 from flask_mail import Message
 from app.main import bp
+from app.models import SankMerch
 
 logger = logging.getLogger('app_logger')
+
+ABOUT = 0
+SHOP = 1
+CONTACT = 2
 
 
 @bp.route('/')
@@ -13,10 +18,17 @@ logger = logging.getLogger('app_logger')
 @bp.route('/home')
 def home():
     logger.info("Rendering homepage.")
-    slides = [{'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'img': 'assets/SANK_TV_LOGO.svg'},
-              {'link': 'https://www.twitch.tv/sankttv', 'img': 'assets/twitch_logo.svg'},
-              {'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'}]
-    return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], slides=slides)
+    # all slides for the homepage carousel
+    slides = [{'type': ABOUT, 'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'img': 'assets/SANK_TV_LOGO.svg'},
+              {'type': SHOP, 'link': 'https://www.twitch.tv/sankttv', 'img': 'assets/twitch_logo.svg'},
+              {'type': CONTACT, 'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'}]
+
+    # query new arrivals from the shop for the shop carousel
+    logger.info("Retrieving new arrivals")
+    new_arrivals = SankMerch.query.all()
+
+    return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], slides=slides,
+                           new_arrivals=new_arrivals)
 
 
 # about us page

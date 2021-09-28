@@ -49,10 +49,13 @@ function showSlides(index) {
     slides[index].style.display = "block";
     dots[index].className += " active";
 
+    // TODO shop cycles but not carousel
+    /*
     // clear existing timeouts
     clearActiveTimeouts();
 
     // have slides cycle automatically
     index++;
     timeouts.push(setTimeout(showSlides, 4000, index)); // Change image every 4 seconds
+    */
 }

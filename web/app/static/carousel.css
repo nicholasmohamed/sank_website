@@ -15,6 +15,77 @@
   margin-top: 20px;
 }
 
+.merch {
+  display: block;
+  max-width: auto;
+  z-index: -1;
+  margin-top: 20px;
+}
+
+.merchImage {
+    display: block;
+    width: 50%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cartButton {
+    position: absolute;
+    top: 5%;
+    right: 20%;
+    height: 60px;
+    width: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+#addButton {
+    z-index: 2;
+}
+
+#removeButton {
+    display: none;
+    z-index: 1;
+}
+
+.cartButton:hover {
+    opacity: 0.4;
+}
+
+#itemId {
+    display: none;
+}
+
+#shopButton {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: #fff;
+    border-style: solid;
+    border-radius: 25px;
+    background-color: #FF9933;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+#shopButton:hover {
+    opacity: 0.4;
+}
+
 .carouselImage{
     display: block;
     width: 50%;
@@ -77,7 +148,9 @@
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  background-color: #bbb;
+  background-color: #FFFFFF;
+  border-style: solid;
+  border-color: #000000;
   border-radius: 50%;
   margin-top: 30px;
   display: inline-block;
@@ -85,7 +158,7 @@
 }
 
 .active, .dot:hover {
-  background-color: #717171;
+  background-color: #FF9933;
 }
 
 /* Fading animation */

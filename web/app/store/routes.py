@@ -45,42 +45,46 @@ def stripe_config():
 # Create stripe checkout page
 @bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
+    logger.info('Creating checkout session')
     stripe.api_key = current_app.config['STRIPE_API_SECRET_KEY']
 
     try:
+        # retrieve data passed to checkout
         data = json.loads(request.data)
 
-        print(data)
+        # convert data to item array
+        items = []
+        for item in data:
+            merch = SankMerch.query.get(item['id'])
+            if merch:
+                items.append(convert_database_to_cart_item(merch, item))
+
+        merch_items = generate_line_items(items)
+
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            line_items=[
-                {
-
-                    'price_data': {
-                        'currency': 'cad',
-                        'unit_amount': 60,
-                        'product_data': {
-                            'name': 'T-shirt',
-                            'images': ['https://i.imgur.com/EHyR2nP.png'],
-                        },
-                    },
-                    'adjustable_quantity': {
-                        'enabled': True,
-                        'minimum': 1,
-                        'maximum': 10,
-                    },
-                    'quantity': 1,
-                },
-            ],
+            line_items=merch_items,
             mode='payment',
             success_url=current_app.config['YOUR_DOMAIN'] + '/store',
             cancel_url=current_app.config['YOUR_DOMAIN'] + '/store'
         )
+
         return jsonify({'sessionId': checkout_session['id']})
     except:
         # TODO handle errors
         logger.error("Unexpected error:", sys.exc_info()[0])
         return redirect(current_app.config['YOUR_DOMAIN'] + '/home')
+
+
+# TODO make more efficient
+# take database information and cart information and produce line item
+def convert_database_to_cart_item(merch, data):
+    item = {}
+    item['price'] = merch.price
+    item['quantity'] = data['quantity']
+    item['name'] = merch.name
+    # item['imageLink'] = merch.imageLink
+    return item
 
 
 # webhook to handle payment responses
@@ -119,3 +123,30 @@ def handle_order(session):
     msg.body = 'Thank you for your purchase! We have attached your receipt.'
     mail.send(msg)
 
+
+# create line items for checkout
+def generate_line_items(items):
+    line_items = []
+
+    # TODO handle image links
+    # url_for("static", filename=item.imageLink)
+
+    for item in items:
+        line_item = {
+            'price_data': {
+                'currency': 'cad',
+                'unit_amount': item['price'] * 10,
+                'product_data': {
+                    'name': item['name'],
+                    'images': [],
+                },
+            },
+            'adjustable_quantity': {
+                'enabled': True,
+                'minimum': 1,
+                'maximum': 10,
+            },
+            'quantity': item['quantity'],
+        }
+        line_items.append(line_item)
+    return line_items
