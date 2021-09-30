@@ -9,8 +9,12 @@
 		<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 		<script src="https://js.stripe.com/v3/"></script>
 		{% if slides %}
-			<script type="text/javascript" src="{{url_for('static', filename='carousel.js')}}"></script>
+			<script type="text/javascript" src="{{url_for('static', filename='scripts/carousel.js')}}"></script>
+			<script type="text/javascript" src="{{url_for('static', filename='scripts/home_carousel.js')}}"></script>
+			<script type="text/javascript" src="{{url_for('static', filename='scripts/touch_events.js')}}"></script>
 		{% endif %}
+		<!-- scripts for handling cart -->
+		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_shop.js')}}"></script>
     </head>
 	<!-- url_for finds filepath for stylesheet -->
 	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
@@ -18,54 +22,58 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='carousel.css')}}">
     <body>
 		<header class = "nav">
-			<!-- creation of navigation sidebar -->
-			<div id="leftSidebar" class="sidebar">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-				<!-- list all pages on the website -->
-					{%for page in pages%}
-						<a href="{{url_for(page.link)}}" class="sidebarHeading">{{page.name}}</a>
-					{%endfor%}
-			</div>
-
-			<!-- button to open navigation sidebar -->
-			<div id="sidebarButton">
-				<button class="openbtn" onclick="openNav()">&#9776;</button>
-			</div>
-
-			<div class="heading">
-				<a href="{{ url_for('main.home')}}"><h1>SANKCHEWAIR-E</h1></a>
-			</div>
-
 			<!-- button to search site -->
-			<div id="searchButton">
-				<button class="searchbtn" onclick="openSearch()"><img src="{{url_for('static', filename='assets/search_icon.svg')}}">
-				</button>
+			<div class = cartListButton>
+				<div id="cartListIcon">
+					<button onclick="openCart()"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}">
+					</button>
+				</div>
+				<div id="cartListText">
+					<h3>0</h3>
+				</div>
 			</div>
-			<div id="searchBar" class="search">
-				<a href="javascript:void(0)" class="closeSearchBtn" onclick="closeSearch()">&times;</a>
-				<script async src="https://cse.google.com/cse.js?cx=ca2fb9a3c8d923fe9"></script>
-				<div class="gcse-searchbox-only"></div>
+			<div id="rightSidebar" class="sidebar">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
+					<!-- list all items in the cart -->
+					<div id="cartList">
+					</div>
 			</div>
 		</header>
 
 		<!-- scripts for opening side menu -->
 		<script>
-			function openNav() {
-				document.getElementById("leftSidebar").style.width = "200px";
+			function clearCartList(){
+				var cart = document.getElementById("cartList");
+
+				// Remove all children from tag
+				cart.innerHTML = '';
 			}
 
-			function closeNav() {
-				document.getElementById("leftSidebar").style.width = "0";
+			function openCart() {
+				document.getElementById("rightSidebar").style.width = "200px";
+
+				//clear list and recreate
+				clearCartList();
+
+				for (var i = 0; i < cartItems.length; i++){
+					var item = cartItems[i];
+
+					// Create elements
+					var tag = document.createElement("h2");
+					tag.classList.add("cartItem");
+
+					// Add text
+					var name = document.createTextNode(item.price);
+					tag.appendChild(name);
+
+					// Add to existing tag
+					var cart = document.getElementById("cartList");
+					cart.appendChild(tag);
+				}
 			}
 
-			function openSearch(){
-				document.getElementById("searchButton").style.display = "none"
-				document.getElementById("searchBar").style.display = "flex"
-			}
-
-			function closeSearch(){
-				document.getElementById("searchButton").style.display = "block"
-				document.getElementById("searchBar").style.display = "none"
+			function closeCart() {
+				document.getElementById("rightSidebar").style.width = "0";
 			}
 		</script>
 

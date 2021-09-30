@@ -13,6 +13,36 @@
     src: url('/static/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf') format('opentype');
 }
 
+body {
+    background-image: url('/static/assets/png/jjk_bg_sankmobile.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.cartListButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-color: transparent;
+    border-style: solid;
+    border-radius: 20px;
+    background-color: white;
+    color: #FF9933;
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.cartListButton button {
+    background-color: transparent;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.cartListButton h3{
+}
+
+/*
 h1{
     font-family: kuunari;
 }
@@ -20,7 +50,7 @@ h1{
 h3{
     font-family: graphic;
     font-weight: light;
-}
+}*/
 
 .homeDescription{
     color: grey;
