@@ -60,9 +60,10 @@ function addToCart(item) {
     var itemId = item.querySelector("#itemId").textContent;
     var itemName = item.querySelector("#itemName").textContent;
     var itemPrice = item.querySelector("#itemPrice").textContent;
+    var itemImage = item.querySelector("#itemImage").src;
 
     // add to items array
-    cartItems.push({id: itemId, name: itemName, price: itemPrice, quantity: 1})
+    cartItems.push({id: itemId, name: itemName, price: itemPrice, image: itemImage, quantity: 1})
 }
 
 // remove item from cart

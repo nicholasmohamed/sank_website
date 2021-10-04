@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merch Database</title>
+</head>
+<body>
+    <h1>Current Merchandise</h1>
+
+    <form action = "http://127.0.0.1:5000/update-database" method = "POST">
+        {% for i in range(0, length) %}
+        <div id = item-container>
+            <label>Item Id:</label>
+            <input type="text" name="id" value="{{items[i].id}}" readonly></br>
+
+            <label>Item Name:</label>
+            <input type="text" name="name" value="{{items[i].name}}"></br>
+
+            <label>Item Price:</label>
+            <input type="text" name="price" value="{{items[i].price}}"></br>
+
+            <label>Item Image Source:</label>
+            <input type="text" name="imageLink" value="{{items[i].imageLink}}"></br>
+
+            <label>Item Description:</label>
+            <input type="text" name="description" value="{{items[i].description}}"></br>
+
+            <label>Item Quantity:</label>
+            <input type="text" name="quantity" value="{{items[i].quantity}}"></br>
+
+            <label>Availability:</label>
+            <input type="text" name="isAvailable" value="{{items[i].isAvailable}}"></br>
+
+            <label>Remove:</label>
+            <input type="text" name="remove" value="false"></br>
+        </div></br></br>
+        {% endfor %}
+        <input type="button" onclick="addItem()" value="Add">
+        <input type = "submit" value = "Submit" />
+    </form>
+    <script>
+        let i = {{items[length-1].id}} + 1;
+        function addItem() {
+            let template = `
+            <br><br>
+            <label>Item Id:</label>
+            <input type="text" name="id" value="${i}"readonly></br>
+
+            <label>Item Name:</label>
+            <input type="text" name="name"></br>
+
+            <label>Item Price:</label>
+            <input type="text" name="price"></br>
+
+            <label>Item Image Source:</label>
+            <input type="text" name="imageLink"></br>
+
+            <label>Item Description:</label>
+            <input type="text" name="description"></br>
+
+            <label>Item Quantity:</label>
+            <input type="text" name="quantity"></br>
+
+            <label>Availability:</label>
+            <input type="text" name="isAvailable"></br>`;
+
+            let container = document.getElementById('item-container');
+            let div = document.createElement('div');
+            div.innerHTML = template;
+            container.appendChild(div);
+
+            i++;
+        }
+    </script>
+</body>
+</html>

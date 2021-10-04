@@ -20,7 +20,73 @@ def database():
     items = SankMerch.query.all()
     if not items:
         items = {}
-    return render_template('store/database.html', title='SankChewAir-E', items=items)
+    return render_template('store/database.html', title='SankChewAir-E', items=items, length=len(items))
+
+
+@bp.route('/update-database', methods=['POST', 'GET'])
+def update_database():
+    if request.method == 'POST':
+        logger.info("Updating database")
+        result = request.form
+
+        item_list = parse_returned_values(result)
+        update_database_items(item_list)
+
+        return redirect("/database")
+
+
+def update_database_items(item_list):
+    database_items = SankMerch.query.all()
+    for client_item in item_list:
+        # get item from database that corresponds to item returned from client
+        try:
+            # check for id in database items
+            database_item = next(item for item in database_items if int(item.id) == int(client_item['id']))
+
+            # check if needed to delete
+            if 'remove' in client_item:
+                db.session.delete(database_item)
+                db.session.commit()
+            else:
+                # update the item with new values
+                database_item.id = client_item.get('id')
+                database_item.name = client_item.get('name')
+                database_item.price = client_item.get('price')
+                database_item.description = client_item.get('description')
+                database_item.imageLink = client_item.get('imageLink')
+                database_item.quantity = client_item.get('quantity')
+                database_item.isAvailable = client_item.get('isAvailable')
+                database_item.tags = client_item.get('tags')
+
+                # add items to database
+                db.session.commit()
+        except StopIteration:
+            # create new item
+            database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
+                                      imageLink=client_item.get('imageLink'),description=client_item.get('description'),
+                                      quantity=client_item.get('quantity'), isAvailable=client_item.get('isAvailable'),
+                                      tags=client_item.get('tags'))
+            db.session.add(database_item)
+            db.session.commit()
+
+
+# Returns all items in a usable format (python dictionary)
+def parse_returned_values(items):
+    length = len(items.getlist('id'))
+    item_list = []
+
+    for i in range(length):
+        item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
+                'imageLink': items.getlist('imageLink')[i], 'description': items.getlist('description')[i],
+                'quantity': items.getlist('quantity')[i],
+                'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
+        # check for removal
+        if i < len(items.getlist('remove')):
+            if items.getlist('remove')[i] in ['True', 'true', 't', 'T']:
+                item['remove'] = True
+
+        item_list.append(item)
+    return item_list
 
 
 # store page

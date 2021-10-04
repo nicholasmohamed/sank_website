@@ -41,41 +41,7 @@
 		</header>
 
 		<!-- scripts for opening side menu -->
-		<script>
-			function clearCartList(){
-				var cart = document.getElementById("cartList");
-
-				// Remove all children from tag
-				cart.innerHTML = '';
-			}
-
-			function openCart() {
-				document.getElementById("rightSidebar").style.width = "200px";
-
-				//clear list and recreate
-				clearCartList();
-
-				for (var i = 0; i < cartItems.length; i++){
-					var item = cartItems[i];
-
-					// Create elements
-					var tag = document.createElement("h2");
-					tag.classList.add("cartItem");
-
-					// Add text
-					var name = document.createTextNode(item.price);
-					tag.appendChild(name);
-
-					// Add to existing tag
-					var cart = document.getElementById("cartList");
-					cart.appendChild(tag);
-				}
-			}
-
-			function closeCart() {
-				document.getElementById("rightSidebar").style.width = "0";
-			}
-		</script>
+		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_cart.js')}}"></script>
 
 		{% block content %}
 		{% endblock %}
