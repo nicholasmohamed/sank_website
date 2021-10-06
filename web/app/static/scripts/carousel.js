@@ -41,12 +41,15 @@ function showImages(index, htmlClass) {
 }
 
 function updateDots(index){
-    var dots = document.getElementsByClassName("dot");
+    var dots = document.getElementsByClassName("dotIcon");
+    var dotLabels = document.getElementsByClassName("dotText");
 
     //set all dots to inactive
     for (var i = 0; i < dots.length; i++) {
       dots[i].className = dots[i].className.replace(" active", "");
+      dotLabels[i].style.color ="transparent";
     }
 
     dots[index].className += " active";
+    dotLabels[index].style.color = "white";
 }

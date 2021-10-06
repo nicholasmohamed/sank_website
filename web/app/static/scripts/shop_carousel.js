@@ -59,3 +59,4 @@ function updateUI(index){
     addButton.style.display = "block"
     removeButton.style.display = "none"
 }
+

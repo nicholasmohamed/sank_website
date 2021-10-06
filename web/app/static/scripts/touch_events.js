@@ -4,12 +4,12 @@
 // Result of touch event moves slide to the left or right
 function xResult(increment) {
     console.log(increment);
-    plusSlides(increment);
+    //plusSlides(increment);
 }
 
 function yResult(increment) {
     console.log(increment);
-    plusMerch(increment);
+    //plusMerch(increment);
 
     var index = getActiveImageIndex("merch");
     index++;

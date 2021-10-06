@@ -18,17 +18,23 @@ CONTACT = 2
 @bp.route('/home')
 def home():
     logger.info("Rendering homepage.")
-    # all slides for the homepage carousel
-    slides = [{'type': ABOUT, 'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'img': 'assets/SANK_TV_LOGO.svg'},
-              {'type': SHOP, 'link': 'https://www.twitch.tv/sankttv', 'img': 'assets/twitch_logo.svg'},
-              {'type': CONTACT, 'link': 'https://discord.gg/ywVvEnkgjW', 'img': 'assets/discord_logo.svg'}]
 
     # query new arrivals from the shop for the shop carousel
     logger.info("Retrieving new arrivals")
     new_arrivals = SankMerch.query.all()
 
-    return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], slides=slides,
-                           new_arrivals=new_arrivals)
+    about_text = "SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, " \
+                 "gaming events and workshops held through theplatform of Discord.<br><br>We’re a community full of dancers," \
+                 " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
+                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday," \
+                 "Friday and Sunday.<br><br><br>Contact us<br>info@sankchewaire.com"
+    socials = ['assets/discord_logo.svg',
+               'assets/instagram_logo.svg',
+               'assets/twitch_logo.svg',
+               'assets/youtube_logo.svg']
+
+    return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], about_text=about_text,
+                           new_arrivals=new_arrivals, socials=socials)
 
 
 # about us page

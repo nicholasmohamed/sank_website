@@ -3,17 +3,34 @@
 {% block content %}
 <br><br>
 <script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
+
+<h1 id="pageHeading">ABOUT</h1>
 <!-- Slideshow container -->
 <div class="slideshow-container">
-    <!-- Images for the carousel -->
-    {% for slide in slides %}
-      <div class="homeSlides fade">
-          <!-- If shop, start the shop carousel -->
-          {% if slide.type == 1 %}
-            <!-- Background text and shop buttons -->
-            <div class = backgroundText>
-                <h1>New Arrivals</h1>
+    <div class="homeSlides fade">
+        <div class="aboutPage">
+            <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}">
+            {% autoescape false%}
+                <p>{{about_text}}</p>
+            {% endautoescape %}
+            <div class="socials">
+            {% for social in socials %}
+                <img src="{{url_for('static', filename=social)}}" class="socialImage">
+            {% endfor %}
             </div>
+        </div>
+    </div>
+    <div class="homeSlides fade">
+        <div class = landing>
+            <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}" class="landingImage">
+            <h2 class="landingText">Be happy. Have fun. Get Good.</h2>
+        </div>
+    </div>
+    <!-- Images for the carousel -->
+    <div class="homeSlides fade">
+        <!-- Start the shop carousel -->
+        <!-- Background text and shop buttons -->
+        <div class="shopItem">
             <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
                    src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
             <input id="removeButton" class="cartButton" type="image" onclick="quickRemoveItem()"
@@ -23,27 +40,29 @@
                 <div class="merch">
                     <img src="{{url_for('static', filename=item.imageLink)}}" class="merchImage" id="itemImage">
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
-                    <h2 class="itemDescriptor" id="itemName">{{item.name}}</h2>
-                    <h2 class="itemDescriptor" id="itemPrice">{{item.price}}</h2>
+                    <h2 class="name" id="itemName">{{item.name}}</h2>
+                    <h2 class="price" id="itemPrice">${{item.price}}</h2>
                 </div>
             {% endfor %}
-            <button id="shopButton">Shop</button>
-            <script>showMerch(0);</script>
-          <!-- otherwise regular carousel-->
-          {% else %}
-            <a href="{{slide.link}}">
-                <img src="{{url_for('static', filename=slide.img)}}" class="carouselImage">
-            </a>
-          {% endif %}
-      </div>
-    {% endfor %}
+        </div>
+        <script>showMerch(0);</script>
+    </div>
 </div>
 
 <!-- The dots/circles -->
-<div style="text-align:center">
-    {% for slide in slides %}
-      <span class="dot" onclick="dotClick({{loop.index - 1}});"></span>
-    {% endfor %}
+<div style="text-align:center" class="dotContainer">
+    <div class="dot">
+        <h6 class="dotText">about</h6>
+        <div class="dotIcon" onclick="dotClick(0);"></div>
+    </div>
+    <div class="dot">
+        <h6 class="dotText">&nbsp</h6>
+        <div class="dotIcon" onclick="dotClick(1);"></div>
+    </div>
+    <div class="dot">
+        <h6 class="dotText">shop</h6>
+        <div class="dotIcon" onclick="dotClick(2);"></div>
+    </div>
 </div>
 
 <script>showSlides(1);</script>
@@ -56,14 +75,5 @@
     }
 </script>
 <br>
-<!-- Old homepage text
-<div style="text-align:center">
-    <h3 class="homeDescription">SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, gaming events
-        and workshops held through the platform of discord.</h3>
-
-    <h1 class="videoHeading">LATEST YOUTUBE VIDEO</h1>
-    <iframe width="640" height="360" src="https://www.youtube.com/embed/zGKd_LJf4Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
--->
 {% endblock %}
 

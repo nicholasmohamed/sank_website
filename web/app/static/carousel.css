@@ -1,11 +1,16 @@
 * {box-sizing:border-box}
 
+#pageHeading {
+    margin-top: 25px;
+}
+
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
   position: relative;
+  vertical-align: middle
   margin: auto;
-  margin-top: 50px;
+  margin-top: 20%;
   z-index: 0;
   overflow-x: clip;
   overflow-y: visible;
@@ -28,23 +33,81 @@
     margin-right: auto;
 }
 
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #FFFFFF;
-  border-style: solid;
-  border-color: #000000;
-  border-radius: 50%;
-  margin-top: 30px;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+.aboutPage {
+    margin-top: -30px;
 }
 
-.active, .dot:hover {
-  background-color: #FF9933;
+.socials{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.socialImage{
+    height: 50px;
+    width: 50px;
+}
+
+.landing {
+    display: block;
+}
+
+.landingImage {
+    display: block;
+    height: 300px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.landingText {
+    font-family: avenir;
+    font-size: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    margin-right: 20px;
+    right: 50%;
+}
+
+.dotIcon {
+    height: 35px;
+    width: 35px;
+    opacity: 40%;
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.dotText {
+    font-family: avenir;
+    position: relative;
+    top: 20%;
+    font-size: 18px;
+}
+
+.dotContainer {
+    display: flex;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+}
+
+.active, .dotIcon:hover {
+    opacity: 100%;
 }
 
 /* Fading animation */
@@ -67,10 +130,12 @@
 
 /* Shop part of the carousel */
 .merch {
-  display: none;
   max-width: auto;
   z-index: -1;
-  margin-top: 20px;
+}
+
+.merchSlider {
+    display: block;
 }
 
 .backgroundText h1 {
@@ -85,20 +150,31 @@
     color: #FF9933;
 }
 
+#previousMerchImage {
+    position: absolute;
+    margin-top: -100px;
+}
+
+#nextMerchImage {
+    position: absolute;
+    margin-top: 300px;
+}
+
 .merchImage {
     display: block;
-    width: 50%;
+    width: 300px;
     height: 300px;
     margin-left: auto;
     margin-right: auto;
+    z-index: 0;
 }
 
 .cartButton {
     position: absolute;
-    top: 5%;
-    right: 20%;
+    right: 30%;
     height: 60px;
     width: 60px;
+    margin-top: -2%;
     margin-left: auto;
     margin-right: auto;
     padding: 16px;
@@ -125,6 +201,27 @@
 
 .itemDescriptor {
     display: none;
+}
+
+.price {
+    position: relative;
+    color: #FFFFFF;
+    font-family: avenir;
+    font-size: 30px;
+    left: 60%;
+    bottom: 150px;
+    z-index: 2;
+}
+
+.name {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    font-family: avenir;
+    font-size: 16px;
+    padding-top: 10px;
 }
 
 #shopButton {

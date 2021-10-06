@@ -13,12 +13,36 @@
     src: url('/static/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf') format('opentype');
 }
 
-body {
-    background-image: url('/static/assets/png/jjk_bg_sankmobile.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+@font-face {
+    font-family: avenir;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Black.otf') format('opentype');
 }
+@font-face {
+    font-family: avenir;
+    font-weight: light;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Light.otf') format('opentype');
+}
+
+body {
+    background-color: #FF9933;
+    overflow-y: clip;
+}
+
+h1 {
+    font-family: avenir;
+    color: white;
+    text-align: center;
+    margin-top: 0;
+    font-size: 50px;
+}
+
+p {
+    font-family: avenir;
+    font-size: 28px;
+    font-weight: light;
+    color: white;
+}
+
 
 .cartListButton {
     display: flex;
