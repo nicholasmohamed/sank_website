@@ -28,14 +28,11 @@
 					<button onclick="openCart()"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}">
 					</button>
 				</div>
-				<div id="cartListText">
-					<h3>0</h3>
-				</div>
 			</div>
 			<div id="rightSidebar" class="sidebar">
 				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
 					<!-- list all items in the cart -->
-					<div id="cartList">
+					<div class="cartListContainer" id="cartList">
 					</div>
 			</div>
 		</header>

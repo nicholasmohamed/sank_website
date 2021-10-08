@@ -22,6 +22,27 @@
     font-weight: light;
     src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Light.otf') format('opentype');
 }
+@font-face {
+    font-family: avenir-heavy;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Heavy.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir;
+    font-weight: medium;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Medium.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir-next;
+    src: url('/static/fonts/Avenir/Avenir_Next/Avenir_Next.ttc') format('truetype');
+}
+@font-face {
+    font-family: avenir-roman;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Roman.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir-book;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Book.otf') format('opentype');
+}
 
 body {
     background-color: #FF9933;
@@ -29,50 +50,18 @@ body {
 }
 
 h1 {
-    font-family: avenir;
     color: white;
     text-align: center;
     margin-top: 0;
-    font-size: 50px;
+    font-family: avenir-heavy;
+    font-size: 70px;
 }
 
 p {
-    font-family: avenir;
-    font-size: 28px;
-    font-weight: light;
+    font-family: avenir-book;
+    font-size: 40px;
+    font-weight: 45;
     color: white;
-}
-
-
-.cartListButton {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-color: transparent;
-    border-style: solid;
-    border-radius: 20px;
-    background-color: white;
-    color: #FF9933;
-    padding-left: 10px;
-    font-size: 12px;
-}
-
-.cartListButton button {
-    background-color: transparent;
-    border-color: transparent;
-    border-style: solid;
-}
-
-.cartListButton h3{
-}
-
-.cartItem h4 {
-    color: #FF9933;
-}
-
-.cartItem img {
-    height = 20px;
-    width = 20px;
 }
 
 /*

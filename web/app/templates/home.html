@@ -7,28 +7,33 @@
 <h1 id="pageHeading">ABOUT</h1>
 <!-- Slideshow container -->
 <div class="slideshow-container">
+    <!-- About page -->
     <div class="homeSlides fade">
+        <!-- Text for the about page -->
         <div class="aboutPage">
-            <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}">
+            <img src="{{url_for('static', filename=logo)}}" class="aboutLogo">
+            <br>
             {% autoescape false%}
-                <p>{{about_text}}</p>
+                <p class="aboutText">{{about_text}}</p>
             {% endautoescape %}
-            <div class="socials">
-            {% for social in socials %}
-                <img src="{{url_for('static', filename=social)}}" class="socialImage">
-            {% endfor %}
-            </div>
+            <br>
+        </div>
+        <!-- Image links of all Sank socials -->
+        <div class="socials">
+        {% for social in socials %}
+            <a href="{{social.link}}"><img src="{{url_for('static', filename=social.logo)}}" class="socialImage"></a>
+        {% endfor %}
         </div>
     </div>
+    <!-- Landing page -->
     <div class="homeSlides fade">
         <div class = landing>
-            <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}" class="landingImage">
+            <img src="{{url_for('static', filename=logo)}}" class="landingImage">
             <h2 class="landingText">Be happy. Have fun. Get Good.</h2>
         </div>
     </div>
-    <!-- Images for the carousel -->
+    <!-- Shop page -->
     <div class="homeSlides fade">
-        <!-- Start the shop carousel -->
         <!-- Background text and shop buttons -->
         <div class="shopItem">
             <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
@@ -42,9 +47,11 @@
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
                     <h2 class="name" id="itemName">{{item.name}}</h2>
                     <h2 class="price" id="itemPrice">${{item.price}}</h2>
+                    <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
                 </div>
             {% endfor %}
         </div>
+        <!-- Start the shop carousel -->
         <script>showMerch(0);</script>
     </div>
 </div>
@@ -67,11 +74,14 @@
 
 <script>showSlides(1);</script>
 <script>
+    setAssetPath("{{url_for('static', filename='assets/')}}")
+
     function dotClick(index){
         currentSlide(index);
-        var index = getActiveImageIndex("merch");
-        index++;
-        resetTimeout(4000, index);
+
+        var merch_index = getActiveImageIndex("merch");
+        merch_index++;
+        resetTimeout(4000, merch_index);
     }
 </script>
 <br>

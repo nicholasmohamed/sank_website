@@ -24,17 +24,19 @@ def home():
     new_arrivals = SankMerch.query.all()
 
     about_text = "SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, " \
-                 "gaming events and workshops held through theplatform of Discord.<br><br>We’re a community full of dancers," \
+                 "gaming events and workshops held through the platform of Discord.<br><br>We’re a community full of dancers," \
                  " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
                  "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday," \
                  "Friday and Sunday.<br><br><br>Contact us<br>info@sankchewaire.com"
-    socials = ['assets/discord_logo.svg',
-               'assets/instagram_logo.svg',
-               'assets/twitch_logo.svg',
-               'assets/youtube_logo.svg']
+    socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordwhiteicon.svg'},
+               {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubewhiteicon.svg'},
+               {'link': 'https://www.instagram.com/sankchewaire_/', 'logo': 'assets/instagramwhiteicon.svg'},
+               {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookwhiteicon.svg'},
+               {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterwhiteicon.svg'}]
+    logo = 'assets/SankChewAir-E_Outline_white.svg'
 
     return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], about_text=about_text,
-                           new_arrivals=new_arrivals, socials=socials)
+                           logo=logo, new_arrivals=new_arrivals, socials=socials)
 
 
 # about us page
@@ -57,15 +59,4 @@ def programs():
                   'subscribed.'
 
     return render_template('programs.html', title='SankChewAir-E', description=description, pages=current_app.config['PAGE_LIST'])
-
-
-# contact page
-@bp.route('/contact')
-def contact():
-    links = {'instagram': {'link': 'https://www.instagram.com/sankchewaire_/', 'logo': 'assets/instagram_logo.svg'},
-             'twitch': {'link': 'https://www.twitch.tv/sankttv', 'logo': 'assets/twitch_logo.svg'},
-             'discord': {'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discord_logo.svg'},
-             'youtube': {'link': 'https://www.youtube.com/SankTtv', 'logo': 'assets/youtube_logo.svg'}}
-    return render_template('contact.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], links=links)
-
 

@@ -23,7 +23,7 @@ function quickAddItem(){
     removeButton.style.display = "block"
 
     // Update cart number
-    updateCartNumber(1);
+    //updateCartNumber(1);
 }
 
 // Remove item from cart and change buttons
@@ -42,7 +42,7 @@ function quickRemoveItem(){
     removeButton.style.display = "none"
 
     // Update cart number
-    updateCartNumber(-1);
+    //updateCartNumber(-1);
 }
 
 //  Update cart number in nav bar
@@ -60,10 +60,12 @@ function addToCart(item) {
     var itemId = item.querySelector("#itemId").textContent;
     var itemName = item.querySelector("#itemName").textContent;
     var itemPrice = item.querySelector("#itemPrice").textContent;
+    var itemDescription = item.querySelector("#itemDescription").textContent;
     var itemImage = item.querySelector("#itemImage").src;
 
     // add to items array
-    cartItems.push({id: itemId, name: itemName, price: itemPrice, image: itemImage, quantity: 1})
+    cartItems.push({id: itemId, name: itemName, price: itemPrice, description: itemDescription,
+                    image: itemImage, quantity: 1})
 }
 
 // remove item from cart

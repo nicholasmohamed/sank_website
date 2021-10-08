@@ -1,7 +1,7 @@
 * {box-sizing:border-box}
 
 #pageHeading {
-    margin-top: 25px;
+    margin-top: 80px;
 }
 
 /* Slideshow container */
@@ -10,7 +10,7 @@
   position: relative;
   vertical-align: middle
   margin: auto;
-  margin-top: 20%;
+  margin-top: 25%;
   z-index: 0;
   overflow-x: clip;
   overflow-y: visible;
@@ -19,7 +19,7 @@
 /* Hide the images by default */
 .homeSlides {
   display: none;
-  height: 350px;
+  height: 1000px;
   width: 100%
   z-index: -1;
   margin-top: 20px;
@@ -34,7 +34,18 @@
 }
 
 .aboutPage {
-    margin-top: -30px;
+    margin-top: -140px;
+    width: 95%;
+}
+
+.aboutLogo {
+    width: 150px;
+    height: 150px;
+    margin-left: 40px;
+}
+
+.aboutText {
+    margin-left: 40px;
 }
 
 .socials{
@@ -45,8 +56,9 @@
 }
 
 .socialImage{
-    height: 50px;
-    width: 50px;
+    height: 100px;
+    width: 120px;
+    padding-left: 30px;
 }
 
 .landing {
@@ -55,19 +67,20 @@
 
 .landingImage {
     display: block;
-    height: 300px;
-    width: 300px;
+    height: 700px;
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .landingText {
-    font-family: avenir;
-    font-size: 20px;
+    font-family: avenir-heavy;
+    font-size: 40px;
     text-align: center;
     justify-content: center;
     align-items: center;
     color: #FFFFFF;
+    font-weight: 85;
 }
 
 /* The dots/bullets/indicators */
@@ -93,7 +106,7 @@
 }
 
 .dotText {
-    font-family: avenir;
+    font-family: avenir-heavy;
     position: relative;
     top: 20%;
     font-size: 18px;
@@ -108,6 +121,9 @@
 
 .active, .dotIcon:hover {
     opacity: 100%;
+}
+
+.dotIcon:active {
 }
 
 /* Fading animation */
@@ -162,8 +178,8 @@
 
 .merchImage {
     display: block;
-    width: 300px;
-    height: 300px;
+    width: 700px;
+    height: 700px;
     margin-left: auto;
     margin-right: auto;
     z-index: 0;
@@ -172,8 +188,8 @@
 .cartButton {
     position: absolute;
     right: 30%;
-    height: 60px;
-    width: 60px;
+    height: 120px;
+    width: 120px;
     margin-top: -2%;
     margin-left: auto;
     margin-right: auto;
@@ -207,9 +223,10 @@
     position: relative;
     color: #FFFFFF;
     font-family: avenir;
-    font-size: 30px;
+    font-weight: bold;
+    font-size: 80px;
     left: 60%;
-    bottom: 150px;
+    bottom: 300px;
     z-index: 2;
 }
 
@@ -219,8 +236,8 @@
     justify-content: center;
     align-items: center;
     color: #FFFFFF;
-    font-family: avenir;
-    font-size: 16px;
+    font-family: avenir-roman;
+    font-size: 40px;
     padding-top: 10px;
 }
 

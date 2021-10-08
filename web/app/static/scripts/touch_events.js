@@ -4,7 +4,8 @@
 // Result of touch event moves slide to the left or right
 function xResult(increment) {
     console.log(increment);
-    //plusSlides(increment);
+    var index = getActiveImageIndex("homeSlides");
+    dotClick(index + increment);
 }
 
 function yResult(increment) {
@@ -17,7 +18,7 @@ function yResult(increment) {
 }
 
 // Simple click
-document.addEventListener('click', function(){xResult(0);}, false);
+//document.addEventListener('click', function(){xResult(0);}, false);
 
 // Click and drag (non-touch-screen)
 document.addEventListener('dragstart', handleDragStart, false);

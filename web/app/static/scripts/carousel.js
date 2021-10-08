@@ -27,8 +27,10 @@ function showImages(index, htmlClass) {
     var images = document.getElementsByClassName(htmlClass);
 
     //If greater than max, start at zero. For looping
-    if (index >= images.length) {index = 0}
-    if (index < 0) {index = images.length - 1}
+    if (index >= images.length) {index = images.length - 1;
+        return index;
+    }
+    if (index < 0) {index = 0}
 
     //set display for all slides to none
     for (var i = 0; i < images.length; i++) {
