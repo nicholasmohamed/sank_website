@@ -15,6 +15,8 @@
 
 		<!-- scripts for handling cart -->
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_shop.js')}}"></script>
+		<!-- scripts for opening side menu -->
+		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_cart.js')}}"></script>
     </head>
 	<!-- url_for finds filepath for stylesheet -->
 	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
@@ -31,15 +33,18 @@
 			</div>
 			<div id="rightSidebar" class="sidebar">
 				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
-					<!-- list all items in the cart -->
-					<div class="cartListContainer" id="cartList">
+				<!-- list all items in the cart -->
+				<div class="cartListContainer" id="cartList"></div>
+				<div class="checkoutBox">
+					<hr class="totalLine" size="5px" width="90%" color="#FF9933">
+					<div class="totalBox">
+						<h2 class="totalLabel">Subtotal: </h2>
+						<h2 id="cartTotal">$0<h2>
 					</div>
+					<button id="checkoutButton" onclick="submitCheckout()">Checkout</button>
+				</div>
 			</div>
 		</header>
-
-		<!-- scripts for opening side menu -->
-		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_cart.js')}}"></script>
-
 		{% block content %}
 		{% endblock %}
     </body>

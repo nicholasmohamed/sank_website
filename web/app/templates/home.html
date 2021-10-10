@@ -74,14 +74,25 @@
 
 <script>showSlides(1);</script>
 <script>
-    setAssetPath("{{url_for('static', filename='assets/')}}")
+    setAssetPath("{{url_for('static', filename='assets/')}}");
+    loadCart();
+
+    if (cartItems != null) {
+        regenerateCartList();
+        setCheckoutButton();
+    } else {
+        setCheckoutButton();
+    }
 
     function dotClick(index){
         currentSlide(index);
 
         var merch_index = getActiveImageIndex("merch");
-        merch_index++;
-        resetTimeout(4000, merch_index);
+        resetTimeout(4000, merch_index + 1);
+
+        if (index == 2) {
+            updateUI(merch_index);
+        }
     }
 </script>
 <br>

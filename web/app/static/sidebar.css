@@ -168,7 +168,8 @@ body{
 
 /* cartInfo contains cartName and cartQuantity */
 .cartInfo {
-    width: 100%;
+    width: 430;
+    margin-left: 20px;
 }
 
 /* cartName contains cartItemName and cartItemPrice */
@@ -183,7 +184,6 @@ body{
 .cartItemName {
     font-family: avenir-heavy;
     font-size: 45px;
-    margin-left: 20px;
     align-self: center;
 }
 
@@ -193,18 +193,78 @@ body{
     align-self: center;
 }
 
-/* cartQuantity contains cartItemDescription and cartItemQuantity */
-.cartQuantity{
+/* cartDescription contains cartItemDescription and cartQuantity */
+.cartDescription{
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     width: 100%;
+    height: 50%;
+    font-size: 45px;
 }
 
+.cartItemDescription {
+    font-family: avenir-book;
+    font-size: 25px;
+    margin-top: -15px;
+    margin-left: 10px;
+    color: #332D26;
+    width: 60%;
+    text-align: left;
+}
 
+.cartQuantity {
+    display: flex;
+    direction: row-reverse;
+    justify-content: space-between;
+}
 
-.checkoutButton {
+.cartQuantity input {
+    height: 40px;
+    width: 40px;
+}
 
+.cartItemQuantity {
+    margin-top: -5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.checkoutBox {
+    position: absolute;
+    bottom: 40px;
+}
+
+.totalLine {
+    margin-right: 70px;
+}
+
+.totalBox{
+    display: flex;
+    direction: ltr;
+    color: #FF9933;
+    font-size: 35px;
+}
+
+#cartTotal {
+    position: absolute;
+    right: 80px;
+}
+
+#checkoutButton {
+    width: 500px;
+    height: 100px;
+    margin-right: 100px;
+    font-family: 'avenir-heavy';
+    font-size: 40px;
+    color: #FFFFFF;
+    background-color: #FF9933;
+    border-color: transparent;
+    border-radius: 20px;
+}
+
+#checkoutButton:disabled {
+    background-color: #FAC591;
 }
 
 .closeSearchBtn {

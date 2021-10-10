@@ -131,8 +131,8 @@ def create_checkout_session():
             payment_method_types=['card'],
             line_items=merch_items,
             mode='payment',
-            success_url=current_app.config['YOUR_DOMAIN'] + '/store',
-            cancel_url=current_app.config['YOUR_DOMAIN'] + '/store'
+            success_url=current_app.config['YOUR_DOMAIN'],
+            cancel_url=current_app.config['YOUR_DOMAIN']
         )
 
         return jsonify({'sessionId': checkout_session['id']})
@@ -201,7 +201,7 @@ def generate_line_items(items):
         line_item = {
             'price_data': {
                 'currency': 'cad',
-                'unit_amount': item['price'] * 10,
+                'unit_amount': item['price'] * 100,
                 'product_data': {
                     'name': item['name'],
                     'images': [],

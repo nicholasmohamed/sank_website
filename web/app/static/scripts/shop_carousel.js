@@ -29,7 +29,7 @@ function resetTimeout(milliseconds, index){
 }
 
 function showMerch(index){
-    index = showImages(index, "merch")
+    index = showImages(index, "merch");
 
     // Update the UI
     updateUI(index);

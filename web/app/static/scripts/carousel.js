@@ -34,7 +34,7 @@ function showImages(index, htmlClass) {
 
     //set display for all slides to none
     for (var i = 0; i < images.length; i++) {
-      images[i].style.display = "none";
+        images[i].style.display = "none";
     }
 
     images[index].style.display = "block";

@@ -7,51 +7,15 @@ function clearCart(){
     cartItems.length = 0
 }
 
-// Add item to cart and change buttons
-function quickAddItem(){
-    var addButton = document.getElementById("addButton");
-    var removeButton = document.getElementById("removeButton");
+//load cart if data exists
+function loadCart(){
+    var items = JSON.parse(sessionStorage.getItem("cart"));
 
-    //get item from merch list
-    var index = getActiveImageIndex("merch");
-    var merch = document.getElementsByClassName("merch");
-
-    addToCart(merch[index]);
-
-    // change button image
-    addButton.style.display = "none"
-    removeButton.style.display = "block"
-
-    // Update cart number
-    //updateCartNumber(1);
-}
-
-// Remove item from cart and change buttons
-function quickRemoveItem(){
-    var addButton = document.getElementById("addButton");
-    var removeButton = document.getElementById("removeButton");
-
-    //get item from merch list
-    var index = getActiveImageIndex("merch");
-    var merch = document.getElementsByClassName("merch");
-
-    removeFromCart(merch[index]);
-
-    // change button image
-    addButton.style.display = "block"
-    removeButton.style.display = "none"
-
-    // Update cart number
-    //updateCartNumber(-1);
-}
-
-//  Update cart number in nav bar
-function updateCartNumber(increment){
-    var cartListText = document.getElementById("cartListText");
-    var cartItemNumber = parseInt(cartListText.textContent);
-
-    cartItemNumber += increment;
-    cartListText.innerHTML = cartItemNumber;
+    if (items == null) {
+        cartItems = [];
+    } else {
+        cartItems = items;
+    }
 }
 
 // add item to cart
@@ -63,9 +27,21 @@ function addToCart(item) {
     var itemDescription = item.querySelector("#itemDescription").textContent;
     var itemImage = item.querySelector("#itemImage").src;
 
+    var item = {
+        id: itemId,
+        name: itemName,
+        price: itemPrice,
+        description: itemDescription,
+        image: itemImage,
+        quantity: 1,
+    };
+
     // add to items array
-    cartItems.push({id: itemId, name: itemName, price: itemPrice, description: itemDescription,
-                    image: itemImage, quantity: 1})
+    cartItems.push(item);
+
+    sessionStorage.setItem("cart", JSON.stringify(cartItems));
+
+    return item;
 }
 
 // remove item from cart
@@ -79,6 +55,8 @@ function removeFromCart(item) {
             cartItems.splice(i, 1)
         }
     }
+
+    sessionStorage.setItem("cart", cartItems);
 }
 
 function getStripePublishableKey() {
