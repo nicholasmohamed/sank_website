@@ -4,17 +4,23 @@
 // Result of touch event moves slide to the left or right
 function xResult(increment) {
     console.log(increment);
-    var index = getActiveImageIndex("homeSlides");
-    dotClick(index + increment);
+    dotClick(homeCarousel.activeIndex + increment);
 }
 
 function yResult(increment) {
     console.log(increment);
-    //plusMerch(increment);
 
-    var index = getActiveImageIndex("merch");
-    index++;
-    resetTimeout(4000, index);
+    if (homeCarousel.activeIndex == 2){
+        var merch = document.getElementsByClassName("merch");
+
+        // If at the end of the carousels, do not move
+        if (shopCarousel.activeIndex == 0 && increment < 0){
+        } else if (shopCarousel.activeIndex == (merch.length - 1) && increment > 0) {
+        } else {
+            showMerch(shopCarousel.activeIndex + increment);
+        }
+        resetTimeout(4000, shopCarousel.activeIndex + increment);
+    }
 }
 
 // Simple click

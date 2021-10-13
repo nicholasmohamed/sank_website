@@ -47,6 +47,7 @@
 body {
     background-color: #FF9933;
     overflow-y: clip;
+    -webkit-font-smoothing : antialiased;
 }
 
 h1 {

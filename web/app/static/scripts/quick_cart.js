@@ -12,7 +12,7 @@ function quickAddItem(){
     var removeButton = document.getElementById("removeButton");
 
     //get item from merch list
-    var index = getActiveImageIndex("merch");
+    var index = shopCarousel.activeIndex;
     var merch = document.getElementsByClassName("merch");
 
     var item = addToCart(merch[index]);
@@ -37,7 +37,7 @@ function quickRemoveItem(){
     var removeButton = document.getElementById("removeButton");
 
     //get item from merch list
-    var index = getActiveImageIndex("merch");
+    var index = shopCarousel.activeIndex;
     var merch = document.getElementsByClassName("merch");
 
     removeFromCart(merch[index]);
@@ -52,8 +52,8 @@ function quickRemoveItem(){
     setCheckoutButton();
 
     // change button image
-    addButton.style.display = "block"
-    removeButton.style.display = "none"
+    addButton.style.display = "block";
+    removeButton.style.display = "none";
 
     // Update cart number
     //updateCartNumber(-1);

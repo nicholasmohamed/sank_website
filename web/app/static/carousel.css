@@ -2,6 +2,7 @@
 
 #pageHeading {
     margin-top: 80px;
+    z-index: 2;
 }
 
 /* Slideshow container */
@@ -20,7 +21,7 @@
 .homeSlides {
   display: none;
   height: 1000px;
-  width: 100%
+  width: 100%;
   z-index: -1;
   margin-top: 20px;
 }
@@ -144,10 +145,32 @@
   to {opacity: 1}
 }
 
+/* Sliding animation */
+.slideIn {
+  animation-name: slidein;
+  animation-duration: 1.5s;
+}
+
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    margin-left: 0%;
+  }
+}
+
 /* Shop part of the carousel */
+.merchList {
+    transition-property: transform;
+    z-index: -2;
+}
+
 .merch {
   max-width: auto;
-  z-index: -1;
+  z-index: -2;
 }
 
 .merchSlider {
@@ -166,14 +189,18 @@
     color: #FF9933;
 }
 
-#previousMerchImage {
-    position: absolute;
-    margin-top: -100px;
+.inactiveImage {
+    opacity: 70%;
 }
 
-#nextMerchImage {
-    position: absolute;
-    margin-top: 300px;
+.currentImage {
+    /*position: absolute;
+    top: 0px;
+    left: 12%;*/
+}
+
+.imageDescriptor {
+    display: none;
 }
 
 .merchImage {
@@ -203,7 +230,7 @@
 }
 
 #addButton {
-    z-index: 2;
+    z-index: 1;
 }
 
 #removeButton {

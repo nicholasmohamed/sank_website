@@ -6,9 +6,9 @@
 
 <h1 id="pageHeading">ABOUT</h1>
 <!-- Slideshow container -->
-<div class="slideshow-container">
+<div class="slideshow-container" id="slideList">
     <!-- About page -->
-    <div class="homeSlides fade">
+    <div class="homeSlides">
         <!-- Text for the about page -->
         <div class="aboutPage">
             <img src="{{url_for('static', filename=logo)}}" class="aboutLogo">
@@ -26,14 +26,14 @@
         </div>
     </div>
     <!-- Landing page -->
-    <div class="homeSlides fade">
+    <div class="homeSlides">
         <div class = landing>
             <img src="{{url_for('static', filename=logo)}}" class="landingImage">
             <h2 class="landingText">Be happy. Have fun. Get Good.</h2>
         </div>
     </div>
     <!-- Shop page -->
-    <div class="homeSlides fade">
+    <div class="homeSlides">
         <!-- Background text and shop buttons -->
         <div class="shopItem">
             <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
@@ -41,6 +41,7 @@
             <input id="removeButton" class="cartButton" type="image" onclick="quickRemoveItem()"
                    src="{{url_for('static', filename='assets/math_minus.svg')}}"/>
             <!-- Shop carousel items -->
+            <div id = "merchList">
             {% for item in new_arrivals %}
                 <div class="merch">
                     <img src="{{url_for('static', filename=item.imageLink)}}" class="merchImage" id="itemImage">
@@ -50,6 +51,7 @@
                     <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
                 </div>
             {% endfor %}
+            </div>
         </div>
         <!-- Start the shop carousel -->
         <script>showMerch(0);</script>
@@ -87,7 +89,7 @@
     function dotClick(index){
         currentSlide(index);
 
-        var merch_index = getActiveImageIndex("merch");
+        var merch_index = shopCarousel.activeIndex;
         resetTimeout(4000, merch_index + 1);
 
         if (index == 2) {

@@ -2,11 +2,8 @@
 * Requires carousel.js
 */
 
-// change slides
-function plusSlides(n) {
-    var activeIndex = getActiveImageIndex("homeSlides");
-    showSlides(activeIndex += n);
-}
+homeCarousel = new Carousel("homeSlides", "slideList", false, false, false);
+homeCarousel.initialize(1);
 
 //set current slide
 function currentSlide(index) {
@@ -14,11 +11,11 @@ function currentSlide(index) {
 }
 
 function showSlides(index) {
-    index = showImages(index, "homeSlides");
+    homeCarousel.advanceCarousel(index);
 
-    updateDots(index);
+    homeCarousel.updateDots(homeCarousel.activeIndex);
 
-    updateHeading(index);
+    updateHeading(homeCarousel.activeIndex);
 }
 
 function updateHeading(index) {

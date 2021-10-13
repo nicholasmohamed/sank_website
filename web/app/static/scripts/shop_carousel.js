@@ -3,12 +3,8 @@
 */
 
 var timeouts = []
-
-// change slides
-function plusMerch(n) {
-    var activeIndex = getActiveImageIndex("merch");
-    showMerch(activeIndex += n);
-}
+var shopCarousel = new Carousel("merch", "merchList", true, true, true);
+shopCarousel.initialize(0);
 
 //set current slide
 function currentMerch(index) {
@@ -29,18 +25,31 @@ function resetTimeout(milliseconds, index){
 }
 
 function showMerch(index){
-    index = showImages(index, "merch");
+    shopCarousel.advanceCarousel(index);
 
     // Update the UI
-    updateUI(index);
+    updateUI(shopCarousel.activeIndex);
 
     // reset change merch timer
-    index++;
-    resetTimeout(4000, index);
+    resetTimeout(4000, shopCarousel.activeIndex + 1);
 }
 
 function updateUI(index){
     var merch = document.getElementsByClassName("merch");
+
+    // removing text for inactive images
+    for (let i = 0, len = merch.length; i < len; i++) {
+        var name = merch[i].querySelector("#itemName");
+        var price = merch[i].querySelector("#itemPrice");
+
+        if (i == shopCarousel.activeIndex){
+            name.style.visibility = "visible";
+            price.style.visibility = "visible";
+        } else {
+            name.style.visibility = "hidden";
+            price.style.visibility = "hidden";
+        }
+    }
 
     // Get ID of merch item
     var itemId = merch[index].querySelector("#itemId").textContent;
@@ -51,12 +60,13 @@ function updateUI(index){
     // Check if itemId is in cart, if in cart then set button to remove.
     for (let i = 0, len = cartItems.length; i < len; i++) {
         if (cartItems[i].id == itemId){
-            addButton.style.display = "none"
-            removeButton.style.display = "block"
+            addButton.style.display = "none";
+            removeButton.style.display = "block";
             return;
         }
     }
-    addButton.style.display = "block"
-    removeButton.style.display = "none"
+
+    addButton.style.display = "block";
+    removeButton.style.display = "none";
 }
 

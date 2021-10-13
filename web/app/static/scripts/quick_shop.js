@@ -53,6 +53,7 @@ function removeFromCart(item) {
     for (let i = 0, len = cartItems.length; i < len; i++) {
         if (cartItems[i].id == itemId){
             cartItems.splice(i, 1)
+            break;
         }
     }
 
