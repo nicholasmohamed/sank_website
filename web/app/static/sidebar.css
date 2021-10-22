@@ -138,6 +138,15 @@ body{
 .cartListButton h3{
 }
 
+#newNotificationCircle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 48%;
+    right: 7.5%;
+    visibility: hidden;
+}
+
 
 /* Styling for cart items list */
 .cartListContainer {

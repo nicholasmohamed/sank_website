@@ -5,7 +5,7 @@ class Carousel {
         this.showMultiple = showMultiple;
         this.infinite = infinite;
         this.xTranslation = 1000;
-        this.yTranslation = 1000;
+        this.yTranslation = 1015;
         this.vertical = vertical;
         this.activeIndex = 0;
     }

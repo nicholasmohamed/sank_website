@@ -26,6 +26,9 @@ function quickAddItem(){
     // Set checkout button
     setCheckoutButton();
 
+    // Add notification dot
+    setCartNotification(false);
+
     // change button image
     addButton.style.display = "none";
     removeButton.style.display = "block";
@@ -51,12 +54,12 @@ function quickRemoveItem(){
     // Set checkout button
     setCheckoutButton();
 
+    // Add notification dot
+    setCartNotification(false);
+
     // change button image
     addButton.style.display = "block";
     removeButton.style.display = "none";
-
-    // Update cart number
-    //updateCartNumber(-1);
 }
 
 function addToCartList(item) {
@@ -81,13 +84,15 @@ function clearCartList(){
     cart.innerHTML = '';
 }
 
-//  Update cart number in nav bar
-function updateCartNumber(increment){
-    var cartListText = document.getElementById("cartListText");
-    var cartItemNumber = parseInt(cartListText.textContent);
+//  Add cart notification dot in nav bar
+function setCartNotification(isVisible){
+    var notificationDot = document.getElementById("newNotificationCircle");
 
-    cartItemNumber += increment;
-    cartListText.innerHTML = cartItemNumber;
+    if (isVisible){
+        notificationDot.style.visibility = "hidden";
+    } else {
+       notificationDot.style.visibility = "visible";
+    }
 }
 
 function openCart() {
@@ -95,6 +100,8 @@ function openCart() {
     var cart = document.getElementById("cartList");
 
     cart.style.display = "block";
+
+    setCartNotification(true);
 }
 
 function closeCart() {

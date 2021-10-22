@@ -19,7 +19,6 @@ function yResult(increment) {
         } else {
             showMerch(shopCarousel.activeIndex + increment);
         }
-        resetTimeout(4000, shopCarousel.activeIndex + increment);
     }
 }
 
@@ -55,14 +54,17 @@ function handleDragEnd(evt) {
 }
 
 function handleEnd(xUp, yUp) {
+  var xThreshold = 20;
+  var yThreshold = 20;
+
   if ( !xDown ) { return; }
   var xDiff = xDown - xUp;
   var yDiff = yDown - yUp;
   // if large enough swipe, change image
-  if ( xDiff > 20 ) xResult(1);
-  else if ( xDiff < -20 ) xResult(-1);
-  else if ( yDiff > 2 ) yResult(1);
-  else if ( yDiff < -2 ) yResult(-1);
+  if ( xDiff > xThreshold ) xResult(1);
+  else if ( xDiff < -xThreshold ) xResult(-1);
+  else if ( yDiff > yThreshold ) yResult(1);
+  else if ( yDiff < -yThreshold ) yResult(-1);
   xDown = null;
   yDown = null;
 };

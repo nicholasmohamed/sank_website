@@ -4,11 +4,11 @@
 <br><br>
 <script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
 
-<h1 id="pageHeading">ABOUT</h1>
+<h1 id="pageHeading" class="fade">ABOUT</h1>
 <!-- Slideshow container -->
 <div class="slideshow-container" id="slideList">
     <!-- About page -->
-    <div class="homeSlides">
+    <div class="homeSlides slideInRight">
         <!-- Text for the about page -->
         <div class="aboutPage">
             <img src="{{url_for('static', filename=logo)}}" class="aboutLogo">
@@ -26,20 +26,22 @@
         </div>
     </div>
     <!-- Landing page -->
-    <div class="homeSlides">
+    <div class="homeSlides fade">
         <div class = landing>
             <img src="{{url_for('static', filename=logo)}}" class="landingImage">
             <h2 class="landingText">Be happy. Have fun. Get Good.</h2>
         </div>
     </div>
     <!-- Shop page -->
-    <div class="homeSlides">
+    <div class="homeSlides slideInLeft">
         <!-- Background text and shop buttons -->
         <div class="shopItem">
-            <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
-                   src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
-            <input id="removeButton" class="cartButton" type="image" onclick="quickRemoveItem()"
-                   src="{{url_for('static', filename='assets/math_minus.svg')}}"/>
+            <div class="addRemoveButtons">
+                <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
+                       src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
+                <input id="removeButton" class="cartButton" type="image" onclick="quickRemoveItem()"
+                       src="{{url_for('static', filename='assets/math_minus.svg')}}"/>
+            </div>
             <!-- Shop carousel items -->
             <div id = "merchList">
             {% for item in new_arrivals %}
@@ -76,6 +78,7 @@
 
 <script>showSlides(1);</script>
 <script>
+
     setAssetPath("{{url_for('static', filename='assets/')}}");
     loadCart();
 
