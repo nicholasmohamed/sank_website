@@ -54,10 +54,18 @@ function handleDragEnd(evt) {
 }
 
 function handleEnd(xUp, yUp) {
-  var xThreshold = 20;
-  var yThreshold = 20;
+  if (screen.orientation.type == "landscape-primary"){
+    var xThreshold = 10;
+    var yThreshold = 10;
+  } else {
+    var xThreshold = 20;
+    var yThreshold = 20;
+  }
 
+  // If there is no ending x
   if ( !xDown ) { return; }
+
+  // Calculate difference (ending x minus starting x)
   var xDiff = xDown - xUp;
   var yDiff = yDown - yUp;
   // if large enough swipe, change image

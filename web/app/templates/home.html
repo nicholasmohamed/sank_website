@@ -89,11 +89,24 @@
         setCheckoutButton();
     }
 
+    shopCarousel.setTranslation();
+
+    screen.orientation.onchange = function (){
+        /* Reset Carousel */
+        var slideList = document.getElementById("merchList");
+        slideList.style.transform = "translate(0%,  0%)";
+        shopCarousel.activeIndex = 0;
+        showMerch(0);
+
+        /* Set translation amount */
+        shopCarousel.setTranslation();
+    };
+
     function dotClick(index){
         currentSlide(index);
 
         var merch_index = shopCarousel.activeIndex;
-        resetTimeout(4000, merch_index + 1);
+        resetTimeout(35000, merch_index + 1);
 
         if (index == 2) {
             updateUI(merch_index);

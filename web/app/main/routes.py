@@ -26,7 +26,7 @@ def home():
     about_text = "SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, " \
                  "gaming events and workshops held through the platform of Discord.<br><br>We’re a community full of dancers," \
                  " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
-                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday," \
+                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday, " \
                  "Friday and Sunday.<br><br><br>Contact us<br>info@sankchewaire.com"
     socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordwhiteicon.svg'},
                {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubewhiteicon.svg'},

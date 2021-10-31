@@ -4,8 +4,8 @@ class Carousel {
         this.containerClass = containerClass;
         this.showMultiple = showMultiple;
         this.infinite = infinite;
-        this.xTranslation = 1000;
-        this.yTranslation = 1015;
+        this.xTranslation = 0;
+        this.yTranslation = 0;
         this.vertical = vertical;
         this.activeIndex = 0;
     }
@@ -24,9 +24,41 @@ class Carousel {
         this.goToImage(currentIndex);
     }
 
+    // Sets the translation amount for sliding
+    setTranslation() {
+        var images = document.getElementsByClassName(this.htmlClass);
+
+        if (images.length > 1){
+            var image1Size = images[0].getBoundingClientRect();
+            var image2Size = images[1].getBoundingClientRect();
+
+            // get image1's center point
+            var image1x = image1Size.left + image1Size.width/2;
+            var image1y = image1Size.top + image1Size.height/2;
+
+            // get image2's center point
+            var image2x = image2Size.left + image2Size.width/2;
+            var image2y = image2Size.top + image2Size.height/2;
+
+            // calculate the distance using the Pythagorean Theorem (a^2 + b^2 = c^2)
+            var distanceSquared = Math.pow(image1x - image2x, 2) + Math.pow(image1y - image2y, 2);
+            var distance = Math.sqrt(distanceSquared);
+
+            this.yTranslation = distance;
+        } else {
+            this.yTranslation = 0;
+        }
+    }
+
     // For vertical carousel, translate images
     translateVertical(translateUpwards, numImages, duration){
         var slideList = document.getElementById(this.containerClass);
+
+        // Find translation amount if there is none
+        if (this.yTranslation == 0) {
+            this.setTranslation();
+        }
+
         if (translateUpwards){
             slideList.style.transform += "translate(0px, " + (numImages * (-1) * this.yTranslation) + "px)";
             slideList.style.transitionDuration = duration + "s";
@@ -37,15 +69,51 @@ class Carousel {
     }
 
     // For vertical carousel, translate images
-    translateHorizontal(translateUpwards, numImages, duration){
+    translateHorizontal(translateRight, numImages, duration){
         var slideList = document.getElementById(this.containerClass);
-        if (translateUpwards){
+        if (translateRight){
             slideList.style.transform += "translate(" + numImages * (-1) * this.yTranslation + "px,  0px)";
             slideList.style.transitionDuration = duration + "s";
         } else {
             slideList.style.transform += "translate(" + numImages * this.yTranslation + "px,  0px)";
             slideList.style.transitionDuration = duration + "s";
         }
+    }
+
+    // Transition the image with a slide in and out
+    transitionImage (index, directionPositive, duration) {
+        var images = document.getElementsByClassName(this.htmlClass);
+        var direction = 100;
+
+        // Determine if moving right or left
+        if (directionPositive){
+            direction = -100;
+        }
+
+        //Reset transform for active image
+        images[this.activeIndex].style.transform = "translate(0%,  0%)";
+
+        //Reset transform for all images
+        for (var i = 0; i < images.length; i++) {
+            images[i].style.marginLeft = "0%";
+            images[i].style.transform = "translate(0%,  0%)";
+        }
+
+        // move current image off screen
+        images[index].style.transform = "translate(" + direction + "%,  0%)";
+        images[index].style.transitionDuration = duration + "s";
+
+        //Set up activeImage
+        var aIndex = this.activeIndex;
+
+        //After first transition, set all image displays to none
+        window.setTimeout( function(){
+            for (var i = 0; i < images.length; i++) {
+                images[i].style.display = "none";
+            }
+
+           images[aIndex].style.display = "block";
+        }, duration * 1000); // timed to match animation-duration
     }
 
     // Return image index
@@ -71,6 +139,7 @@ class Carousel {
         }
     }
 
+    // set class of current image and inactive images. For styling
     updateImageClasses() {
         var images = document.getElementsByClassName(this.htmlClass);
 
@@ -116,6 +185,7 @@ class Carousel {
     goToImage(index){
         var images = document.getElementsByClassName(this.htmlClass);
 
+        // Set direction to and travel distance for active image
         var travel = this.activeIndex - index;
         var direction = false;
         if (travel > 0){
@@ -145,11 +215,7 @@ class Carousel {
                 }
             }
         } else {
-            for (var i = 0; i < images.length; i++) {
-                images[i].style.display = "none";
-            }
-
-            images[this.activeIndex].style.display = "block";
+            this.transitionImage(index, direction, 0.5);
         }
     }
 

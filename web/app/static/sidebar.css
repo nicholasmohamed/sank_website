@@ -109,10 +109,6 @@ body{
 
 .cartListButton {
     display: flex;
-    width: 80px;
-    height: 78px;
-    margin-top: 20px;
-    margin-right: 20px;
     align-items: center;
     justify-content: center;
     border-color: transparent;
@@ -120,7 +116,6 @@ body{
     border-radius: 20px;
     background-color: white;
     color: #FF9933;
-    font-size: 12px;
 }
 
 .cartListButton button {
@@ -140,10 +135,6 @@ body{
 
 #newNotificationCircle {
     position: absolute;
-    width: 24px;
-    height: 24px;
-    top: 48%;
-    right: 7.5%;
     visibility: hidden;
 }
 
@@ -154,13 +145,12 @@ body{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    overflow-y: scroll;
 }
 
 .cartItem {
     display: flex;
     flex-direction: row-reverse;
-    height: 200px;
-    width: 100%;
 }
 
 .cartItem h4 {
@@ -169,16 +159,11 @@ body{
 
 .cartItem img {
     position: relative;
-    height: 150px;
-    width: 150px;
-    margin-left: 20px;
     align-self: center;
 }
 
 /* cartInfo contains cartName and cartQuantity */
 .cartInfo {
-    width: 430;
-    margin-left: 20px;
 }
 
 /* cartName contains cartItemName and cartItemPrice */
@@ -186,19 +171,15 @@ body{
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    width: 100%;
-    height: 50%;
 }
 
 .cartItemName {
     font-family: avenir-heavy;
-    font-size: 45px;
     align-self: center;
 }
 
 .cartItemPrice {
     font-family: avenir-heavy;
-    font-size: 45px;
     align-self: center;
 }
 
@@ -207,18 +188,11 @@ body{
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    width: 100%;
-    height: 50%;
-    font-size: 45px;
 }
 
 .cartItemDescription {
     font-family: avenir-book;
-    font-size: 25px;
-    margin-top: -15px;
-    margin-left: 10px;
     color: #332D26;
-    width: 60%;
     text-align: left;
 }
 
@@ -229,14 +203,9 @@ body{
 }
 
 .cartQuantity input {
-    height: 40px;
-    width: 40px;
 }
 
 .cartItemQuantity {
-    margin-top: -5px;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 .checkoutBox {
@@ -252,7 +221,7 @@ body{
     display: flex;
     direction: ltr;
     color: #FF9933;
-    font-size: 35px;
+    font-family: avenir;
 }
 
 #cartTotal {
@@ -261,11 +230,7 @@ body{
 }
 
 #checkoutButton {
-    width: 500px;
-    height: 100px;
-    margin-right: 100px;
     font-family: 'avenir-heavy';
-    font-size: 40px;
     color: #FFFFFF;
     background-color: #FF9933;
     border-color: transparent;
@@ -292,8 +257,313 @@ body{
   padding: 0px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+@media screen
+and (orientation: portrait){
+    #newNotificationCircle {
+        width: 24px;
+        height: 24px;
+        top: 48%;
+        right: 7.5%;
+    }
+
+    .cartListButton {
+        width: 80px;
+        height: 78px;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .cartItem {
+        height: 200px;
+        width: 100%;
+    }
+
+    .cartItem img {
+        height: 150px;
+        width: 150px;
+        margin-left: 20px;
+    }
+
+    /* cartInfo contains cartName and cartQuantity */
+    .cartInfo {
+        width: 430;
+        margin-left: 20px;
+    }
+
+    /* cartName contains cartItemName and cartItemPrice */
+    .cartName {
+        width: 100%;
+        height: 50%;
+    }
+
+    .cartItemName {
+        font-size: 45px;
+    }
+
+    .cartItemPrice {
+        font-size: 45px;
+    }
+
+    /* cartDescription contains cartItemDescription and cartQuantity */
+    .cartDescription{
+        width: 100%;
+        height: 50%;
+        font-size: 45px;
+    }
+
+    .cartItemDescription {
+        font-size: 25px;
+        margin-top: -15px;
+        margin-left: 10px;
+        width: 60%;
+    }
+
+    .cartQuantity input {
+        height: 40px;
+        width: 40px;
+    }
+
+    .cartItemQuantity {
+        margin-top: -5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+    }
+
+    #checkoutButton {
+        width: 500px;
+        height: 55px;
+        margin-right: 100px;
+        font-size: 30px;
+    }
+
+    .totalBox {
+        font-size: 32px;
+    }
+
+    #checkoutButton {
+        width: 500px;
+        height: 100px;
+        margin-right: 100px;
+        font-size: 40px;
+    }
+}
+
+@media only screen
+and (orientation: landscape){
+    #newNotificationCircle {
+        width: 20px;
+        height: 20px;
+        top: 105%;
+        right: 5.8%;
+    }
+
+    .cartListButton {
+        width: 60px;
+        height: 60px;
+        margin-top: 50px;
+        margin-right: 20px;
+    }
+}
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 280px)
+and (max-device-width : 740px) {
+    #newNotificationCircle {
+        width: 20px;
+        height: 20px;
+        top: 58%;
+        right: 5.8%;
+    }
+
+    .openCartIcon {
+        width: 55px;
+        height: 55px;
+    }
+
+    .cartListButton {
+        width: 60px;
+        height: 60px;
+        margin-top: 26px;
+        margin-right: 20px;
+    }
+
+    .cartListContainer {
+        height: 40%;
+    }
+
+    .cartItem {
+        height: 180px;
+        width: 100%;
+    }
+
+    .cartItem img {
+        height: 120px;
+        width: 120px;
+        margin-left: 20px;
+    }
+
+    /* cartInfo contains cartName and cartQuantity */
+    .cartInfo {
+        width: 430;
+        margin-left: 20px;
+    }
+
+    /* cartName contains cartItemName and cartItemPrice */
+    .cartName {
+        width: 100%;
+        height: 50%;
+    }
+
+    .cartItemName {
+        font-size: 35px;
+    }
+
+    .cartItemPrice {
+        font-size: 35px;
+    }
+
+    /* cartDescription contains cartItemDescription and cartQuantity */
+    .cartDescription{
+        width: 100%;
+        height: 50%;
+        font-size: 35px;
+    }
+
+    .cartItemDescription {
+        font-size: 20px;
+        margin-top: -15px;
+        margin-left: 10px;
+        width: 60%;
+    }
+
+    .cartQuantity input {
+        height: 25px;
+        width: 25px;
+    }
+
+    .cartItemQuantity {
+        margin-top: -5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .totalBox {
+        font-size: 18px;
+    }
+
+    #checkoutButton {
+        width: 500px;
+        height: 55px;
+        margin-right: 100px;
+        font-size: 30px;
+    }
+}
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 740px) {
+    body {
+        margin-top: -12px;
+    }
+
+    #newNotificationCircle {
+        width: 24px;
+        height: 24px;
+        top: 48%;
+        right: 5.5%;
+    }
+
+    .cartListButton {
+        width: 80px;
+        height: 78px;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .cartListContainer {
+        height: 60%;
+    }
+
+    .cartItem {
+        height: 200px;
+        width: 100%;
+    }
+
+    .cartItem img {
+        height: 150px;
+        width: 150px;
+        margin-left: 20px;
+    }
+
+    /* cartInfo contains cartName and cartQuantity */
+    .cartInfo {
+        width: 430;
+        margin-left: 20px;
+    }
+
+    /* cartName contains cartItemName and cartItemPrice */
+    .cartName {
+        width: 100%;
+        height: 50%;
+    }
+
+    .cartItemName {
+        font-size: 45px;
+    }
+
+    .cartItemPrice {
+        font-size: 45px;
+    }
+
+    /* cartDescription contains cartItemDescription and cartQuantity */
+    .cartDescription{
+        width: 100%;
+        height: 50%;
+        font-size: 45px;
+    }
+
+    .cartItemDescription {
+        font-size: 25px;
+        margin-top: -15px;
+        margin-left: 10px;
+        width: 60%;
+    }
+
+    .cartQuantity input {
+        height: 40px;
+        width: 40px;
+    }
+
+    .cartItemQuantity {
+        margin-top: -5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+    }
+
+    #checkoutButton {
+        width: 500px;
+        height: 55px;
+        margin-right: 100px;
+        font-size: 30px;
+    }
+
+    .totalBox {
+        font-size: 32px;
+    }
+
+    #checkoutButton {
+        width: 500px;
+        height: 100px;
+        margin-right: 100px;
+        font-size: 40px;
+    }
 }

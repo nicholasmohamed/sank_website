@@ -1,308 +1,1058 @@
 * {box-sizing:border-box}
 
-#pageHeading {
-    margin-top: 80px;
-    z-index: 2;
+/* For regular mobile screens*/
+@media only screen
+and (orientation: portrait)
+and (min-device-width : 360px)
+and (max-device-width : 499px)
+and (max-device-height : 739px) {
+    .slideshow-container {
+        margin-top: 25%;
+    }
+
+    /* About Page */
+    .aboutPage {
+        margin-top: -180px;
+    }
+
+    /* Landing Page */
+    .landingImage {
+        height: 700px;
+        width: 700px;
+    }
+
+    .landingText {
+        font-size: 40px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 700px;
+        height: 700px;
+    }
+
+    .cartButton {
+        right: 30%;
+        height: 120px;
+        width: 120px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 80px;
+        left: 60%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 40px;
+        padding-top: 10px;
+    }
 }
 
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  vertical-align: middle
-  margin: auto;
-  margin-top: 25%;
-  z-index: 0;
-  overflow-x: clip;
-  overflow-y: visible;
+/* Surface 540 * 720 */
+@media only screen
+and (orientation: portrait)
+and (min-device-width : 500px)
+and (max-device-width : 700px){
+    .slideshow-container {
+        margin-top: -2%;
+    }
+
+    /* About Page */
+    .aboutLogo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .aboutText {
+        font-size: 30px;
+    }
+
+    .socials {
+        margin-top: 30px;
+        top: 235px;
+        left: 300px;
+    }
+
+    /* Landing Page */
+    .landingImage {
+        height: 600px;
+        width: 600px;
+    }
+
+    .landingText {
+        font-size: 30px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
+
+    .cartButton {
+        right: 34%;
+        height: 100px;
+        width: 100px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 60px;
+        left: 60%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 30px;
+        padding-top: 10px;
+    }
+
+    .shopItem {
+        margin-top: 18%;
+    }
 }
 
-/* Hide the images by default */
-.homeSlides {
-  display: none;
-  height: 1000px;
-  width: 100%;
-  z-index: -1;
-  margin-top: 20px;
+/* For XL screens (lengthwise) */
+@media only screen
+and (orientation: portrait)
+and (min-device-height : 740px)
+and (max-device-height : 899px) {
+    .slideshow-container {
+        margin-top: 35%;
+    }
+
+    /* About Page */
+    .aboutPage {
+        margin-top: -180px;
+    }
+
+    /* Landing Page */
+    .landingImage {
+        height: 700px;
+        width: 700px;
+    }
+
+    .landingText {
+        font-size: 40px;
+    }
+
+    /* Shop Page */
+     .merchImage {
+        width: 700px;
+        height: 700px;
+    }
+
+    .cartButton {
+        right: 30%;
+        height: 120px;
+        width: 120px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 80px;
+        left: 60%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 40px;
+        padding-top: 10px;
+    }
 }
 
-.carouselImage{
-    display: block;
-    width: 50%;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
+/* Fold screens */
+@media only screen
+and (orientation: portrait)
+and (min-device-width : 280px)
+and (max-device-width: 359px){
+    .slideshow-container {
+        margin-top: 50%;
+    }
+
+    /* About Page */
+    .aboutText {
+        font-size: 52px;
+    }
+
+    .aboutPage {
+        margin-top: -370px;
+    }
+
+    /* Landing Page */
+    .landingImage {
+        height: 700px;
+        width: 700px;
+    }
+
+    .landingText {
+        font-size: 40px;
+    }
+
+
+    /* Shop Page */
+     .merchImage {
+        width: 700px;
+        height: 700px;
+    }
+
+    .merch {
+        padding-bottom: 80px;
+    }
+
+    .cartButton {
+        right: 30%;
+        height: 120px;
+        width: 120px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 80px;
+        left: 60%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 40px;
+        padding-top: 10px;
+    }
 }
 
-.aboutPage {
-    margin-top: -140px;
-    width: 95%;
+/* For tablets */
+@media only screen
+and (orientation: portrait)
+and (min-device-height : 900px)
+and (max-device-height : 1370px) {
+    #pageHeading {
+        font-size: 60px;
+    }
+
+    .slideshow-container {
+        margin-top: 10%;
+    }
+
+    /* Landing page */
+    .landingImage {
+        height: 600px;
+        width: 600px;
+    }
+
+    .landingText {
+        font-size: 30px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
+
+    .cartButton {
+        position: absolute;
+        right: 35%;
+        height: 100px;
+        width: 100px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 60px;
+        left: 60%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 40px;
+        padding-top: 10px;
+    }
+
+    .shopItem {
+        margin-top: 20%;
+    }
+
+    /* about page */
+    .aboutText {
+        font-size: 30px;
+    }
+
+    .aboutPage {
+        margin-top: -75px;
+    }
 }
 
-.aboutLogo {
-    width: 150px;
-    height: 150px;
-    margin-left: 40px;
+/* For mobile screens */
+@media only screen
+and (orientation: portrait)
+and (min-device-width : 280px) {
+
+    #pageHeading {
+        margin-top: 80px;
+        z-index: 2;
+    }
+
+    /* Slideshow container */
+    .slideshow-container {
+      max-width: 1000px;
+      position: relative;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+
+    /* Hide the images by default */
+    .homeSlides {
+      display: none;
+      height: 1000px;
+      width: 100%;
+      z-index: -1;
+      margin-top: 20px;
+    }
+
+    .carouselImage{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* About page */
+    .aboutPage {
+        width: 95%;
+    }
+
+    .aboutLogo {
+        width: 150px;
+        height: 150px;
+        margin-left: 40px;
+    }
+
+    .aboutText {
+        margin-left: 40px;
+    }
+
+    .socials{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .socialImage{
+        height: 100px;
+        width: 120px;
+        padding-left: 30px;
+    }
+
+    .landing {
+        display: block;
+    }
+
+    .landingImage {
+        display: block;;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landingText {
+        font-family: avenir-heavy;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-weight: 85;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+        text-align: center;
+        vertical-align: middle;
+        position: relative;
+        cursor: pointer;
+        margin-right: 20px;
+        right: 50%;
+    }
+
+    .dotIcon {
+        height: 35px;
+        width: 35px;
+        opacity: 40%;
+        background-color: #FFFFFF;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .dotText {
+        font-family: avenir-heavy;
+        position: relative;
+        top: 20%;
+        font-size: 18px;
+    }
+
+    .dotContainer {
+        display: flex;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+    }
+
+    .active, .dotIcon:hover {
+        opacity: 100%;
+    }
+
+    .dotIcon:active {
+    }
+
+    /* Fading animation */
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.5s;
+      animation-name: fade;
+      animation-duration: 0.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    /* Slide animation */
+    .slideInLeft {
+      animation-name: slideInLeft;
+      animation-duration: 0.5s;
+    }
+
+
+    @keyframes slideInLeft {
+      from {
+        margin-left: 100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    .slideInRight {
+      animation-name: slideInRight;
+      animation-duration: 0.5s;
+    }
+
+    @keyframes slideInRight {
+      from {
+        margin-left: -100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    /* Shop part of the carousel */
+    .merchList {
+        transition-property: transform;
+        z-index: -2;
+    }
+
+    .merch {
+      max-width: auto;
+      z-index: -2;
+    }
+
+    .merchSlider {
+        display: block;
+    }
+
+    .backgroundText h1 {
+        position: absolute;
+        margin-top: -40px;
+        font-size: 100px;
+        font-style: italic;
+        white-space: nowrap;
+        margin-left: -20px;
+        z-index: -1;
+        text-align: justify;
+        color: #FF9933;
+    }
+
+    .inactiveImage {
+        opacity: 70%;
+    }
+
+    .currentImage {
+        /*position: absolute;
+        top: 0px;
+        left: 12%;*/
+    }
+
+    .imageDescriptor {
+        display: none;
+    }
+
+    .merchImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 0;
+    }
+
+    .cartButton {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    #addButton {
+        z-index: 1;
+    }
+
+    #removeButton {
+        display: none;
+        z-index: 1;
+    }
+
+    .cartButton:hover {
+        opacity: 0.4;
+    }
+
+    .itemDescriptor {
+        display: none;
+    }
+
+    .price {
+        position: relative;
+        color: #FFFFFF;
+        font-family: avenir;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .name {
+        position: relative;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-family: avenir-roman;
+    }
 }
 
-.aboutText {
-    margin-left: 40px;
+/* ----------------------------*/
+/* For Landscape Orientation
+/*-----------------------------*/
+@media only screen
+and (orientation: landscape)
+and (min-device-height : 280px) {
+    #pageHeading {
+        position: relative;
+        right: 38%;
+        z-index: 2;
+    }
+
+    /* Slideshow container */
+    .slideshow-container {
+      position: relative;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+      margin-top: -4%;
+    }
+
+    /* Hide the images by default */
+    .homeSlides {
+      display: none;
+      height: 1000px;
+      width: 100%;
+      z-index: -1;
+      margin-top: 20px;
+    }
+
+    .carouselImage{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* About page */
+    .aboutPage {
+        width: 95%;
+    }
+
+    .socials{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+    }
+
+    .socialImage{
+        height: 80px;
+        width: 96px;
+        padding-left: 30px;
+    }
+
+    /* Landing Page */
+    .landing {
+        display: block;
+    }
+
+    .landingImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landingText {
+        font-family: avenir-heavy;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-weight: 85;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        margin-right: 20px;
+        right: 50%;
+        width: 30px;
+    }
+
+    .dotIcon {
+        height: 20px;
+        width: 20px;
+        opacity: 40%;
+        background-color: #FFFFFF;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .dotText {
+        font-family: avenir-heavy;
+        position: relative;
+        top: 25%;
+        font-size: 14px;
+    }
+
+    .dotContainer {
+        display: flex;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+    }
+
+    .active, .dotIcon:hover {
+        opacity: 100%;
+    }
+
+    .dotIcon:active {
+    }
+
+    /* Fading animation */
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.5s;
+      animation-name: fade;
+      animation-duration: 0.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    /* Slide animation */
+    .slideInLeft {
+      animation-name: slideInLeft;
+      animation-duration: 0.5s;
+    }
+
+
+    @keyframes slideInLeft {
+      from {
+        margin-left: 100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    .slideInRight {
+      animation-name: slideInRight;
+      animation-duration: 0.5s;
+    }
+
+    @keyframes slideInRight {
+      from {
+        margin-left: -100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    /* Shop part of the carousel */
+    .merchList {
+        transition-property: transform;
+        z-index: -2;
+    }
+
+    .merch {
+      max-width: auto;
+      z-index: -2;
+    }
+
+    .merchSlider {
+        display: block;
+    }
+
+    .backgroundText h1 {
+        position: absolute;
+        margin-top: -40px;
+        font-size: 100px;
+        font-style: italic;
+        white-space: nowrap;
+        margin-left: -20px;
+        z-index: -1;
+        text-align: justify;
+        color: #FF9933;
+    }
+
+    .inactiveImage {
+        opacity: 70%;
+    }
+
+    .currentImage {
+        /*position: absolute;
+        top: 0px;
+        left: 12%;*/
+    }
+
+    .imageDescriptor {
+        display: none;
+    }
+
+    .merchImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 0;
+    }
+
+    .cartButton {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    #addButton {
+        z-index: 1;
+    }
+
+    #removeButton {
+        display: none;
+        z-index: 1;
+    }
+
+    .cartButton:hover {
+        opacity: 0.4;
+    }
+
+    .itemDescriptor {
+        display: none;
+    }
+
+    .price {
+        position: relative;
+        color: #FFFFFF;
+        font-family: avenir;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .name {
+        position: relative;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-family: avenir-roman;
+    }
 }
 
-.socials{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+@media only screen
+and (orientation: landscape)
+and (min-device-height : 280px)
+and (max-device-height : 739px){
+
+    #pageHeading {
+        margin-top: 10px;
+        font-size: 40px;
+    }
+
+    .slideshow-container {
+      margin-top: -4%;
+      max-width: 1000px;
+    }
+
+
+    .landingImage {
+        height: 300px;
+        width: 300px;
+    }
+
+    .landingText {
+        font-size: 18px;
+    }
+
+    .aboutLogo {
+        display: none;
+        width: 150px;
+        height: 150px;
+    }
+
+    .aboutText {
+        font-size: 20px;
+    }
+
+    .socials {
+        margin-top: 30px;
+        top: 235px;
+        left: 300px;
+    }
+
+     .shopItem {
+        margin-top: -5%;
+    }
+
+    .aboutLogo {
+        margin-left: 40px;
+    }
+
+    .aboutText {
+        margin-left: 40px;
+    }
+
+    /* Shop Page */
+    .merchImage {
+        width: 300px;
+        height: 300px;
+    }
+
+    .price {
+        font-size: 25px;
+        left: 56.5%;
+        bottom: 120px;
+    }
+
+    .name {
+        font-size: 18px;
+        padding-top: 10px;
+    }
+
+    .cartButton {
+        right: 37%;
+        height: 80px;
+        width: 80px;
+        margin-top: -2%;
+    }
 }
 
-.socialImage{
-    height: 100px;
-    width: 120px;
-    padding-left: 30px;
+@media only screen
+and (orientation: landscape)
+and (min-device-height : 740px)
+and (max-device-height : 899px){
+    #pageHeading {
+        margin-top: 10px;
+        font-size: 40px;
+    }
+
+    .slideshow-container {
+        margin-top: 4%;
+        max-width: 1000px;
+    }
+
+    /* landing page */
+    .landingImage {
+        height: 400px;
+        width: 400px;
+    }
+
+    .landingText {
+        font-size: 22px;
+    }
+
+    /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 23%;
+        top: -9%;
+    }
+
+    .aboutText {
+        font-size: 25px;
+    }
+
+    .aboutLogo {
+        margin-left: 40px;
+    }
+
+    .aboutText {
+        margin-left: 40px;
+    }
+
+
+    .socials {
+        margin-top: 30px;
+        top: 335px;
+        left: 385px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
+
+    .shopItem {
+        margin-top: 10%;
+    }
+
+    .cartButton {
+        right: 30%;
+        height: 120px;
+        width: 120px;
+        margin-top: -2%;
+    }
 }
 
-.landing {
-    display: block;
-}
+@media only screen
+and (orientation: landscape)
+and (min-device-height : 900px)
+{
+    #pageHeading {
+        margin-top: 20px;
+        font-size: 60px;
+    }
 
-.landingImage {
-    display: block;
-    height: 700px;
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
+    .slideshow-container {
+        margin-top: 2%;
+        max-width: 1500px;
+    }
 
-.landingText {
-    font-family: avenir-heavy;
-    font-size: 40px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #FFFFFF;
-    font-weight: 85;
-}
+     /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
 
-/* The dots/bullets/indicators */
-.dot {
-    text-align: center;
-    vertical-align: middle;
-    position: relative;
-    cursor: pointer;
-    margin-right: 20px;
-    right: 50%;
-}
+    .aboutText {
+        font-size: 28px;
+    }
 
-.dotIcon {
-    height: 35px;
-    width: 35px;
-    opacity: 40%;
-    background-color: #FFFFFF;
-    border-style: solid;
-    border-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-}
+    .aboutPage {
+        margin-left: 70px;
+    }
 
-.dotText {
-    font-family: avenir-heavy;
-    position: relative;
-    top: 20%;
-    font-size: 18px;
-}
+    .socials {
+        margin-left: 23%;
+    }
 
-.dotContainer {
-    display: flex;
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-}
+    .socialImage{
+        height: 120px;
+        width: 144px;
+        padding-left: 30px;
+    }
 
-.active, .dotIcon:hover {
-    opacity: 100%;
-}
+    /* landing page */
+    .landingImage {
+        height: 600px;
+        width: 600px;
+    }
 
-.dotIcon:active {
-}
+    .landingText {
+        font-size: 37px;
+    }
 
-/* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
+    /* Shop page */
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
 
-@-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
+    .cartButton {
+        position: absolute;
+        right: 37%;
+        height: 100px;
+        width: 100px;
+        margin-top: -2%;
+    }
 
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
+    .price {
+        font-size: 60px;
+        left: 58%;
+        bottom: 300px;
+    }
 
-/* Slide animation */
-.slideInLeft {
-  animation-name: slideInLeft;
-  animation-duration: 0.5s;
-}
+    .name {
+        font-size: 40px;
+        padding-top: 10px;
+    }
 
+    .shopItem {
+        margin-top: 8%;
+    }
 
-@keyframes slideInLeft {
-  from {
-    margin-left: 100%;
-  }
-
-  to {
-    margin-left: 0%;
-  }
-}
-
-.slideInRight {
-  animation-name: slideInRight;
-  animation-duration: 0.5s;
-}
-
-@keyframes slideInRight {
-  from {
-    margin-left: -100%;
-  }
-
-  to {
-    margin-left: 0%;
-  }
-}
-
-/* Shop part of the carousel */
-.merchList {
-    transition-property: transform;
-    z-index: -2;
-}
-
-.merch {
-  max-width: auto;
-  z-index: -2;
-}
-
-.merchSlider {
-    display: block;
-}
-
-.backgroundText h1 {
-    position: absolute;
-    margin-top: -40px;
-    font-size: 100px;
-    font-style: italic;
-    white-space: nowrap;
-    margin-left: -20px;
-    z-index: -1;
-    text-align: justify;
-    color: #FF9933;
-}
-
-.inactiveImage {
-    opacity: 70%;
-}
-
-.currentImage {
-    /*position: absolute;
-    top: 0px;
-    left: 12%;*/
-}
-
-.imageDescriptor {
-    display: none;
-}
-
-.merchImage {
-    display: block;
-    width: 700px;
-    height: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 0;
-}
-
-.cartButton {
-    position: absolute;
-    right: 30%;
-    height: 120px;
-    width: 120px;
-    margin-top: -2%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 16px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-#addButton {
-    z-index: 1;
-}
-
-#removeButton {
-    display: none;
-    z-index: 1;
-}
-
-.cartButton:hover {
-    opacity: 0.4;
-}
-
-.itemDescriptor {
-    display: none;
-}
-
-.price {
-    position: relative;
-    color: #FFFFFF;
-    font-family: avenir;
-    font-weight: bold;
-    font-size: 80px;
-    left: 60%;
-    bottom: 300px;
-    z-index: 2;
-}
-
-.name {
-    position: relative;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #FFFFFF;
-    font-family: avenir-roman;
-    font-size: 40px;
-    padding-top: 10px;
-}
-
-#shopButton {
-    display: block;
-    position:relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    border-color: transparent;
-    border-style: solid;
-    border-radius: 25px;
-    background-color: #FF9933;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 16px;
-}
-
-#shopButton:hover {
-    opacity: 0.4;
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
 }
