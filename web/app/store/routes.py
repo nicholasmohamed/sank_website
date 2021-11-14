@@ -9,7 +9,7 @@ from flask import render_template, redirect, url_for, current_app, jsonify, requ
 from flask_mail import Message
 from app import db, mail
 from app.store import bp
-from app.models import SankMerch
+from app.models import SankMerch, Size
 
 logger = logging.getLogger('app_logger')
 
@@ -58,16 +58,29 @@ def update_database_items(item_list):
                 database_item.isAvailable = client_item.get('isAvailable')
                 database_item.tags = client_item.get('tags')
 
-                # add items to database
-                db.session.commit()
+                # handle size table (separate related database)
+                item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
+
+                # if there is same number in db, replace data. If not, replace everything
+                if len(item_sizes) != len(client_item.get('sizes')):
+                    for item_size in item_sizes:
+                        db.session.delete(item_size)
+                    for i, size in enumerate(client_item.get('sizes')):
+                        db.session.add(Size(id=i+1, size=size, merch_id=database_item.id))
+                else:
+                    for i, size in enumerate(client_item.get('sizes')):
+                        item_sizes[i].size = size
+
         except StopIteration:
             # create new item
             database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
-                                      imageLink=client_item.get('imageLink'),description=client_item.get('description'),
+                                      imageLink=client_item.get('imageLink'), description=client_item.get('description'),
                                       quantity=client_item.get('quantity'), isAvailable=client_item.get('isAvailable'),
                                       tags=client_item.get('tags'))
             db.session.add(database_item)
-            db.session.commit()
+
+        # add items to database
+        db.session.commit()
 
 
 # Returns all items in a usable format (python dictionary)
@@ -76,9 +89,17 @@ def parse_returned_values(items):
     item_list = []
 
     for i in range(length):
+        if i < len(items.getlist('sizes')):
+            sizes = items.getlist('sizes')[i].split(",")
+            # remove leading white-spaces
+            for x, size in enumerate(sizes):
+                sizes[x] = size.lstrip(' ')
+        else:
+            sizes = []
+
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
                 'imageLink': items.getlist('imageLink')[i], 'description': items.getlist('description')[i],
-                'quantity': items.getlist('quantity')[i],
+                'sizes': sizes, 'quantity': items.getlist('quantity')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
         # check for removal
         if i < len(items.getlist('remove')):
@@ -120,22 +141,43 @@ def create_checkout_session():
 
         # convert data to item array
         items = []
-        for item in data:
+        for item in data['cart']:
             merch = SankMerch.query.get(item['id'])
             if merch:
                 items.append(convert_database_to_cart_item(merch, item))
 
         merch_items = generate_line_items(items)
 
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=merch_items,
-            mode='payment',
-            success_url=current_app.config['YOUR_DOMAIN'],
-            cancel_url=current_app.config['YOUR_DOMAIN']
-        )
+        # Determine shipping rate 1 - Delivery MTl, 2- Delivery CAN
+        if int(data['shipping']) == 1:
+            shipping_rate = "shr_1JvpKLBUeaWrljhjmVH3xPjK"
+        elif int(data['shipping']) == 2:
+            shipping_rate = "shr_1JqkJLBUeaWrljhjNqjTaOrk"
+        else:
+            shipping_rate = ""
 
+        if shipping_rate != "":
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                shipping_rates=[shipping_rate],
+                shipping_address_collection={
+                    'allowed_countries': ['CA'],
+                },
+                line_items=merch_items,
+                mode='payment',
+                success_url=current_app.config['YOUR_DOMAIN'],
+                cancel_url=current_app.config['YOUR_DOMAIN']
+            )
+        else:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=merch_items,
+                mode='payment',
+                success_url=current_app.config['YOUR_DOMAIN'],
+                cancel_url=current_app.config['YOUR_DOMAIN']
+            )
         return jsonify({'sessionId': checkout_session['id']})
+
     except:
         # TODO handle errors
         logger.error("Unexpected error:", sys.exc_info()[0])
@@ -183,9 +225,10 @@ def webhook():
 # save into database and send customer a receipt
 def handle_order(session):
     recipient_email = session['charges']['data'][0]['billing_details']['email']
+    source_email = "info@sankchewaire.com"
     logger.info('Sending e-mail to ' + recipient_email)
     msg = Message('SankChewAir-E Order Confirmation', sender=current_app.config['MAIL_USERNAME'],
-                  recipients=[recipient_email])
+                  recipients=[recipient_email, source_email])
     msg.body = 'Thank you for your purchase! We have attached your receipt.'
     mail.send(msg)
 
@@ -207,11 +250,7 @@ def generate_line_items(items):
                     'images': [],
                 },
             },
-            'adjustable_quantity': {
-                'enabled': True,
-                'minimum': 1,
-                'maximum': 10,
-            },
+            'tax_rates': ['txr_1Jvq5HBUeaWrljhjQJmRXlTj', 'txr_1Jvq63BUeaWrljhjNOGjB1K1'],
             'quantity': item['quantity'],
         }
         line_items.append(line_item)

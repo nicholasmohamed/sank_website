@@ -25,6 +25,17 @@
             <label>Item Description:</label>
             <input type="text" name="description" value="{{items[i].description}}"></br>
 
+            <label>Available Sizes:</label>
+            <!-- Extract sizes -->
+            {% set x = [] %}
+            {% for size in items[i].sizes %}
+            <div style="display: none;">
+                {{ x.append(size.size) }}
+            </div>
+            {% endfor %}
+            {% set sizes = x|join(", ") %}
+            <input type="text" name="sizes" value="{{ sizes }}"></br>
+
             <label>Item Quantity:</label>
             <input type="text" name="quantity" value="{{items[i].quantity}}"></br>
 
@@ -39,7 +50,12 @@
         <input type = "submit" value = "Submit" />
     </form>
     <script>
-        let i = {{items[length-1].id}} + 1;
+        if (length > 0){
+            var i = {{items[length-1].id}} + 1;
+        } else {
+            var i = 0;
+        }
+
         function addItem() {
             let template = `
             <br><br>
@@ -57,6 +73,9 @@
 
             <label>Item Description:</label>
             <input type="text" name="description"></br>
+
+            <label>Available Sizes:</label>
+            <input type="text" name="sizes"></br>
 
             <label>Item Quantity:</label>
             <input type="text" name="quantity"></br>

@@ -3,6 +3,7 @@ import stripe
 from config import Config
 from app import create_app, db
 from app.models import SankMerch as Merch
+from app.models import Size as Size
 
 
 class TestConfig(Config):
@@ -39,8 +40,12 @@ class SankMerchModel(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_hashing(self):
+        sizes = [Size(id=1, size="P", merch_id="1"),
+                 Size(id=2, size="M", merch_id="1"),
+                 Size(id=3, size="L", merch_id="1")]
+
         m = Merch(id=1, name='T-Shirt', price=35, imageLink='assets/Sank_Chew_Air_E_color.svg',
-                  description='Check out Sank Tees', quantity=5, isAvailable=True, tags="new")
+                  description='Check out Sank Tees', sizes=sizes, quantity=5, isAvailable=True, tags="new")
         db.session.add(m)
         add_check = Merch.query.get(1)
         self.assertTrue(add_check == m)

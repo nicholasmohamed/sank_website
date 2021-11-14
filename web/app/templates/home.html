@@ -37,26 +37,49 @@
         <!-- Background text and shop buttons -->
         <div class="shopItem">
             <div class="addRemoveButtons">
-                <input id="addButton" class="cartButton" type="image" onclick="quickAddItem()"
+                <input id="addButton" class="cartButton" type="image" onclick="selectSize()"
                        src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
-                <input id="removeButton" class="cartButton" type="image" onclick="quickRemoveItem()"
-                       src="{{url_for('static', filename='assets/math_minus.svg')}}"/>
             </div>
             <!-- Shop carousel items -->
             <div id = "merchList">
-            {% for item in new_arrivals %}
+            {% if available_merch|length > 0 %}
+            {% for item in available_merch %}
                 <div class="merch">
+                    <!-- If image is unavailable (no quantity on hand) -->
+                    {% if item.quantity <= 0 %}
+                    <div class="soldOut">
+                    {% endif %}
                     <img src="{{url_for('static', filename=item.imageLink)}}" class="merchImage" id="itemImage">
+                    {% if item.quantity <= 0 %}
+                    </div>
+                    {% endif %}
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
                     <h2 class="name" id="itemName">{{item.name}}</h2>
                     <h2 class="price" id="itemPrice">${{item.price}}</h2>
                     <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
+                    <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
+                    <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}
+                    </h2>
+
+                    <!-- To position buttons relative to merch item, but not impact space -->
+                    <div style="position: relative; width: 0; height: 0">
+                        <div class="sizeButtonGroup" id="itemSizeButtons">
+                            <!-- Determine size buttons based on available sizes -->
+                            {% for size_object in item.sizes %}
+                            <button class="sizeButton" value={{size_object.size}} onclick="sizeButtonPressed(this.value)">{{size_object.size}}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if item.quantity <= 0 %}
+                    <h2 class="soldOutText" id="soldText">SOLD OUT</h2>
+                    {% endif %}
                 </div>
             {% endfor %}
-            </div>
+            {% endif %}
         </div>
         <!-- Start the shop carousel -->
         <script>showMerch(0);</script>
+    </div>
     </div>
 </div>
 

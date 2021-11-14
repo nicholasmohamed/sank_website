@@ -25,30 +25,38 @@ function addToCart(item) {
     var itemName = item.querySelector("#itemName").textContent;
     var itemPrice = item.querySelector("#itemPrice").textContent;
     var itemDescription = item.querySelector("#itemDescription").textContent;
+    var itemMaxQuantity = item.querySelector("#itemMaxQuantity").textContent;
     var itemImage = item.querySelector("#itemImage").src;
+    var itemSize =  item.querySelector("#itemSize").textContent;
 
-    var item = {
+    itemSize.replace("\n", "")
+    itemSize = itemSize.trim();
+
+    if (itemSize == "None") {
+        itemSize = "";
+    }
+
+    var cartItem = {
         id: itemId,
         name: itemName,
         price: itemPrice,
         description: itemDescription,
         image: itemImage,
+        size: itemSize,
         quantity: 1,
+        maxQuantity: itemMaxQuantity,
     };
 
     // add to items array
-    cartItems.push(item);
+    cartItems.push(cartItem);
 
     sessionStorage.setItem("cart", JSON.stringify(cartItems));
 
-    return item;
+    return cartItem;
 }
 
 // remove item from cart
-function removeFromCart(item) {
-    //get itemId
-    var itemId = item.querySelector("#itemId").textContent;
-
+function removeFromCart(itemId) {
     // remove from items array
     for (let i = 0, len = cartItems.length; i < len; i++) {
         if (cartItems[i].id == itemId){
@@ -69,14 +77,26 @@ function getStripePublishableKey() {
     });
 }
 
-function submitCheckout() {
+// gets shipping data then sends to checkout
+function proceedToCheckout(){
+    var shipping = document.querySelector('input[name="deliveryOption"]:checked');
+
+    console.log("Shipping value: " + shipping.value);
+
+    checkoutData = {'cart': cartItems,
+                    'shipping': shipping.value};
+
+    submitCheckout(checkoutData)
+}
+
+function submitCheckout(checkoutData) {
     getStripePublishableKey()
     fetch(domain + '/create-checkout-session', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(cartItems),
+        body: JSON.stringify(checkoutData),
     })
         .then((result) => result.json())
         .then((data) => {

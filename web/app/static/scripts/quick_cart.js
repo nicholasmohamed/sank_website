@@ -6,14 +6,49 @@ function setAssetPath (path){
     ASSETS = path;
 }
 
-// Add item to cart and change buttons
-function quickAddItem(){
-    var addButton = document.getElementById("addButton");
-    var removeButton = document.getElementById("removeButton");
+// Show buttons for sizing
+function selectSize() {
+    var index = shopCarousel.activeIndex;
+    var merch = document.getElementsByClassName("merch");
+    // Check if there are size options. If there are options, show buttons. Otherwise, add to cart
+    var size = merch[index].querySelector("#itemSize").textContent;
+    size.replace("\n", "")
+    size = size.trim();
 
+    if (size == "None") {
+        quickAddItem();
+    } else {
+        var sizeButtons = merch[index].querySelector("#itemSizeButtons");
+        sizeButtons.style.visibility = "visible";
+    }
+}
+
+function sizeButtonPressed(size) {
+    var index = shopCarousel.activeIndex;
+    var merch = document.getElementsByClassName("merch");
+
+    // Set size corresponding to button pressed
+    var sizeText = merch[index].querySelector("#itemSize");
+    sizeText.textContent = size;
+
+    // Hide the size buttons
+    var sizeButtons = merch[index].querySelector("#itemSizeButtons");
+    sizeButtons.style.visibility = "hidden";
+
+    quickAddItem();
+}
+
+// Add item to cart
+function quickAddItem(){
     //get item from merch list
     var index = shopCarousel.activeIndex;
     var merch = document.getElementsByClassName("merch");
+
+    //If there is no quantity, don't add to cart
+    var itemQuantity = merch[index].querySelector("#itemMaxQuantity").textContent;
+    if (itemQuantity <= 0) {
+        return;
+    }
 
     var item = addToCart(merch[index]);
 
@@ -29,21 +64,17 @@ function quickAddItem(){
     // Add notification dot
     setCartNotification(false);
 
-    // change button image
-    addButton.style.display = "none";
-    removeButton.style.display = "block";
+    // hide size buttons
+    var sizeButtons = merch[index].querySelector("#itemSize");
+    sizeButtons.style.visibility = "hidden";
 }
 
-// Remove item from cart and change buttons
-function quickRemoveItem(){
-    var addButton = document.getElementById("addButton");
-    var removeButton = document.getElementById("removeButton");
-
-    //get item from merch list
-    var index = shopCarousel.activeIndex;
+// Remove item from cart
+function quickRemoveItem(itemId){
     var merch = document.getElementsByClassName("merch");
 
-    removeFromCart(merch[index]);
+    // Remove item by ID
+    removeFromCart(itemId);
 
     // Update cart listing (UI)
     regenerateCartList();
@@ -53,13 +84,6 @@ function quickRemoveItem(){
 
     // Set checkout button
     setCheckoutButton();
-
-    // Add notification dot
-    setCartNotification(false);
-
-    // change button image
-    addButton.style.display = "block";
-    removeButton.style.display = "none";
 }
 
 function addToCartList(item) {
@@ -82,6 +106,60 @@ function clearCartList(){
 
     // Remove all children from tag
     cart.innerHTML = '';
+}
+
+// Opens delivery modal window on checkoutClicked
+function checkoutClicked(){
+    // Get the modal window for checkout
+    var modal = document.getElementById("checkoutModal");
+
+    modal.style.display = "block";
+
+    //Set initial modal text
+    var pickupButton = document.getElementById("pickupButton");
+    pickupButton.checked = true;
+
+    var deliveryMtlText = document.getElementById("deliveryMtlText");
+    var deliveryCanText = document.getElementById("deliveryCanText");
+    deliveryMtlText.style.display = "none";
+    deliveryCanText.style.display = "none";
+
+    // Set on click function for radio buttons
+    var radioButtonGroup = document.getElementById("deliveryOptionsGroup");
+    radioButtonGroup.addEventListener("click", onRadioButtonGroupClick);
+    radioButtonGroup.addEventListener("touchend", onRadioButtonGroupClick);
+}
+
+// Closes open shipping modal
+function closeShippingModal() {
+    var modal = document.getElementById("checkoutModal");
+    modal.style.display = "none";
+}
+
+// Changes modal text of radio button click
+function onRadioButtonGroupClick(){
+    var pickupButton = document.getElementById("pickupButton");
+    var deliveryMtlButton = document.getElementById("deliveryMtlButton");
+    var deliveryCanButton = document.getElementById("deliveryCanButton");
+
+    var pickupText = document.getElementById("pickupText");
+    var deliveryMtlText = document.getElementById("deliveryMtlText");
+    var deliveryCanText = document.getElementById("deliveryCanText");
+
+    // Based on radio button checked, change the text of the modal
+    if (pickupButton.checked == true){
+        pickupText.style.display = "block";
+        deliveryMtlText.style.display = "none";
+        deliveryCanText.style.display = "none";
+    } else if (deliveryMtlButton.checked == true){
+        pickupText.style.display = "none";
+        deliveryMtlText.style.display = "block";
+        deliveryCanText.style.display = "none";
+    } else {
+        pickupText.style.display = "none";
+        deliveryMtlText.style.display = "none";
+        deliveryCanText.style.display = "block";
+    }
 }
 
 //  Add cart notification dot in nav bar
@@ -122,6 +200,9 @@ function createCartItem(item) {
     var nameContainer = document.createElement("div");
     nameContainer.classList.add("cartName");
     // Create div for description and quantity
+    var specificInfoContainer = document.createElement("div");
+    specificInfoContainer.classList.add("cartSpecificInfo");
+    // Create div for size and description
     var descriptionContainer = document.createElement("div");
     descriptionContainer.classList.add("cartDescription");
     // Create div for quantity buttons
@@ -134,6 +215,7 @@ function createCartItem(item) {
     var priceTag = document.createElement("h4");
     var quantityTag = document.createElement("h4");
     var descriptionTag = document.createElement("h5");
+    var sizeTag = document.createElement("h5");
 
     // Add classes to elements
     imageTag.classList.add("cartItemImage");
@@ -141,6 +223,7 @@ function createCartItem(item) {
     priceTag.classList.add("cartItemPrice");
     quantityTag.classList.add("cartItemQuantity");
     descriptionTag.classList.add("cartItemDescription");
+    sizeTag.classList.add("cartItemSize");
 
     // Add text
     var name = document.createTextNode(item.name);
@@ -149,6 +232,8 @@ function createCartItem(item) {
     priceTag.appendChild(price);
     var description = document.createTextNode(item.description);
     descriptionTag.appendChild(description);
+    var size = document.createTextNode(item.size);
+    sizeTag.appendChild(size);
 
     var quantity = document.createTextNode(item.quantity);
     quantityTag.appendChild(quantity);
@@ -175,14 +260,16 @@ function createCartItem(item) {
     nameContainer.appendChild(nameTag);
     nameContainer.appendChild(priceTag);
     descriptionContainer.appendChild(descriptionTag);
+    descriptionContainer.appendChild(sizeTag);
+    specificInfoContainer.appendChild(descriptionContainer);
 
     quantityContainer.appendChild(minusButton);
     quantityContainer.appendChild(quantityTag);
     quantityContainer.appendChild(plusButton);
-    descriptionContainer.appendChild(quantityContainer);
+    specificInfoContainer.appendChild(quantityContainer);
 
     infoContainer.appendChild(nameContainer);
-    infoContainer.appendChild(descriptionContainer);
+    infoContainer.appendChild(specificInfoContainer);
     itemContainer.appendChild(imageTag);
     itemContainer.appendChild(infoContainer);
 
@@ -194,8 +281,10 @@ function createCartItem(item) {
 // Updated quantity number UI and cart
 function updateQuantityNumber(id, cartId, increment) {
     var quantity = document.getElementById(id);
+    // If user subtracts and quantity is less than one, remove from cart
     if (quantity.textContent == "1"){
         if (increment == -1){
+            quickRemoveItem(cartId);
             return;
         }
     }
@@ -205,20 +294,24 @@ function updateQuantityNumber(id, cartId, increment) {
         }
     }
 
-    // Update UI
-   quantity.textContent = parseInt(quantity.textContent) + increment;
-
    // Update cart
    for (var i = 0; i < cartItems.length; i++){
         var item = cartItems[i];
 
         if (item.id == cartId) {
-            item.quantity = quantity.textContent;
-            updateCartTotal();
-            return;
-        }
-    }
+            newQuantity = parseInt(quantity.textContent) + increment;
 
+            // make sure amount in cart is less than max quantity
+            if (newQuantity <= parseInt(item.maxQuantity)) {
+                // Update UI
+                quantity.textContent = newQuantity;
+
+                item.quantity = quantity.textContent;
+                updateCartTotal();
+                return;
+            }
+        }
+   }
     console.log("Error: cartId not found.");
 }
 
@@ -246,4 +339,51 @@ function setCheckoutButton(){
     } else {
         checkout.disabled = "";
     }
+}
+
+function addRadioButtonGroup(options){
+    // Create a container for buttons div (for styling)
+    var buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("radioButtonGroup");
+
+    for (var i = 0; i < options.length; i++){
+        var label = document.createElement("label");
+        label.classList.add("buttonLabel");
+
+        // Declare button and set type
+        var button = document.createElement("input");
+        button.type = "radio";
+        button.name = "sizeOption";
+        button.autocomplete = "off";
+        button.value = options[i];
+
+        button.classList.add("radioButton");
+
+        var textContainer = document.createElement("div");
+        textContainer.classList.add("buttonStyle");
+
+        // Round first and last buttons
+        if (i == 0){
+            textContainer.classList.add("firstButton");
+            label.classList.add("firstButton");
+            button.checked = true;
+        } else if (i == options.length - 1){
+            textContainer.classList.add("lastButton");
+            label.classList.add("lastButton");
+        }
+
+        // Set button text
+        var textTag = document.createElement("h4");
+        var text = document.createTextNode(options[i]);
+        textTag.classList.add("buttonText");
+        textTag.appendChild(text);
+        textContainer.appendChild(textTag);
+
+        // Append button to container
+        label.appendChild(button);
+        label.appendChild(textContainer);
+        buttonContainer.appendChild(label);
+    }
+
+    return buttonContainer;
 }

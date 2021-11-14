@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='sidebar.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='carousel.css')}}">
+		<link rel="stylesheet" href="{{url_for('static', filename='checkout_popup.css')}}">
     <body>
 		<header class = "nav">
 			<!-- button to search site -->
@@ -44,10 +45,45 @@
 						<h2 class="totalLabel">Subtotal: </h2>
 						<h2 id="cartTotal">$0<h2>
 					</div>
-					<button id="checkoutButton" onclick="submitCheckout()">Checkout</button>
+					<button id="checkoutButton" onclick="checkoutClicked()">Checkout</button>
 				</div>
 			</div>
 		</header>
+		<!-- Modal for showing deliver options before checkout -->
+		<div id="checkoutModal" class="checkoutModalBg">
+			<div id="deliveryOptionsWindow" class="checkoutModal">
+				<a href="javascript:void(0)" class="close" onclick="closeShippingModal()">&times;</a>
+				<h1 class="deliveryWindowHeading">Select your Method of Shipping</h1>
+				<h2 class="deliveryText" id="pickupText">{{delivery_text.pickup}}</h2>
+				<h2 class="deliveryText" id="deliveryMtlText">{{delivery_text.deliveryMtl}}</h2>
+				<h2 class="deliveryText" id="deliveryCanText">{{delivery_text.deliveryCan}}</h2>
+				<div class="radioButtonGroup" id="deliveryOptionsGroup">
+					<label class="buttonLabel firstButton">
+						<input type="radio" name="deliveryOption" id="pickupButton" autocomplete="off" value="0" class="radioButton">
+						<div class="buttonStyle firstButton">
+							<h4 class="buttonText">Pick-up</h4>
+						</div>
+					</label>
+					<label class="buttonLabel">
+						<input type="radio" name="deliveryOption" id="deliveryMtlButton" autocomplete="off" value="1" class="radioButton">
+						<div class="buttonStyle">
+							<h4 class="buttonText">Delivery (MTL)</h4>
+						</div>
+					</label>
+					<label class="buttonLabel lastButton">
+						<input type="radio" name="deliveryOption" id="deliveryCanButton" autocomplete="off" value="2" class="radioButton">
+						<div class="buttonStyle lastButton">
+							<h4 class="buttonText">Delivery (CAN)</h4>
+						</div>
+					</label>
+				</div>
+				<div id="proceedToCheckout">
+					<button onclick="proceedToCheckout()" class="proceedToCheckoutButton">
+						<img src="{{url_for('static', filename='assets/right_arrow.svg')}}" class="proceedToCheckoutIcon">
+					</button>
+				</div>
+			</div>
+		</div>
 		{% block content %}
 		{% endblock %}
     </body>

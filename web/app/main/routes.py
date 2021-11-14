@@ -21,7 +21,7 @@ def home():
 
     # query new arrivals from the shop for the shop carousel
     logger.info("Retrieving new arrivals")
-    new_arrivals = SankMerch.query.all()
+    available_merch = SankMerch.query.all()
 
     about_text = "SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, " \
                  "gaming events and workshops held through the platform of Discord.<br><br>We’re a community full of dancers," \
@@ -34,9 +34,14 @@ def home():
                {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookwhiteicon.svg'},
                {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterwhiteicon.svg'}]
     logo = 'assets/SankChewAir-E_Outline_white.svg'
+    delivery_text = {"pickup": "Pick-up your order from 1-3390 Sherbrooke Street East, Montreal, QC. H1W 1C4",
+                     "deliveryMtl": "You order will be delivered to you in Montreal at the earliest convenience "
+                                       "after it is prepared. Delivery Fee: $3.00",
+                     "deliveryCan": "You order will be delivered to you by standard shipping after it is prepared "
+                                       "Delivery Fee: $12.00"}
 
     return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], about_text=about_text,
-                           logo=logo, new_arrivals=new_arrivals, socials=socials)
+                           logo=logo, available_merch=available_merch, socials=socials, delivery_text=delivery_text)
 
 
 # about us page
