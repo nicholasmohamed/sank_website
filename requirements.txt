@@ -5,7 +5,6 @@ blinker==1.4
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
-dataclasses==0.8
 decorator==4.4.2
 Django==3.2.5
 dnspython==2.1.0
@@ -29,7 +28,6 @@ graphql-server-core==1.2.0
 graypy==2.1.0
 gunicorn==20.1.0
 idna==2.10
-importlib-metadata @ file:///C:/ci/importlib-metadata_1617877476772/work
 infinity==1.5
 intervals==0.9.1
 itsdangerous==2.0.1
@@ -57,4 +55,3 @@ Werkzeug==2.0.1
 wincertstore==0.2
 WTForms==2.3.3
 WTForms-Components==0.10.5
-zipp @ file:///tmp/build/80754af9/zipp_1615904174917/work
