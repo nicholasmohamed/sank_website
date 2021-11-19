@@ -9,7 +9,8 @@ from flask import render_template, redirect, url_for, current_app, jsonify, requ
 from flask_mail import Message
 from app import db, mail
 from app.store import bp
-from app.models import SankMerch, Size
+from app.models import SankMerch, Size, Order
+from app.models import PurchasedMerch as pm
 
 logger = logging.getLogger('app_logger')
 
@@ -146,6 +147,8 @@ def create_checkout_session():
             if merch:
                 items.append(convert_database_to_cart_item(merch, item))
 
+        # construct_order(items)
+
         merch_items = generate_line_items(items)
 
         # Determine shipping rate 1 - Delivery MTl, 2- Delivery CAN
@@ -189,8 +192,10 @@ def create_checkout_session():
 def convert_database_to_cart_item(merch, data):
     item = {}
     item['price'] = merch.price
-    item['quantity'] = data['quantity']
+    item['quantity'] = data.get('quantity')
     item['name'] = merch.name
+    item['size'] = Size.query.filter_by(merch_id=merch.id, size=data.get('size')).first()
+    item['variation'] = data.get('variation')
     # item['imageLink'] = merch.imageLink
     return item
 
@@ -255,3 +260,14 @@ def generate_line_items(items):
         }
         line_items.append(line_item)
     return line_items
+
+
+# create order object based on checkout items
+def construct_order(items):
+    order = Order(status="In Progress")
+    db.session.add(order)
+    for item in items:
+        purchased_item = pm(merch_id=item.id, size_id=item.size, order_id=order.id)
+        db.session.add(purchased_item)
+    db.session.commit()
+    return order.id
