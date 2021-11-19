@@ -19,7 +19,7 @@ class Config(object):
     SQLALCHEMY_ECHO = True
 
     # Stripe settings
-    YOUR_DOMAIN = 'http://127.0.0.1:5000'
+    YOUR_DOMAIN = 'https://sankchewaire.com'
     STRIPE_API_PUBLIC_KEY = os.environ.get('STRIPE_API_PUBLIC_KEY')
     STRIPE_API_SECRET_KEY = os.environ.get('STRIPE_API_SECRET_KEY')
     STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
