@@ -50,11 +50,12 @@
         <input type = "submit" value = "Submit" />
     </form>
     <script>
-        console.log(length)
-        if (length > 0){
-            var i = {{items[length-1].id}} + 1;
-        } else {
-            var i = 0;
+        var i = 0;
+
+        try {
+            i = {{items[length-1].id}} + 1;
+        } catch (e) {
+            i = 0;
         }
 
         function addItem() {
