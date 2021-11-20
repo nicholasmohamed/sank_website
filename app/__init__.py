@@ -2,7 +2,7 @@ from config import Config
 from datetime import datetime
 from dominate.tags import img
 import logging
-from logging.handlers import RotatingFileHandler, StreamHandler
+from logging.handlers import RotatingFileHandler
 import os
 from flask import Flask, current_app
 from flask_bootstrap import Bootstrap
