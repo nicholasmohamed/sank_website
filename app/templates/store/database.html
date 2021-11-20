@@ -8,8 +8,8 @@
     <h1>Current Merchandise</h1>
 
     <form action = "http://127.0.0.1:5000/update-database" method = "POST">
-        {% for i in range(0, length) %}
         <div id = item-container>
+        {% for i in range(0, length) %}
             <label>Item Id:</label>
             <input type="text" name="id" value="{{items[i].id}}" readonly></br>
 
@@ -44,8 +44,8 @@
 
             <label>Remove:</label>
             <input type="text" name="remove" value="false"></br>
-        </div></br></br>
         {% endfor %}
+        </div></br></br>
         <input type="button" onclick="addItem()" value="Add">
         <input type = "submit" value = "Submit" />
     </form>
