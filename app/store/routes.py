@@ -153,9 +153,9 @@ def create_checkout_session():
 
         # Determine shipping rate 1 - Delivery MTl, 2- Delivery CAN
         if int(data['shipping']) == 1:
-            shipping_rate = "shr_1JvpKLBUeaWrljhjmVH3xPjK"
+            shipping_rate = "shr_1JxiLDBUeaWrljhjds73RTxh"
         elif int(data['shipping']) == 2:
-            shipping_rate = "shr_1JqkJLBUeaWrljhjNqjTaOrk"
+            shipping_rate = "shr_1JxiLHBUeaWrljhjkZ9Tvg23"
         else:
             shipping_rate = ""
 
@@ -255,7 +255,7 @@ def generate_line_items(items):
                     'images': [],
                 },
             },
-            'tax_rates': ['txr_1Jvq5HBUeaWrljhjQJmRXlTj', 'txr_1Jvq63BUeaWrljhjNOGjB1K1'],
+            'tax_rates': ['txr_1Jxi8UBUeaWrljhj6s6z5162', 'txr_1Jxi8dBUeaWrljhj9gz8Zyhg'],
             'quantity': item['quantity'],
         }
         line_items.append(line_item)
