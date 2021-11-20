@@ -2,7 +2,7 @@ from config import Config
 from datetime import datetime
 from dominate.tags import img
 import logging
-from logging.handlers import RotatingFileHandler
+from logging.handlers import RotatingFileHandler, StreamHandler
 import os
 from flask import Flask, current_app
 from flask_bootstrap import Bootstrap
@@ -59,8 +59,10 @@ def configure_logging(app):
     if not os.path.exists('logs'):
         os.mkdir('logs')
     # set log output
-    file_handler = RotatingFileHandler('logs/' + datetime.today().strftime('%Y-%m-%d') + '_web.log',
-                                       maxBytes=10240, backupCount=10)
+    #file_handler = RotatingFileHandler('logs/' + datetime.today().strftime('%Y-%m-%d') + '_web.log',
+    #                                   maxBytes=10240, backupCount=10)
+
+    file_handler = logging.StreamHandler(sys.stderr)
     # set log format
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s '

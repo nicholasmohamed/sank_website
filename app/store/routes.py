@@ -179,6 +179,7 @@ def create_checkout_session():
                 success_url=current_app.config['YOUR_DOMAIN'],
                 cancel_url=current_app.config['YOUR_DOMAIN']
             )
+        logger.info('Checkout session created')
         return jsonify({'sessionId': checkout_session['id']})
 
     except:
