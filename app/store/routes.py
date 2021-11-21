@@ -21,7 +21,8 @@ def database():
     items = SankMerch.query.all()
     if not items:
         items = {}
-    return render_template('store/database.html', title='SankChewAir-E', items=items, length=len(items))
+    return render_template('store/database.html', title='SankChewAir-E', domain=current_app.config['YOUR_DOMAIN'],
+                           items=items)
 
 
 @bp.route('/update-database', methods=['POST', 'GET'])
@@ -62,15 +63,20 @@ def update_database_items(item_list):
                 # handle size table (separate related database)
                 item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
 
-                # if there is same number in db, replace data. If not, replace everything
-                if len(item_sizes) != len(client_item.get('sizes')):
-                    for item_size in item_sizes:
-                        db.session.delete(item_size)
-                    for i, size in enumerate(client_item.get('sizes')):
-                        db.session.add(Size(id=i+1, size=size, merch_id=database_item.id))
-                else:
-                    for i, size in enumerate(client_item.get('sizes')):
-                        item_sizes[i].size = size
+                # first check if there are changes
+                # then if there is same number in db, replace data. If not, replace everything
+                if len(client_item.get('sizes')) > 0:
+                    if client_item.get('sizes')[0] != '':
+                        if len(item_sizes) != len(client_item.get('sizes')):
+                            logger.info("Items size length: " + str(len(item_sizes)))
+                            logger.info("Client size length: " + str(len(client_item.get('sizes'))))
+                            for item_size in item_sizes:
+                                db.session.delete(item_size)
+                            for i, size in enumerate(client_item.get('sizes')):
+                                db.session.add(Size(id=i+1, size=size, merch_id=database_item.id))
+                        else:
+                            for i, size in enumerate(client_item.get('sizes')):
+                                item_sizes[i].size = size
 
         except StopIteration:
             # create new item
@@ -97,7 +103,6 @@ def parse_returned_values(items):
                 sizes[x] = size.lstrip(' ')
         else:
             sizes = []
-
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
                 'imageLink': items.getlist('imageLink')[i], 'description': items.getlist('description')[i],
                 'sizes': sizes, 'quantity': items.getlist('quantity')[i],

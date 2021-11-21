@@ -7,9 +7,9 @@
 <body>
     <h1>Current Merchandise</h1>
 
-    <form action = "https://sankchewaire.com/update-database" method = "POST">
+    <form action = "{{domain}}/update-database" method = "POST">
         <div id = item-container>
-        {% for i in range(0, length) %}
+        {% for i in range(0, items|length) %}
             <label>Item Id:</label>
             <input type="text" name="id" value="{{items[i].id}}" readonly></br>
 
@@ -51,7 +51,7 @@
     </form>
     <script>
         {% if items is defined and items|length %}
-            var i = {{items[length-1].id}} + 1;
+            var i = {{items[items|length-1].id}} + 1;
         {% else %}
             var i = 0;
         {% endif %}
