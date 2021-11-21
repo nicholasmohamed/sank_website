@@ -47,7 +47,10 @@ def update_database_items(item_list):
 
             # check if needed to delete
             if 'remove' in client_item:
+                item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
                 db.session.delete(database_item)
+                for item_size in item_sizes:
+                    db.session.delete(item_size)
                 db.session.commit()
             else:
                 # update the item with new values
