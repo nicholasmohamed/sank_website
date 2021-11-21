@@ -1,6 +1,10 @@
-var domain = 'https://sankchewaire.com';
+var domain = '';
 
 var cartItems = [];
+
+function setDomain(new_domain){
+    domain = new_domain;
+}
 
 //clear cart
 function clearCart(){

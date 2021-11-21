@@ -36,11 +36,12 @@ def home():
     logo = 'assets/SankChewAir-E_Outline_white.svg'
     delivery_text = {"pickup": "Pick-up your order from 1-3390 Sherbrooke Street East, Montreal, QC. H1W 1C4",
                      "deliveryMtl": "You order will be delivered to you in Montreal at the earliest convenience "
-                                       "after it is prepared. Delivery Fee: $3.00",
+                                    "after it is prepared. Delivery Fee: $3.00",
                      "deliveryCan": "You order will be delivered to you by standard shipping after it is prepared "
-                                       "Delivery Fee: $12.00"}
+                                    "Delivery Fee: $12.00"}
+    domain = current_app.config['YOUR_DOMAIN']
 
-    return render_template('home.html', title='SankChewAir-E', pages=current_app.config['PAGE_LIST'], about_text=about_text,
+    return render_template('home.html', title='SankChewAir-E', domain=domain, about_text=about_text,
                            logo=logo, available_merch=available_merch, socials=socials, delivery_text=delivery_text)
 
 

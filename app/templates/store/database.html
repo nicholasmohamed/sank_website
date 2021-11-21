@@ -50,8 +50,11 @@
         <input type = "submit" value = "Submit" />
     </form>
     <script>
-        var i = 0;
-
+        {% if items is defined and items|length %}
+            var i = {{items[length-1].id}} + 1;
+        } else {
+            var i = 0;
+        }
         function addItem() {
             let template = `
             <br><br>

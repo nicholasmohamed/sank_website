@@ -59,11 +59,14 @@ def configure_logging(app):
     # create folder for logs if one does not exist
     if not os.path.exists('logs'):
         os.mkdir('logs')
+    # if online, set logging to stdout
     # set log output
-    #file_handler = RotatingFileHandler('logs/' + datetime.today().strftime('%Y-%m-%d') + '_web.log',
-    #                                   maxBytes=10240, backupCount=10)
+    if 'DYNO' in os.environ:
+        file_handler = logging.StreamHandler(sys.stdout)
+    else:
+        file_handler = RotatingFileHandler('logs/' + datetime.today().strftime('%Y-%m-%d') + '_web.log',
+                                       maxBytes=10240, backupCount=10)
 
-    file_handler = logging.StreamHandler(sys.stderr)
     # set log format
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s '
