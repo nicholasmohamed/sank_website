@@ -258,7 +258,7 @@ def generate_line_items(items):
         line_item = {
             'price_data': {
                 'currency': 'cad',
-                'unit_amount': item['price'] * 100,
+                'unit_amount_decimal': item['price'] * 100,
                 'product_data': {
                     'name': item['name'],
                     'images': [],
