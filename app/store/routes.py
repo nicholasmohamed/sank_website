@@ -239,6 +239,7 @@ def webhook():
 # save into database and send customer a receipt
 def handle_order(session):
     recipient_email = session['charges']['data'][0]['billing_details']['email']
+    recipient_email = "nick.mohamed5@gmail.com"
     source_email = "info@sankchewaire.com"
     logger.info('Sending e-mail to ' + recipient_email)
     msg = Message('SankChewAir-E Order Confirmation', sender=current_app.config['MAIL_USERNAME'],
