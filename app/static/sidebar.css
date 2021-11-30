@@ -113,8 +113,8 @@ body{
     justify-content: center;
     border-color: transparent;
     border-style: solid;
-    border-radius: 20px;
-    background-color: white;
+    border-radius: 50px;
+    background-color: #d8241a;
     color: #FF9933;
 }
 
@@ -303,9 +303,14 @@ and (orientation: portrait){
         right: 7.5%;
     }
 
+    .openCartIcon {
+        width: 65px;
+        height: 65px;
+    }
+
     .cartListButton {
-        width: 80px;
-        height: 78px;
+        width: 90px;
+        height: 90px;
         margin-top: 20px;
         margin-right: 20px;
     }
@@ -403,8 +408,8 @@ and (orientation: landscape){
     }
 
     .cartListButton {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         margin-top: 50px;
         margin-right: 20px;
     }
@@ -427,8 +432,8 @@ and (max-device-width : 740px) {
     }
 
     .openCartIcon {
-        width: 55px;
-        height: 55px;
+        width: 45px;
+        height: 45px;
     }
 
     .cartListButton {

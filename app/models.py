@@ -11,7 +11,7 @@ class SankMerch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
     price = db.Column(db.Float, index=True)
-    imageLink = db.Column(db.String(256), index=True)
+    imageLink = db.relationship('Image', backref='sank_merch', lazy=True)
     description = db.Column(db.String(256), index=True)
     quantity = db.Column(db.Integer, index=True)
     isAvailable = db.Column(db.Boolean, index=True)

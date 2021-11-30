@@ -45,13 +45,13 @@
 }
 
 body {
-    background-color: #FF9933;
+    background-color: #FFFFFF;
     overflow-y: clip;
     -webkit-font-smoothing : antialiased;
 }
 
 h1 {
-    color: white;
+    color: black;
     text-align: center;
     margin-top: 0;
     font-family: avenir-heavy;
@@ -60,9 +60,9 @@ h1 {
 
 p {
     font-family: avenir-book;
-    font-size: 40px;
+    font-size: 37px;
     font-weight: 45;
-    color: white;
+    color: black;
 }
 
 /*

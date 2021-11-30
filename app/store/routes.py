@@ -9,10 +9,12 @@ from flask import render_template, redirect, url_for, current_app, jsonify, requ
 from flask_mail import Message
 from app import db, mail
 from app.store import bp
-from app.models import SankMerch, Size, Order
+from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
 
 logger = logging.getLogger('app_logger')
+
+pending_orders = {}
 
 
 # TODO adding and removing items from database
@@ -58,21 +60,25 @@ def update_database_items(item_list):
                 database_item.name = client_item.get('name')
                 database_item.price = client_item.get('price')
                 database_item.description = client_item.get('description')
-                database_item.imageLink = client_item.get('imageLink')
                 database_item.quantity = client_item.get('quantity')
                 database_item.isAvailable = client_item.get('isAvailable')
                 database_item.tags = client_item.get('tags')
 
+                # handle image table (separate related database)
+                item_images = Image.query.filter_by(merch_id=database_item.id).all()
+
                 # handle size table (separate related database)
                 item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
 
+                update_related_table('sizes', item_sizes, client_item, database_item)
+
+                update_related_table('imageLink', item_images, client_item, database_item)
                 # first check if there are changes
                 # then if there is same number in db, replace data. If not, replace everything
+                '''
                 if len(client_item.get('sizes')) > 0:
                     if client_item.get('sizes')[0] != '':
                         if len(item_sizes) != len(client_item.get('sizes')):
-                            logger.info("Items size length: " + str(len(item_sizes)))
-                            logger.info("Client size length: " + str(len(client_item.get('sizes'))))
                             for item_size in item_sizes:
                                 db.session.delete(item_size)
                             for i, size in enumerate(client_item.get('sizes')):
@@ -80,25 +86,55 @@ def update_database_items(item_list):
                         else:
                             for i, size in enumerate(client_item.get('sizes')):
                                 item_sizes[i].size = size
+                '''
 
         except StopIteration:
             # create new item
             database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
-                                      imageLink=client_item.get('imageLink'), description=client_item.get('description'),
-                                      quantity=client_item.get('quantity'), isAvailable=client_item.get('isAvailable'),
-                                      tags=client_item.get('tags'))
+                                      description=client_item.get('description'), quantity=client_item.get('quantity'),
+                                      isAvailable=client_item.get('isAvailable'), tags=client_item.get('tags'))
             db.session.add(database_item)
 
         # add items to database
         db.session.commit()
 
+        logger.info("Database updated.")
+
+
+# updates related array table for sank_merch
+def update_related_table(table_name, item_properties, client_item, database_item):
+    # first check if there are changes
+    # then if there is same number in db, replace data. If not, replace everything
+    if len(client_item.get(table_name)) > 0:
+        if client_item.get(table_name)[0] != '':
+            if len(item_properties) != len(client_item.get(table_name)):
+                logger.info("Rewriting all " + table_name + " for merch_id: " + database_item.id)
+                for item_property in item_properties:
+                    db.session.delete(item_property)
+                for i, property in enumerate(client_item.get(table_name)):
+                    if table_name == "sizes":
+                        db.session.add(Size(id=i + 1, size=property, merch_id=database_item.id))
+                    elif table_name == "imageLink":
+                        db.session.add(Image(id=i + 1, imageLink=property, merch_id=database_item.id))
+            else:
+                logger.info("Changing existing " + table_name + " for merch_id: " + database_item.id)
+                for i, property in enumerate(client_item.get(table_name)):
+                    if table_name == "sizes":
+                        item_properties[i].size = property
+                    elif table_name == "imageLink":
+                        item_properties[i].imageLink = property
+
 
 # Returns all items in a usable format (python dictionary)
 def parse_returned_values(items):
+    logger.info("Parsing values.")
     length = len(items.getlist('id'))
     item_list = []
 
     for i in range(length):
+        sizes = parse_returned_array_property(items, 'sizes', i)
+        images = parse_returned_array_property(items, 'imageLink', i)
+        '''
         if i < len(items.getlist('sizes')):
             sizes = items.getlist('sizes')[i].split(",")
             # remove leading white-spaces
@@ -106,8 +142,9 @@ def parse_returned_values(items):
                 sizes[x] = size.lstrip(' ')
         else:
             sizes = []
+        '''
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
-                'imageLink': items.getlist('imageLink')[i], 'description': items.getlist('description')[i],
+                'imageLink': images, 'description': items.getlist('description')[i],
                 'sizes': sizes, 'quantity': items.getlist('quantity')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
         # check for removal
@@ -117,6 +154,20 @@ def parse_returned_values(items):
 
         item_list.append(item)
     return item_list
+
+
+# parse array property
+def parse_returned_array_property(items, item_name, index):
+    logger.info(len(items.getlist(item_name)))
+    if index < len(items.getlist(item_name)):
+        properties = items.getlist(item_name)[index].split(",")
+        # remove leading white-spaces
+        for x, property in enumerate(properties):
+            properties[x] = property.lstrip(' ')
+    else:
+        properties = []
+
+    return properties
 
 
 # store page
@@ -155,8 +206,6 @@ def create_checkout_session():
             if merch:
                 items.append(convert_database_to_cart_item(merch, item))
 
-        # construct_order(items)
-
         merch_items = generate_line_items(items)
 
         # Determine shipping rate 1 - Delivery MTl, 2- Delivery CAN
@@ -188,6 +237,8 @@ def create_checkout_session():
                 cancel_url=current_app.config['YOUR_DOMAIN']
             )
         logger.info('Checkout session created')
+
+        pending_orders[checkout_session['payment_intent']] = {"line_items": items}
         return jsonify({'sessionId': checkout_session['id']})
 
     except:
@@ -237,14 +288,23 @@ def webhook():
 
 
 # save into database and send customer a receipt
-def handle_order(session):
-    recipient_email = session['charges']['data'][0]['billing_details']['email']
-    recipient_email = "nick.mohamed5@gmail.com"
+def handle_order(payment_intent):
+    recipient_email = payment_intent['charges']['data'][0]['billing_details']['email']
     source_email = "info@sankchewaire.com"
+
+    # get line items
+    items = pending_orders[payment_intent['id']]['line_items']
+
+    # format string for list of items
+    item_string = "\n"
+    for line_item in items:
+        item_string += "\n" + str(line_item['name']) + "\t\t" + str(line_item['price']) + "\n"
+
+    # send e-mail
     logger.info('Sending e-mail to ' + recipient_email)
     msg = Message('SankChewAir-E Order Confirmation', sender=current_app.config['MAIL_USERNAME'],
                   recipients=[recipient_email, source_email])
-    msg.body = 'Thank you for your purchase! We have attached your receipt.'
+    msg.body = 'Thank you for your purchase! We have attached your receipt.' + item_string
     mail.send(msg)
 
 

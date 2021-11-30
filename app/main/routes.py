@@ -1,7 +1,7 @@
 import logging
 
 # Flask imports
-from flask import render_template, redirect, url_for, current_app
+from flask import render_template, redirect, url_for, current_app, request
 from flask_mail import Message
 from app.main import bp
 from app.models import SankMerch
@@ -23,17 +23,17 @@ def home():
     logger.info("Retrieving new arrivals")
     available_merch = SankMerch.query.all()
 
-    about_text = "SankChewAir-E is an online community center that promotes hip-hop culture through dance classes, " \
+    about_text = "<b>SankChewAir-E</b> is an online community center that promotes hip-hop culture through dance classes, " \
                  "gaming events and workshops held through the platform of Discord.<br><br>We’re a community full of dancers," \
                  " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
                  "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday, " \
                  "Friday and Sunday.<br><br><br>Contact us<br>info@sankchewaire.com"
-    socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordwhiteicon.svg'},
-               {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubewhiteicon.svg'},
-               {'link': 'https://www.instagram.com/sankchewaire_/', 'logo': 'assets/instagramwhiteicon.svg'},
-               {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookwhiteicon.svg'},
-               {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterwhiteicon.svg'}]
-    logo = 'assets/SankChewAir-E_Outline_white.svg'
+    socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
+               {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
+               {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
+               {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
+               {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterIcon.svg'}]
+    logo = 'assets/Sank_Chew_Air_E_color_logo.svg'
     delivery_text = {"pickup": "Pick-up your order from 1-3390 Sherbrooke Street East, Montreal, QC. H1W 1C4",
                      "deliveryMtl": "You order will be delivered to you in Montreal at the earliest convenience "
                                     "after it is prepared. Delivery Fee: $3.00",
@@ -41,7 +41,17 @@ def home():
                                     "Delivery Fee: $12.00"}
     domain = current_app.config['YOUR_DOMAIN']
 
-    return render_template('home.html', title='SankChewAir-E', domain=domain, about_text=about_text,
+    # determine which version of site to use: mobile or desktop
+    user_agent = request.headers.get('User-Agent')
+    user_agent = user_agent.lower()
+    if "iphone" in user_agent:
+        webpage = 'mobile_home.html'
+    elif "android" in user_agent:
+        webpage = "mobile_home.html"
+    else:
+        webpage = 'home.html'
+
+    return render_template(webpage, title='SankChewAir-E', domain=domain, about_text=about_text,
                            logo=logo, available_merch=available_merch, socials=socials, delivery_text=delivery_text)
 
 

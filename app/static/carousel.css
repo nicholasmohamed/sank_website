@@ -37,6 +37,10 @@
     width: 80px;
 }
 
+.carouselText {
+    color: black;
+}
+
 /* For regular mobile screens*/
 @media only screen
 and (orientation: portrait)
@@ -388,9 +392,13 @@ and (min-device-width : 280px) {
     }
 
     .aboutLogo {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
         margin-left: 40px;
+        padding-left: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
     }
 
     .aboutText {
@@ -402,6 +410,7 @@ and (min-device-width : 280px) {
         justify-content: center;
         align-items: center;
         margin-top: 30px;
+        gap: 20px;
     }
 
     .socialImage{
@@ -425,7 +434,6 @@ and (min-device-width : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-weight: 85;
     }
 
@@ -443,7 +451,7 @@ and (min-device-width : 280px) {
         height: 35px;
         width: 35px;
         opacity: 40%;
-        background-color: #FFFFFF;
+        background-color: #000000;
         border-style: solid;
         border-color: transparent;
         border-radius: 50%;
@@ -620,7 +628,6 @@ and (min-device-width : 280px) {
 
     .price {
         position: relative;
-        color: #FFFFFF;
         font-family: avenir;
         font-weight: bold;
         z-index: 2;
@@ -631,7 +638,6 @@ and (min-device-width : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-family: avenir-roman;
     }
 }
@@ -709,7 +715,6 @@ and (min-device-height : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-weight: 85;
     }
 
@@ -729,7 +734,7 @@ and (min-device-height : 280px) {
         height: 20px;
         width: 20px;
         opacity: 40%;
-        background-color: #FFFFFF;
+        background-color: #000000;
         border-style: solid;
         border-color: transparent;
         border-radius: 50%;

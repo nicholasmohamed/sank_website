@@ -19,8 +19,15 @@
             <label>Item Price:</label>
             <input type="text" name="price" value="{{items[i].price}}"></br>
 
-            <label>Item Image Source:</label>
-            <input type="text" name="imageLink" value="{{items[i].imageLink}}"></br>
+            <label>Item Image Sources:</label>
+            {% set y = [] %}
+            {% for image in items[i].imageLink %}
+            <div style="display: none;">
+                {{ y.append(image.imageLink) }}
+            </div>
+            {% endfor %}
+            {% set images = y|join(", ") %}
+            <input type="text" name="imageLink" value="{{ images }}"></br>
 
             <label>Item Description:</label>
             <input type="text" name="description" value="{{items[i].description}}"></br>
