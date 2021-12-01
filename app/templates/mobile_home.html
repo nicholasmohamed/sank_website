@@ -30,7 +30,7 @@
     <div class="homeSlides fade">
         <div class = landing>
             <img src="{{url_for('static', filename=logo)}}" class="landingImage">
-            <h2 class="landingText carouselText">Be happy. Have fun. Get Good.</h2>
+            <h2 class="landingText carouselText">{{ landingText }}</h2>
         </div>
     </div>
     <!-- Shop page -->
@@ -50,12 +50,12 @@
                     {% if item.quantity <= 0 %}
                     <div class="soldOut">
                     {% endif %}
-                    <img src="{{url_for('static', filename=item.imageLink[0])}}" class="merchImage" id="itemImage">
+                    <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
                     {% if item.quantity <= 0 %}
                     </div>
                     {% endif %}
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
-                    <h2 class="name carouselText" id="itemName">{{item.name}} - ${{item.price}}</h2>
+                    <h2 class="name carouselText" id="itemName">{{item.name}} - <b>${{item.price}}</b></h2>
                     <h2 class="itemDescriptor price" id="itemPrice">${{item.price}}</h2>
                     <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
                     <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>

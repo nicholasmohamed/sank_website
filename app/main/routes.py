@@ -34,6 +34,7 @@ def home():
                {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
                {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterIcon.svg'}]
     logo = 'assets/Sank_Chew_Air_E_color_logo.svg'
+    landing_text = "\"Be happy. Have fun. Get Good.\""
     delivery_text = {"pickup": "Pick-up your order from 1-3390 Sherbrooke Street East, Montreal, QC. H1W 1C4",
                      "deliveryMtl": "You order will be delivered to you in Montreal at the earliest convenience "
                                     "after it is prepared. Delivery Fee: $3.00",
@@ -52,7 +53,8 @@ def home():
         webpage = 'home.html'
 
     return render_template(webpage, title='SankChewAir-E', domain=domain, about_text=about_text,
-                           logo=logo, available_merch=available_merch, socials=socials, delivery_text=delivery_text)
+                           logo=logo, available_merch=available_merch, socials=socials,
+                           landing_text=landing_text, delivery_text=delivery_text)
 
 
 # about us page

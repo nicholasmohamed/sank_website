@@ -41,6 +41,14 @@
     color: black;
 }
 
+#pageHeading {
+    font-family: subway-berlin-sc;
+}
+
+.landingText {
+    font-family: subway-berlin-sc;
+}
+
 /* For regular mobile screens*/
 @media only screen
 and (orientation: portrait)
@@ -48,12 +56,16 @@ and (min-device-width : 360px)
 and (max-device-width : 499px)
 and (max-device-height : 739px) {
     .slideshow-container {
-        margin-top: 25%;
+        margin-top: 10%;
     }
 
     /* About Page */
     .aboutPage {
-        margin-top: -180px;
+        margin-top: -80px;
+    }
+
+    .aboutText {
+        font-size: 33px;
     }
 
     /* Landing Page */
@@ -63,7 +75,7 @@ and (max-device-height : 739px) {
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
     /* Shop page */
@@ -128,7 +140,7 @@ and (max-device-width : 700px){
     }
 
     .landingText {
-        font-size: 30px;
+        font-size: 47px;
     }
 
     /* Shop page */
@@ -171,7 +183,7 @@ and (orientation: portrait)
 and (min-device-height : 740px)
 and (max-device-height : 899px) {
     .slideshow-container {
-        margin-top: 35%;
+        margin-top: 22%;
     }
 
     /* About Page */
@@ -186,7 +198,7 @@ and (max-device-height : 899px) {
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
     /* Shop Page */
@@ -225,26 +237,26 @@ and (orientation: portrait)
 and (min-device-width : 280px)
 and (max-device-width: 359px){
     .slideshow-container {
-        margin-top: 50%;
+        margin-top: 40%;
     }
 
     /* About Page */
     .aboutText {
-        font-size: 52px;
+        font-size: 47px;
     }
 
     .aboutPage {
-        margin-top: -370px;
+        margin-top: -320px;
     }
 
     /* Landing Page */
     .landingImage {
-        height: 700px;
-        width: 700px;
+        height: 650px;
+        width: 650px;
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
 
@@ -302,7 +314,7 @@ and (max-device-height : 1370px) {
     }
 
     .landingText {
-        font-size: 30px;
+        font-size: 47px;
     }
 
     /* Shop page */
@@ -430,7 +442,6 @@ and (min-device-width : 280px) {
     }
 
     .landingText {
-        font-family: avenir-heavy;
         text-align: center;
         justify-content: center;
         align-items: center;
@@ -711,7 +722,6 @@ and (min-device-height : 280px) {
     }
 
     .landingText {
-        font-family: avenir-heavy;
         text-align: center;
         justify-content: center;
         align-items: center;
@@ -948,7 +958,7 @@ and (max-device-height : 739px){
     }
 
     .landingText {
-        font-size: 18px;
+        font-size: 35px;
     }
 
     .aboutLogo {
@@ -1030,7 +1040,7 @@ and (max-device-height : 899px){
     }
 
     .landingText {
-        font-size: 22px;
+        font-size: 39px;
     }
 
     /* about page */
@@ -1138,7 +1148,7 @@ and (min-device-height : 900px)
     }
 
     .landingText {
-        font-size: 37px;
+        font-size: 54px;
     }
 
     /* Shop page */

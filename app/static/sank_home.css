@@ -43,6 +43,10 @@
     font-family: avenir-book;
     src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Book.otf') format('opentype');
 }
+@font-face {
+    font-family: subway-berlin-sc;
+    src: url('/static/fonts/Subway_Berlin_SC/Subway_Berlin_SC.ttf') format('truetype');
+}
 
 body {
     background-color: #FFFFFF;
