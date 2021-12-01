@@ -35,15 +35,16 @@ document.addEventListener('touchmove', handleTouchEnd, false);
 
 var xDown = null;
 var yDown = null;
+
 function handleDragStart(evt) {
   xDown = evt.clientX;
   yDown = evt.clientY;
-};
+}
 
 function handleTouchStart(evt) {
   xDown = evt.touches[0].clientX;
   yDown = evt.touches[0].clientY;
-};
+}
 
 function handleTouchEnd(evt) {
   handleEnd(evt.touches[0].clientX, evt.touches[0].clientY);
@@ -54,7 +55,7 @@ function handleDragEnd(evt) {
 }
 
 function handleEnd(xUp, yUp) {
-  if (screen.orientation.type == "landscape-primary"){
+  if (getScreenOrientation() == "landscape-primary"){
     var xThreshold = 10;
     var yThreshold = 10;
   } else {
@@ -75,4 +76,16 @@ function handleEnd(xUp, yUp) {
   else if ( yDiff < -yThreshold ) yResult(-1);
   xDown = null;
   yDown = null;
-};
+}
+
+// If using safari, detects portrait/landscape based off height and width
+function getScreenOrientation(){
+    try {
+        return screen.orientation.type;
+    } catch (e){
+        if (window.innerHeight > window.innerWidth)
+            return "portrait-primary";
+        else
+            return "landscape-primary";
+    }
+}
