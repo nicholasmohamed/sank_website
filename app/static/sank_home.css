@@ -48,10 +48,18 @@
     src: url('/static/fonts/Subway_Berlin_SC/Subway_Berlin_SC.ttf') format('truetype');
 }
 
+html {
+  position: fixed;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
     background-color: #FFFFFF;
     overflow-y: clip;
     -webkit-font-smoothing : antialiased;
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 h1 {
@@ -94,5 +102,6 @@ a img {
     border: 0px none transparent;
 }
 
-
+footer {
+}
 
