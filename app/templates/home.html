@@ -50,7 +50,11 @@
                     {% if item.quantity <= 0 %}
                     <div class="soldOut">
                     {% endif %}
-                    <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
+                    {% if item.imageLink is defined and item.imageLink|length %}
+                        <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
+                    {% else %}
+                        <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}" class="merchImage" id="itemImage">
+                    {% endif %}
                     {% if item.quantity <= 0 %}
                     </div>
                     {% endif %}
