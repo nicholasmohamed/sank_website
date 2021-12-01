@@ -42,8 +42,7 @@ function addToCart(item) {
     }
 
     // Extract item name
-    itemName = itemName.split("-")[0].trim()
-
+    itemName = itemName.split(/\u2013/g)[0].trim()
 
     var cartItem = {
         id: itemId,

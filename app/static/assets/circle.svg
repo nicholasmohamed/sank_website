@@ -9,5 +9,5 @@
       <feBlend in="SourceGraphic" in2="offOut" mode="normal" />
    </filter>
   </defs>
-  <circle cx="50%" cy="50%" r="12" stroke="#bd84cf" fill="#bd84cf" stroke-width="5"/>
+  <circle cx="50%" cy="50%" r="12" stroke="#60e10e" fill="#60e10e" stroke-width="5"/>
 </svg>

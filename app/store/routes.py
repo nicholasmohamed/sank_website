@@ -73,20 +73,6 @@ def update_database_items(item_list):
                 update_related_table('sizes', item_sizes, client_item, database_item)
 
                 update_related_table('imageLink', item_images, client_item, database_item)
-                # first check if there are changes
-                # then if there is same number in db, replace data. If not, replace everything
-                '''
-                if len(client_item.get('sizes')) > 0:
-                    if client_item.get('sizes')[0] != '':
-                        if len(item_sizes) != len(client_item.get('sizes')):
-                            for item_size in item_sizes:
-                                db.session.delete(item_size)
-                            for i, size in enumerate(client_item.get('sizes')):
-                                db.session.add(Size(id=i+1, size=size, merch_id=database_item.id))
-                        else:
-                            for i, size in enumerate(client_item.get('sizes')):
-                                item_sizes[i].size = size
-                '''
 
         except StopIteration:
             # create new item
@@ -134,15 +120,7 @@ def parse_returned_values(items):
     for i in range(length):
         sizes = parse_returned_array_property(items, 'sizes', i)
         images = parse_returned_array_property(items, 'imageLink', i)
-        '''
-        if i < len(items.getlist('sizes')):
-            sizes = items.getlist('sizes')[i].split(",")
-            # remove leading white-spaces
-            for x, size in enumerate(sizes):
-                sizes[x] = size.lstrip(' ')
-        else:
-            sizes = []
-        '''
+
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
                 'imageLink': images, 'description': items.getlist('description')[i],
                 'sizes': sizes, 'quantity': items.getlist('quantity')[i],

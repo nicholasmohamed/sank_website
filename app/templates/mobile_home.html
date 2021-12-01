@@ -59,8 +59,8 @@
                     </div>
                     {% endif %}
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
-                    <h2 class="name carouselText" id="itemName">{{item.name}} - <b>${{item.price}}</b></h2>
-                    <h2 class="itemDescriptor price" id="itemPrice">${{item.price}}</h2>
+                    <h2 class="name carouselText" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
+                    <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
                     <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
                     <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
                     <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}

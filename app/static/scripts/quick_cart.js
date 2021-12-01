@@ -327,7 +327,7 @@ function updateCartTotal() {
     }
 
     var totalText = document.getElementById("cartTotal");
-    totalText.textContent = "$" + total;
+    totalText.textContent = "$" + total.toFixed(2);
 }
 
 // Disables checkout button if no items in cart
