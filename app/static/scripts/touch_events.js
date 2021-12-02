@@ -47,21 +47,24 @@ function handleTouchStart(evt) {
 }
 
 function handleTouchEnd(evt) {
-  handleEnd(evt.touches[0].clientX, evt.touches[0].clientY);
+    if (getScreenOrientation() == "landscape-primary"){
+        var xThreshold = 10;
+        var yThreshold = 10;
+    } else {
+        var xThreshold = 20;
+        var yThreshold = 20;
+    }
+  handleEnd(evt.touches[0].clientX, evt.touches[0].clientY, xThreshold, yThreshold);
 }
 
 function handleDragEnd(evt) {
-  handleEnd(evt.clientX, evt.clientY);
+    var xThreshold = 30;
+    var yThreshold = 20;
+
+    handleEnd(evt.clientX, evt.clientY, xThreshold, yThreshold);
 }
 
-function handleEnd(xUp, yUp) {
-  if (getScreenOrientation() == "landscape-primary"){
-    var xThreshold = 10;
-    var yThreshold = 10;
-  } else {
-    var xThreshold = 20;
-    var yThreshold = 20;
-  }
+function handleEnd(xUp, yUp, xThreshold, yThreshold) {
 
   // If there is no ending x
   if ( !xDown ) { return; }

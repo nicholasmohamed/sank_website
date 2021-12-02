@@ -23,11 +23,13 @@ def home():
     logger.info("Retrieving new arrivals")
     available_merch = SankMerch.query.all()
 
-    about_text = "<b>SankChewAir-E</b> is an online community center that promotes hip-hop culture through dance classes, " \
-                 "gaming events and workshops held through the platform of Discord.<br><br>We’re a community full of dancers," \
+    about_text = "<b>SankChewAir-E</b> is an organization that is focused on creating and maintaining a community of artists " \
+                 "from all social backgrounds to spread hip-hop culture through teaching, events and activities including dance," \
+                 " video games and music.<br><br>We’re a community full of dancers," \
                  " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
-                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. We live stream every Tuesday, " \
-                 "Friday and Sunday.<br><br><br>Contact us<br>info@sankchewaire.com"
+                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. Join our discord and " \
+                 "connect with us on any or all of the social platforms listed below!" \
+                 "<br><br><br>Contact us<br>info@sankchewaire.com"
     socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
                {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
                {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
@@ -46,14 +48,17 @@ def home():
     user_agent = user_agent.lower()
     if "iphone" in user_agent:
         webpage = 'mobile_home.html'
+        sidebar_width = '700px'
     elif "android" in user_agent:
         webpage = "mobile_home.html"
+        sidebar_width = '700px'
     else:
         webpage = 'home.html'
+        sidebar_width = '450px'
 
     return render_template(webpage, title='SankChewAir-E', domain=domain, about_text=about_text,
                            logo=logo, available_merch=available_merch, socials=socials,
-                           delivery_text=delivery_text)
+                           delivery_text=delivery_text, sidebar_width=sidebar_width)
 
 
 # about us page

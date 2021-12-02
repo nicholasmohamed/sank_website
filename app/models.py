@@ -24,7 +24,7 @@ class SankMerch(db.Model):
 
 
 class Size(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     size = db.Column(db.String(256), index=True)
     merch_id = db.Column(db.Integer, db.ForeignKey('sank_merch.id'), nullable=False)
 
@@ -38,7 +38,7 @@ class Variation(db.Model):
 
 
 class Image(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     imageLink = db.Column(db.String(256), index=True)
     merch_id = db.Column(db.Integer, db.ForeignKey('sank_merch.id'), nullable=False)
 

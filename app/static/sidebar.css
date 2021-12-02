@@ -51,7 +51,7 @@ body{
 }
 
 /* When you mouse over the navigation links, change their color */
-.sidebar a:hover {
+.sidebar:hover, .closebtn:hover {
   color: #f1f1f1;
 }
 
@@ -60,14 +60,16 @@ body{
 }
 
 /* Position and style the close button (top right corner) */
-.sidebar .closebtn {
+.closebtn {
   position: absolute;
   top: 0;
-  left: -15px;
+  left: -13px;
   font-size: 80px;
   width: 110px;
   height: 110px;
-  color: #FF9933
+  color: #FF9933;
+  background: transparent;
+  border-color: transparent;
 }
 
 /* The button used to open the sidebar */
@@ -118,6 +120,7 @@ body{
     border-radius: 50px;
     background-color: #d8241a;
     color: #FF9933;
+    position: absolute;
 }
 
 .cartListButton button {
@@ -143,11 +146,20 @@ body{
 
 /* Styling for cart items list */
 .cartListContainer {
-    margin-top: 70px;
+    margin-top: 30px;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
     overflow-y: scroll;
+}
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 1224px)
+and (min-device-height : 600px){
+    .cartListContainer {
+        height: 63%;
+    }
 }
 
 .cartItem {
@@ -250,6 +262,8 @@ body{
 .checkoutBox {
     position: absolute;
     bottom: 40px;
+    width: 100%;
+    left: 10%;
 }
 
 .totalLine {
@@ -301,8 +315,8 @@ and (orientation: portrait){
     #newNotificationCircle {
         width: 40px;
         height: 40px;
-        top: 50%;
-        right: 7%;
+        top: 0%;
+        right: 55%;
     }
 
     .openCartIcon {
@@ -430,8 +444,8 @@ and (max-device-width : 740px) {
     #newNotificationCircle {
         width: 30px;
         height: 30px;
-        top: 50%;
-        right: 5%;
+        top: -3%;
+        right: 50%;
     }
 
     .openCartIcon {
@@ -627,5 +641,118 @@ and (min-device-width : 740px) {
         height: 100px;
         margin-right: 100px;
         font-size: 40px;
+    }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-device-width : 1224px)
+and (min-device-height : 600px) {
+    body {
+        margin-top: -12px;
+    }
+
+    .openCartIcon {
+        width: 65px;
+        height: 65px;
+    }
+
+    #newNotificationCircle {
+        width: 30px;
+        height: 30px;
+        top: 0%;
+        right: 60%;
+    }
+
+    .cartListButton {
+        width: 80px;
+        height: 78px;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .cartItem {
+        height: 130px;
+        width: 100%;
+    }
+
+    .cartItem img {
+        height: 100px;
+        width: 100px;
+        margin-left: 20px;
+    }
+
+    /* cartInfo contains cartName and cartQuantity */
+    .cartInfo {
+        width: 430;
+        margin-left: 20px;
+    }
+
+    /* cartName contains cartItemName and cartItemPrice */
+    .cartName {
+        width: 100%;
+        height: 50%;
+    }
+
+    .cartItemName {
+        font-size: 30px;
+    }
+
+    .cartItemPrice {
+        font-size: 30px;
+    }
+
+    /* cartSpecificInfo contains cartItemDescription and cartQuantity */
+    .cartSpecificInfo{
+        width: 100%;
+        height: 50%;
+        font-size: 30px;
+    }
+
+    .cartItemDescription {
+        font-size: 15px;
+        margin-top: -15px;
+        margin-left: 10px;
+    }
+
+    .cartItemSize {
+        margin-top: -30px;
+        font-size: 25px;
+    }
+
+    .cartQuantity input {
+        height: 25px;
+        width: 25px;
+    }
+
+    .cartItemQuantity {
+        margin-top: -5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+    }
+
+    #checkoutButton {
+        display: block;
+        width: 80%;
+        height: 60px;
+        margin-right: auto;
+        margin-left: auto;
+        font-size: 30px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+    }
+
+    #checkoutButton {
+        width: 80%;
+        height: 55px;
+        margin-left: 0px;
+        font-size: 23px;
+        display: block;
     }
 }

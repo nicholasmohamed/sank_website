@@ -10,13 +10,13 @@
 
 .sizeButton {
     background-color: #FFFFFF;
-    color: #FF9933;
-    border-color:  #FF9933;
+    color: #d8241a;
+    border-color:  #d8241a;
 }
 
 .sizeButton:hover,
 .sizeButton:focus {
-    background-color: #FF9933;
+    background-color: #d8241a;
     color: #FFFFFF;
 }
 
@@ -914,7 +914,6 @@ and (min-device-height : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-family: avenir-roman;
     }
 
@@ -1190,3 +1189,95 @@ and (min-device-height : 900px)
         left: 865px;
     }
 }
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 1224px)
+and (min-device-height : 600px)
+{
+    #pageHeading {
+        margin-top: 20px;
+        font-size: 60px;
+    }
+
+    .slideshow-container {
+        margin-top: 2%;
+        max-width: 1500px;
+    }
+
+     /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+
+    .aboutText {
+        font-size: 28px;
+    }
+
+    .aboutPage {
+        margin-left: 0px;
+    }
+
+    .socials {
+        margin-left: 23%;
+        bottom: 36%;
+    }
+
+    .socialImage{
+        height: 120px;
+        width: 144px;
+        padding-left: 30px;
+    }
+
+    /* landing page */
+    .landingImage {
+        height: 600px;
+        width: 600px;
+    }
+
+    .landingText {
+        font-size: 54px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 400px;
+        height: 400px;
+    }
+
+    .cartButton {
+        position: absolute;
+        right: 37%;
+        height: 100px;
+        width: 100px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 60px;
+        left: 58%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 30px;
+        padding-top: 10px;
+    }
+
+    .shopItem {
+        margin-top: 8%;
+    }
+
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
+
+    .sizeButtonGroup {
+        top: -770px;
+        left: 865px;
+    }
+}
+

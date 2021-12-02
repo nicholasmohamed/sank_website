@@ -239,10 +239,32 @@ and (max-device-height : 899px)
 @media only screen
 and (orientation: landscape)
 and (min-device-height : 900px)
+and (max-device-width : 1224px)
 {
     .checkoutModal {
         width: 70%;
         height: 72%;
         margin-top: 10%;
+    }
+}
+
+@media only screen
+and (min-device-width : 1224px)
+and (min-device-height : 600px) {
+    .checkoutModal {
+        width: 35%;
+        height: 60%;
+        margin-top: 10%;
+    }
+
+    .deliveryText{
+        font-size: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+        height: 60px
+    }
+
+    .buttonText {
+        font-size: 17px;
     }
 }

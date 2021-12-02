@@ -28,15 +28,15 @@
 			<!-- button to search site -->
 			<div class = cartListButton>
 				<div id="cartListIcon">
-					<button onclick="openCart()"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
+					<button onclick="openCart('{{sidebar_width}}')"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
 					</button>
-				</div>
-				<div id="newNotificationCircle">
-					<img src="{{url_for('static', filename='assets/circle.svg')}}">
+					<div id="newNotificationCircle">
+						<img src="{{url_for('static', filename='assets/circle.svg')}}">
+					</div>
 				</div>
 			</div>
 			<div id="rightSidebar" class="sidebar">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
+				<button class="closebtn" onclick="closeCart()">&times;</button>
 				<!-- list all items in the cart -->
 				<div class="cartListContainer" id="cartList"></div>
 				<div class="checkoutBox">

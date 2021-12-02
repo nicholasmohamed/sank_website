@@ -99,9 +99,9 @@ def update_related_table(table_name, item_properties, client_item, database_item
                     db.session.delete(item_property)
                 for i, property in enumerate(client_item.get(table_name)):
                     if table_name == "sizes":
-                        db.session.add(Size(id=i + 1, size=property, merch_id=database_item.id))
+                        db.session.add(Size(size=property, merch_id=database_item.id))
                     elif table_name == "imageLink":
-                        db.session.add(Image(id=i + 1, imageLink=property, merch_id=database_item.id))
+                        db.session.add(Image(imageLink=property, merch_id=database_item.id))
             else:
                 logger.info("Changing existing " + table_name + " for merch_id: " + database_item.id)
                 for i, property in enumerate(client_item.get(table_name)):

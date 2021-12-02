@@ -173,8 +173,8 @@ function setCartNotification(isVisible){
     }
 }
 
-function openCart() {
-    document.getElementById("rightSidebar").style.width = "700px";
+function openCart(width) {
+    document.getElementById("rightSidebar").style.width = width;
     var cart = document.getElementById("cartList");
 
     cart.style.display = "block";
