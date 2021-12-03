@@ -54,7 +54,7 @@ def home():
         sidebar_width = '700px'
     else:
         webpage = 'home.html'
-        sidebar_width = '450px'
+        sidebar_width = '400px'
 
     return render_template(webpage, title='SankChewAir-E', domain=domain, about_text=about_text,
                            logo=logo, available_merch=available_merch, socials=socials,

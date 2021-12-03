@@ -1,0 +1,420 @@
+* {box-sizing:border-box}
+
+.sizeButtonGroup {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    font-size: 0;
+    visibility: hidden;
+}
+
+.sizeButton {
+    background-color: #FFFFFF;
+    color: #d8241a;
+    border-color:  #d8241a;
+}
+
+.sizeButton:hover,
+.sizeButton:focus {
+    background-color: #d8241a;
+    color: #FFFFFF;
+}
+
+.firstSizeButton {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.lastSizeButton {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+
+.sizeButton {
+    font-size: 20px;
+    height: 60px;
+    width: 80px;
+}
+
+.carouselText {
+    color: black;
+}
+
+#pageHeading {
+    font-family: subway-berlin-sc;
+}
+
+.landingText {
+    font-family: subway-berlin-sc;
+}
+
+@media only screen
+and (min-device-height : 280px) {
+    #pageHeading {
+        position: relative;
+        right: 38%;
+        z-index: 2;
+    }
+
+    /* Slideshow container */
+    .slideshow-container {
+      position: relative;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+      margin-top: -4%;
+    }
+
+    /* Hide the images by default */
+    .homeSlides {
+      display: none;
+      height: 1000px;
+      width: 100%;
+      z-index: -1;
+      margin-top: 20px;
+    }
+
+    .carouselImage{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* About page */
+    .aboutPage {
+        width: 95%;
+    }
+
+    .socials{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+    }
+
+    .socialImage{
+        height: 80px;
+        width: 96px;
+        padding-left: 30px;
+    }
+
+    /* Landing Page */
+    .landing {
+        display: block;
+    }
+
+    .landingImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landingText {
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-weight: 85;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        margin-right: 20px;
+        right: 50%;
+        width: 30px;
+    }
+
+    .dotIcon {
+        height: 20px;
+        width: 20px;
+        opacity: 40%;
+        background-color: #000000;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .dotText {
+        font-family: avenir-heavy;
+        position: relative;
+        top: 25%;
+        font-size: 14px;
+    }
+
+    .dotContainer {
+        display: flex;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+    }
+
+    .active, .dotIcon:hover {
+        opacity: 100%;
+    }
+
+    .dotIcon:active {
+    }
+
+    /* Fading animation */
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.5s;
+      animation-name: fade;
+      animation-duration: 0.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    /* Slide animation */
+    .slideInLeft {
+      animation-name: slideInLeft;
+      animation-duration: 0.5s;
+    }
+
+
+    @keyframes slideInLeft {
+      from {
+        margin-left: 100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    .slideInRight {
+      animation-name: slideInRight;
+      animation-duration: 0.5s;
+    }
+
+    @keyframes slideInRight {
+      from {
+        margin-left: -100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    /* Shop part of the carousel */
+    .merchList {
+        transition-property: transform;
+        z-index: -2;
+    }
+
+    .merch {
+      max-width: auto;
+      z-index: -2;
+    }
+
+    .merchSlider {
+        display: block;
+    }
+
+    .backgroundText h1 {
+        position: absolute;
+        margin-top: -40px;
+        font-size: 100px;
+        font-style: italic;
+        white-space: nowrap;
+        margin-left: -20px;
+        z-index: -1;
+        text-align: justify;
+        color: #FF9933;
+    }
+
+    .inactiveImage {
+        opacity: 70%;
+    }
+
+    .currentImage {
+        /*position: absolute;
+        top: 0px;
+        left: 12%;*/
+    }
+
+    .imageDescriptor {
+        display: none;
+    }
+
+    .merchImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 0;
+    }
+
+    .cartButton {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    #addButton {
+        z-index: 1;
+    }
+
+    #removeButton {
+        display: none;
+        z-index: 1;
+    }
+
+    .cartButton:hover {
+        opacity: 0.4;
+    }
+
+    .itemDescriptor {
+        display: none;
+    }
+
+    .price {
+        position: relative;
+        color: #FFFFFF;
+        font-family: avenir;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .name {
+        position: relative;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-family: avenir-roman;
+    }
+
+    .soldOut {
+         opacity: 70%;
+    }
+
+    .soldOutText {
+        position: absolute;
+        color: #FFFFFF;
+        font-family: avenir;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .soldOutText {
+        top: 5%;
+        left: 42%;
+        font-size: 30px;
+    }
+}
+
+@media only screen
+and (min-device-width : 1224px)
+and (min-device-height : 600px)
+{
+    #pageHeading {
+        margin-top: 20px;
+        font-size: 60px;
+    }
+
+    .slideshow-container {
+        margin-top: 2%;
+        max-width: 1500px;
+    }
+
+     /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+
+    .aboutText {
+        font-size: 20px;
+    }
+
+    .aboutPage {
+        margin-left: 0px;
+        position: relative;
+        left: 5%;
+    }
+
+    .socials {
+        margin-left: 28%;
+        bottom: 52%;
+    }
+
+    .socialImage{
+        height: 90px;
+        width: 108px;
+        padding-left: 30px;
+    }
+
+    /* landing page */
+    .landingImage {
+        height: 350px;
+        width: 350px;
+    }
+
+    .landingText {
+        font-size: 40px;
+    }
+
+    /* Shop page */
+    .merch {
+        margin-bottom: 50px;
+    }
+
+    .merchImage {
+        width: 350px;
+        height: 350px;
+    }
+
+    .cartButton {
+        position: absolute;
+        right: 40%;
+        height: 80px;
+        width: 80px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 60px;
+        left: 58%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 20px;
+        padding-top: 10px;
+    }
+
+    .shopItem {
+        margin-top: 6%;
+    }
+
+    .sizeButtonGroup {
+        top: -43%;
+        left: 60%;
+    }
+}

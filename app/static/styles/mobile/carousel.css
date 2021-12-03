@@ -32,9 +32,9 @@
 
 
 .sizeButton {
-    font-size: 20px;
-    height: 60px;
-    width: 80px;
+    font-size: 27px;
+    height: 90px;
+    width: 120px;
 }
 
 .carouselText {
@@ -103,8 +103,8 @@ and (max-device-height : 739px) {
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -172,8 +172,8 @@ and (max-device-width : 700px){
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -226,8 +226,8 @@ and (max-device-height : 899px) {
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -268,6 +268,7 @@ and (max-device-width: 359px){
 
     .merch {
         padding-bottom: 80px;
+        margin-bottom: 130px;
     }
 
     .cartButton {
@@ -289,8 +290,8 @@ and (max-device-width: 359px){
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -356,8 +357,8 @@ and (max-device-height : 1370px) {
     }
 
     .sizeButtonGroup {
-        top: -765px;
-        left: 640px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -1013,8 +1014,8 @@ and (max-device-height : 739px){
     }
 
     .sizeButtonGroup {
-        top: -475px;
-        left: 655px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -1096,8 +1097,8 @@ and (max-device-height : 899px){
 
 
     .sizeButtonGroup {
-        top: -500px;
-        left: 655px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -1185,8 +1186,8 @@ and (min-device-height : 900px)
     }
 
     .sizeButtonGroup {
-        top: -770px;
-        left: 865px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -1276,8 +1277,8 @@ and (min-device-height : 600px)
     }
 
     .sizeButtonGroup {
-        top: -770px;
-        left: 865px;
+        top: -50%;
+        left: 72%;
     }
 }
 

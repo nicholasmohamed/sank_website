@@ -19,10 +19,10 @@
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_cart.js')}}"></script>
     </head>
 	<!-- url_for finds filepath for stylesheet -->
-	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='sidebar.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='carousel.css')}}">
-		<link rel="stylesheet" href="{{url_for('static', filename='checkout_popup.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/mobile/sank_home.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/mobile/sidebar.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/mobile/carousel.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/mobile/checkout_popup.css')}}">
     <body>
 		<header class = "nav">
 			<!-- button to search site -->
@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div id="rightSidebar" class="sidebar">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
+				<button class="closebtn" onclick="closeCart()">&times;</button>
 				<!-- list all items in the cart -->
 				<div class="cartListContainer" id="cartList"></div>
 				<div class="checkoutBox">
