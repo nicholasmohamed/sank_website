@@ -266,11 +266,12 @@ and (min-device-height : 600px){
     position: absolute;
     bottom: 40px;
     width: 100%;
-    left: 10%;
+    left: 15%;
 }
 
 .totalLine {
-    margin-right: 70px;
+    margin-right: 81px;
+    margin-bottom: 15px;
 }
 
 .totalBox{
@@ -423,13 +424,15 @@ and (min-device-height : 600px) {
     }
 
     .cartItemQuantity {
-        margin-top: -5px;
+        margin-top: 0px;
         padding-left: 10px;
         padding-right: 10px;
+        font-size: 20px;
     }
 
     .totalBox {
         font-size: 20px;
+        margin-bottom: 15px;
     }
 
     #checkoutButton {

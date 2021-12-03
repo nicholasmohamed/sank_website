@@ -86,14 +86,17 @@ and (min-device-height : 280px) {
 
     /* About page */
     .aboutPage {
-        width: 95%;
+        width: 90%;
+        margin-top: -3%;
     }
 
     .socials{
         display: flex;
         justify-content: center;
         align-items: center;
-        position: absolute;
+        position: relative;
+        bottom: 2%;
+        right: 2%;
     }
 
     .socialImage{
@@ -147,7 +150,7 @@ and (min-device-height : 280px) {
     .dotText {
         font-family: avenir-heavy;
         position: relative;
-        top: 25%;
+        top: -15%;
         font-size: 14px;
     }
 
@@ -338,7 +341,7 @@ and (min-device-height : 600px)
     }
 
     .slideshow-container {
-        margin-top: 2%;
+        margin-top: 6%;
         max-width: 1500px;
     }
 
@@ -350,18 +353,13 @@ and (min-device-height : 600px)
     }
 
     .aboutText {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .aboutPage {
         margin-left: 0px;
         position: relative;
         left: 5%;
-    }
-
-    .socials {
-        margin-left: 28%;
-        bottom: 52%;
     }
 
     .socialImage{

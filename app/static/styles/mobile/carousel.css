@@ -702,7 +702,9 @@ and (min-device-height : 280px) {
         display: flex;
         justify-content: center;
         align-items: center;
-        position: absolute;
+        position: relative;
+        bottom: 0%;
+        right: 2%;
     }
 
     .socialImage{
@@ -968,7 +970,7 @@ and (max-device-height : 739px){
     }
 
     .aboutText {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .socials {
