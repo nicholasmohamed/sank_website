@@ -651,6 +651,7 @@ and (min-device-width : 280px) {
         justify-content: center;
         align-items: center;
         font-family: avenir-roman;
+        font-weight: 15;
     }
 }
 

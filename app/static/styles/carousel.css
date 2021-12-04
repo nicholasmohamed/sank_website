@@ -227,6 +227,7 @@ and (min-device-height : 280px) {
     .merch {
       max-width: auto;
       z-index: -2;
+      margin-bottom: 13%;
     }
 
     .merchSlider {
