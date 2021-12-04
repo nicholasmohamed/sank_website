@@ -474,7 +474,7 @@ and (min-device-width : 280px) {
     .dotText {
         font-family: avenir-heavy;
         position: relative;
-        top: 20%;
+        top: -15%;
         font-size: 18px;
     }
 
@@ -551,6 +551,7 @@ and (min-device-width : 280px) {
     .merch {
       max-width: auto;
       z-index: -2;
+      margin-bottom: 10%;
     }
 
     .merchSlider {
