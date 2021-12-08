@@ -19,9 +19,9 @@ function selectSize() {
         quickAddItem();
     } else {
         var sizeButtons = merch[index].querySelector("#itemSizeButtons");
+        var sizingFactor = -0.95;
         sizeButtons.style.visibility = "visible";
-        var sizeContainer = merch[index].querySelector("#sizeButtonContainer");
-        sizeContainer.style.display = "block";
+        sizeButtons.style.top = String(sizingFactor * merch[index].getBoundingClientRect().height) + "px";
     }
 }
 
@@ -36,8 +36,6 @@ function sizeButtonPressed(size) {
     // Hide the size buttons
     var sizeButtons = merch[index].querySelector("#itemSizeButtons");
     sizeButtons.style.visibility = "hidden";
-    var sizeContainer = merch[index].querySelector("#sizeButtonContainer");
-    sizeContainer.style.display = "none";
 
     quickAddItem();
 }
@@ -71,8 +69,6 @@ function quickAddItem(){
     // hide size buttons
     var sizeButtons = merch[index].querySelector("#itemSize");
     sizeButtons.style.visibility = "hidden";
-    var sizeContainer = merch[index].querySelector("#sizeButtonContainer");
-    sizeContainer.style.display = "none";
 }
 
 // Remove item from cart

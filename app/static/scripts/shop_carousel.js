@@ -44,7 +44,6 @@ function updateUI(index){
         var price = merch[i].querySelector("#itemPrice");
         var soldOut = merch[i].querySelector("#soldText");
         var size = merch[i].querySelector("#itemSizeButtons");
-        var sizeContainer = merch[index].querySelector("#sizeButtonContainer");
 
         if (i == shopCarousel.activeIndex){
             name.style.visibility = "visible";
@@ -56,7 +55,6 @@ function updateUI(index){
             name.style.visibility = "hidden";
             price.style.visibility = "hidden";
             size.style.visibility = "hidden";
-            sizeContainer.style.display = "none";
             if (soldOut != null){
                 soldOut.style.visibility = "hidden";
             }
