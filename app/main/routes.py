@@ -38,9 +38,9 @@ def home():
     logo = 'assets/Sank_Chew_Air_E_color_logo.svg'
     delivery_text = {"pickup": "Pick-up your order from 1-3390 Sherbrooke Street East, Montreal, QC. H1W 1C4",
                      "deliveryMtl": "You order will be delivered to you in Montreal at the earliest convenience "
-                                    "after it is prepared. Delivery Fee: $3.00",
+                                    "after it is prepared.<br><br>Delivery Fee: $3.00",
                      "deliveryCan": "You order will be delivered to you by standard shipping after it is prepared "
-                                    "Delivery Fee: $12.00"}
+                                    "<br><br>Delivery Fee: $12.00"}
     domain = current_app.config['YOUR_DOMAIN']
 
     # determine which version of site to use: mobile or desktop

@@ -275,7 +275,7 @@ and (min-device-height : 600px){
 }
 
 .totalLine {
-    margin-right: 70px;
+    margin-right: 20%;
 }
 
 .totalBox{
@@ -403,15 +403,13 @@ and (orientation: portrait){
         font-size: 20px;
     }
 
-    #checkoutButton {
-        width: 500px;
-        height: 55px;
-        margin-right: 100px;
-        font-size: 30px;
-    }
-
     .totalBox {
         font-size: 32px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
     }
 
     #checkoutButton {
@@ -419,6 +417,7 @@ and (orientation: portrait){
         height: 100px;
         margin-right: 100px;
         font-size: 40px;
+        margin-right: 24%;
     }
 }
 

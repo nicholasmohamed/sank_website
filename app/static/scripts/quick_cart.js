@@ -18,10 +18,10 @@ function selectSize() {
     if (size == "None") {
         quickAddItem();
     } else {
-        var sizeButtons = merch[index].querySelector("#itemSizeButtons");
-        sizeButtons.style.visibility = "visible";
         var sizeContainer = merch[index].querySelector("#sizeButtonContainer");
         sizeContainer.style.display = "block";
+        var sizeButtons = merch[index].querySelector("#itemSizeButtons");
+        sizeButtons.style.visibility = "visible";
     }
 }
 

@@ -58,9 +58,11 @@
 			<div id="deliveryOptionsWindow" class="checkoutModal">
 				<a href="javascript:void(0)" class="close" onclick="closeShippingModal()">&times;</a>
 				<h1 class="deliveryWindowHeading">Select your Method of Shipping</h1>
+				{% autoescape false %}
 				<h2 class="deliveryText" id="pickupText">{{delivery_text.pickup}}</h2>
 				<h2 class="deliveryText" id="deliveryMtlText">{{delivery_text.deliveryMtl}}</h2>
 				<h2 class="deliveryText" id="deliveryCanText">{{delivery_text.deliveryCan}}</h2>
+				{% endautoescape %}
 				<div class="radioButtonGroup" id="deliveryOptionsGroup">
 					<label class="buttonLabel firstButton">
 						<input type="radio" name="deliveryOption" id="pickupButton" autocomplete="off" value="0" class="radioButton">

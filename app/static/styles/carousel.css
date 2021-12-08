@@ -382,6 +382,7 @@ and (min-device-height : 600px)
     /* Shop page */
     .merch {
         margin-bottom: 50px;
+        width: 100%;
     }
 
     .merchImage {
