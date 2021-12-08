@@ -410,6 +410,8 @@ and (orientation: portrait){
         margin-left: auto;
         margin-right: auto;
         position: relative;
+        width: 82%;
+        right: 2%;
     }
 
     #checkoutButton {
@@ -482,7 +484,7 @@ and (max-device-width : 740px) {
 
     /* cartInfo contains cartName and cartQuantity */
     .cartInfo {
-        width: 430;
+        width: 430px;
         margin-left: 20px;
     }
 
