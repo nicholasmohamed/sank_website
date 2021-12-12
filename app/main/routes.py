@@ -25,11 +25,16 @@ def home():
 
     about_text = "<b>SankChewAir-E</b> is an organization that is focused on creating and maintaining a community of artists " \
                  "from all social backgrounds to spread hip-hop culture through teaching, events and activities including dance," \
-                 " video games and music.<br><br>We’re a community full of dancers," \
+                 " video games, fashion and music.<br><br>We’re a community full of dancers," \
                  " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
                  "with one another.<br><br>For more content, check out our YouTube channel: SankTV. Join our discord and " \
                  "connect with us on any or all of the social platforms listed below!" \
                  "<br><br><br>Contact us<br>info@sankchewaire.com"
+    home_text = "<b class=\"sankStyledText\">SankChewAir-E</b> is an organization that is focused on creating and maintaining a community of artists " \
+                 "from all social backgrounds to spread hip-hop culture through teaching, events and activities including dance," \
+                 " video games, fashion and music.<br><br>We’re a community full of dancers," \
+                 " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
+                 "with one another."
     socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
                {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
                {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
@@ -58,7 +63,8 @@ def home():
 
     return render_template(webpage, title='SankChewAir-E', domain=domain, about_text=about_text,
                            logo=logo, available_merch=available_merch, socials=socials,
-                           delivery_text=delivery_text, sidebar_width=sidebar_width)
+                           delivery_text=delivery_text, sidebar_width=sidebar_width, home_text=home_text,
+                           pages=current_app.config['PAGE_LIST'])
 
 
 # about us page
@@ -82,3 +88,8 @@ def programs():
 
     return render_template('programs.html', title='SankChewAir-E', description=description, pages=current_app.config['PAGE_LIST'])
 
+
+# contact us page
+@bp.route('/contact')
+def contact():
+    return 3

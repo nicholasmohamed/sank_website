@@ -77,15 +77,63 @@ p {
     color: black;
 }
 
-/*
-h1{
-    font-family: kuunari;
+.homepage {
+    display: flex;
+    justify-content: center;
+    margin-top: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: -2%;
 }
 
-h3{
-    font-family: graphic;
-    font-weight: light;
-}*/
+.homepageText{
+    width: 25%;
+    height: 60%;
+}
+
+.leadInTextContainer {
+    display: flex;
+    font-family: avenir;
+}
+
+.leadInText{
+    text-align: left;
+    font-size: 60px;
+}
+
+.flavorNumber{
+    font-size: 140px;
+}
+
+.endLeadInText {
+    position: absolute;
+    font-size: 19px;
+    text-align: center;
+    font-family: avenir;
+    width: 115px;
+    margin-top: 80px;
+    margin-left: 270px;
+}
+
+.homeImage{
+    height: 350px;
+    width: 350px;
+}
+
+.sankStyledText{
+    font-family: subway-berlin-sc;
+}
+
+.homeText {
+    font-family: avenir;
+    font-weight: 45;
+}
+
+.sloganText{
+    font-family: subway-berlin-sc;
+    text-align: right;
+}
 
 .homeDescription{
     color: grey;
