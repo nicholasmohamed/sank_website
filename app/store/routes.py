@@ -8,7 +8,7 @@ import logging
 from flask import render_template, redirect, url_for, current_app, jsonify, request
 from flask_mail import Message
 from app import db, mail
-from app.store import bp
+from app.store import bp, Blueprint
 from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
 
@@ -17,7 +17,13 @@ logger = logging.getLogger('app_logger')
 pending_orders = {}
 
 
-# TODO adding and removing items from database
+@bp.route('/shop')
+def shop():
+    logger.info("Rendering shop.")
+
+    return render_template('store/shop.html', title='SankChewAir-E')
+
+
 @bp.route('/database')
 def database():
     items = SankMerch.query.all()
@@ -60,6 +66,9 @@ def update_database_items(item_list):
                 database_item.name = client_item.get('name')
                 database_item.price = client_item.get('price')
                 database_item.description = client_item.get('description')
+                database_item.long_description = client_item.get('long_description')
+                database_item.manufacturing_description = client_item.get('mfg_description')
+                database_item.care_instructions = client_item.get('care_instructions')
                 database_item.quantity = client_item.get('quantity')
                 database_item.isAvailable = client_item.get('isAvailable')
                 database_item.tags = client_item.get('tags')
@@ -124,7 +133,12 @@ def parse_returned_values(items):
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
                 'imageLink': images, 'description': items.getlist('description')[i],
                 'sizes': sizes, 'quantity': items.getlist('quantity')[i],
+                'long_description': items.getlist('long_description')[i],
+                'mfg_description': items.getlist('mfg_description')[i],
+                'care_instructions': items.getlist('care_instructions')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
+
+        logger.info(item)
         # check for removal
         if i < len(items.getlist('remove')):
             if items.getlist('remove')[i] in ['True', 'true', 't', 'T']:

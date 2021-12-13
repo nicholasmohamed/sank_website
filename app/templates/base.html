@@ -29,10 +29,10 @@
     <body>
 		<header class = "nav">
 			<ul class="pageLinkList">
-			<div class="leftSideNav">
-				<h1 class="navText">SANK<br>CHEW<br>AIR-E</h1>
-				<img class="navLogo" src="{{url_for('static', filename='assets/SANK_TV_LOGO.svg')}}">
-			</div>
+			<a href="{{url_for('main.home')}}" class="leftSideNav">
+					<h1 class="navText">SANK<br>CHEW<br>AIR-E</h1>
+					<img class="navLogo" src="{{url_for('static', filename='assets/SANK_TV_LOGO.svg')}}">
+			</a>
 			<div class="rightSideNav">
 				{% for page in pages %}
 					<li class="pageLink"><a href="{{url_for(page.link)}}" class="navbarHeading">{{page.name}}</a></li>

@@ -13,6 +13,9 @@ class SankMerch(db.Model):
     price = db.Column(db.Float, index=True)
     imageLink = db.relationship('Image', backref='sank_merch', lazy=True)
     description = db.Column(db.String(256), index=True)
+    long_description = db.Column(db.String(512), index=True)
+    manufacturing_description = db.Column(db.String(512), index=True)
+    care_instructions = db.Column(db.String(512), index=True)
     quantity = db.Column(db.Integer, index=True)
     isAvailable = db.Column(db.Boolean, index=True)
     sizes = db.relationship('Size', backref='sank_merch', lazy=True)
@@ -26,6 +29,7 @@ class SankMerch(db.Model):
 class Size(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     size = db.Column(db.String(256), index=True)
+    measurement = db.Column(db.String(256), index=True)
     merch_id = db.Column(db.Integer, db.ForeignKey('sank_merch.id'), nullable=False)
 
 

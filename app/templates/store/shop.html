@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='styles/store/store.css')}}">
+
+<div class="shop">
+    <!-- Background text and shop buttons -->
+    <div class="shopItem">
+        <div class="addRemoveButtons">
+            <input id="addButton" class="cartButton" type="image" onclick="selectSize()"
+                   src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
+        </div>
+        <!-- Shop carousel items -->
+        <div id = "merchList">
+        {% if available_merch|length > 0 %}
+        {% for item in available_merch %}
+            <div class="merch">
+                <!-- If image is unavailable (no quantity on hand) -->
+                {% if item.quantity <= 0 %}
+                <div class="soldOut">
+                {% endif %}
+                {% if item.imageLink is defined and item.imageLink|length %}
+                    <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
+                {% else %}
+                    <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}" class="merchImage" id="itemImage">
+                {% endif %}
+                {% if item.quantity <= 0 %}
+                </div>
+                {% endif %}
+                <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
+                <h2 class="name carouselText" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
+                <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
+                <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
+                <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
+                <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}
+                </h2>
+
+                <!-- To position buttons relative to merch item, but not impact space -->
+                <div id="sizeButtonContainer" style="position: relative; width: 100%;  height: 0%; display: block;">
+                    <div class="sizeButtonGroup" id="itemSizeButtons">
+                        <!-- Determine size buttons based on available sizes -->
+                        {% for size_object in item.sizes %}
+                        {% if size_object is defined and size_object.size|length %}
+                        <button class="sizeButton" value={{size_object.size}} onclick="sizeButtonPressed(this.value)">{{size_object.size}}</button>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if item.quantity <= 0 %}
+                <h2 class="soldOutText" id="soldText">SOLD OUT</h2>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<!-- Start the shop carousel -->
+<script>showMerch(0);</script>
+</div>
+
+<script>
+    setAssetPath("{{url_for('static', filename='assets/')}}");
+    loadCart();
+    setDomain("{{domain}}")
+
+    if (cartItems != null) {
+        regenerateCartList();
+        setCheckoutButton();
+    } else {
+        setCheckoutButton();
+    }
+
+    shopCarousel.setTranslation();
+</script>
+{% endblock %}

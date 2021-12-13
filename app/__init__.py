@@ -48,6 +48,9 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
 
+    # import models
+    from app import models
+
     # configure app logging
     configure_logging(app)
 

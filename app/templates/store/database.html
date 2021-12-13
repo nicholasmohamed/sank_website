@@ -11,13 +11,13 @@
         <div id = item-container>
         {% for i in range(0, items|length) %}
             <label>Item Id:</label>
-            <input type="text" name="id" value="{{items[i].id}}" readonly></br>
+            <input type="text" name="id" value="{{items[i].id}}" readonly><br>
 
             <label>Item Name:</label>
-            <input type="text" name="name" value="{{items[i].name}}"></br>
+            <input type="text" name="name" value="{{items[i].name}}"><br>
 
             <label>Item Price:</label>
-            <input type="text" name="price" value="{{items[i].price}}"></br>
+            <input type="text" name="price" value="{{items[i].price}}"><br>
 
             <label>Item Image Sources:</label>
             {% set y = [] %}
@@ -27,10 +27,19 @@
             </div>
             {% endfor %}
             {% set images = y|join(", ") %}
-            <input type="text" name="imageLink" value="{{ images }}"></br>
+            <input type="text" name="imageLink" value="{{ images }}"><br>
 
             <label>Item Description:</label>
-            <input type="text" name="description" value="{{items[i].description}}"></br>
+            <input type="text" name="description" value="{{items[i].description}}"><br>
+
+            <label>Item Long Description:</label><br>
+            <textarea rows="2" cols="50" name="long_description">{{items[i].long_description}}</textarea><br>
+
+            <label>Manufacturing Description:</label><br>
+            <textarea rows="2" cols="50" name="mfg_description">{{items[i].manufacturing_description}}</textarea><br>
+
+            <label>Care Instructions:</label><br>
+            <textarea rows="2" cols="50" name="care_instructions">{{items[i].care_instructions}}</textarea><br>
 
             <label>Available Sizes:</label>
             <!-- Extract sizes -->
@@ -41,18 +50,18 @@
             </div>
             {% endfor %}
             {% set sizes = x|join(", ") %}
-            <input type="text" name="sizes" value="{{ sizes }}"></br>
+            <input type="text" name="sizes" value="{{ sizes }}"><br>
 
             <label>Item Quantity:</label>
-            <input type="text" name="quantity" value="{{items[i].quantity}}"></br>
+            <input type="text" name="quantity" value="{{items[i].quantity}}"><br>
 
             <label>Availability:</label>
-            <input type="text" name="isAvailable" value="{{items[i].isAvailable}}"></br>
+            <input type="text" name="isAvailable" value="{{items[i].isAvailable}}"><br>
 
             <label>Remove:</label>
-            <input type="text" name="remove" value="false"></br>
+            <input type="text" name="remove" value="false"><br><br>
         {% endfor %}
-        </div></br></br>
+        </div><br><br>
         <input type="button" onclick="addItem()" value="Add">
         <input type = "submit" value = "Submit" />
     </form>
@@ -66,28 +75,38 @@
             let template = `
             <br><br>
             <label>Item Id:</label>
-            <input type="text" name="id" value="${i}"readonly></br>
+            <input type="text" name="id" value="${i}"readonly><br>
 
             <label>Item Name:</label>
-            <input type="text" name="name"></br>
+            <input type="text" name="name"><br>
 
             <label>Item Price:</label>
-            <input type="text" name="price"></br>
+            <input type="text" name="price"><br>
 
             <label>Item Image Source:</label>
-            <input type="text" name="imageLink"></br>
+            <input type="text" name="imageLink"><br>
 
             <label>Item Description:</label>
-            <input type="text" name="description"></br>
+            <input type="text" name="description"><br>
+
+            <label>Item Long Description</label><br>
+            <textarea rows="2" cols="50" name="long_description" placeholder="This is the default text"></textarea><br>
+
+            <label>Manufacturing Description</label><br>
+            <textarea rows="2" cols="50" name="mfg_description" placeholder="This is the default text"></textarea><br>
+
+            <label>Care Instructions</label><br>
+            <textarea rows="2" cols="50" name="care_instructions" placeholder="Wash and care instructions"></textarea><br>
 
             <label>Available Sizes:</label>
-            <input type="text" name="sizes"></br>
+            <input type="text" name="sizes"><br>
 
             <label>Item Quantity:</label>
-            <input type="text" name="quantity"></br>
+            <input type="text" name="quantity"><br>
 
             <label>Availability:</label>
-            <input type="text" name="isAvailable"></br>`;
+            <input type="text" name="isAvailable"><br>
+            `
 
             let container = document.getElementById('item-container');
             let div = document.createElement('div');
