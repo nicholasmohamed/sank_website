@@ -1,0 +1,21 @@
+
+/* About page */
+.aboutPage {
+    width: 50%;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: block;
+}
+
+.aboutPageHeading {
+    font-family:  subway-berlin-sc;
+}
+
+.aboutPageText {
+    font-family: avenir;
+    font-weight: 25;
+    font-size: 19px;
+}
+

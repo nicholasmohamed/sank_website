@@ -12,30 +12,28 @@
             <input id="addButton" class="cartButton" type="image" onclick="selectSize()"
                    src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
         </div>
+
+        <img src="{{url_for('static', filename='assets/circle_and_line.svg')}}" class="descriptorLine">
+
         <!-- Shop carousel items -->
         <div id = "merchList">
         {% if available_merch|length > 0 %}
         {% for item in available_merch %}
             <div class="merch">
-                <!-- If image is unavailable (no quantity on hand) -->
-                {% if item.quantity <= 0 %}
-                <div class="soldOut">
-                {% endif %}
-                {% if item.imageLink is defined and item.imageLink|length %}
+                <div class="itemProperties">
                     <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
-                {% else %}
-                    <img src="{{url_for('static', filename='assets/Sank_Chew_Air_E_color_logo.svg')}}" class="merchImage" id="itemImage">
-                {% endif %}
-                {% if item.quantity <= 0 %}
+                    <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
+                    <h2 class="name" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
+                    <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
+                    <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
+                    <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
                 </div>
-                {% endif %}
-                <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
-                <h2 class="name carouselText" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
-                <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
-                <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
-                <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
-                <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}
-                </h2>
+                <div class="visibleItemDescription">
+                    <h2 class="descriptionText" id="itemDescription">{{item.description}}</h2><br>
+                    <h2 class="descriptionText" id="itemLongDescription">{{item.long_description}}</h2><br>
+                    <h2 class="descriptionText" id="itemManufacturingDescription">{{item.manufacturing_description}}</h2><br>
+                    <h2 class="descriptionText" id="itemCareInstructions">{{item.care_instructions}}</h2><br>
+                </div>
 
                 <!-- To position buttons relative to merch item, but not impact space -->
                 <div id="sizeButtonContainer" style="position: relative; width: 100%;  height: 0%; display: block;">

@@ -62,6 +62,19 @@ body{
     color: black;
 }
 
+.navbarHeading:hover {
+    font-family: subway-berlin-sc;
+    font-size: 20px;
+}
+
+.currentHeading {
+    font-family: subway-berlin-sc;
+    font-size: 20px;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 3px;
+}
+
 .heading a {
     color: white;
 }

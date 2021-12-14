@@ -20,6 +20,14 @@ a img {
 }
 
 /* Shop part of the carousel */
+.descriptorLine {
+    position: relative;
+    top: 125px;
+    left: 225px;
+    z-index: 1;
+    width: 310px;
+}
+
 .merchList {
     transition-property: transform;
     z-index: -2;
@@ -29,6 +37,12 @@ a img {
   max-width: auto;
   z-index: -2;
   margin-bottom: 13%;
+  display: flex;
+}
+
+.merch {
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 .merchSlider {
@@ -106,6 +120,12 @@ a img {
     z-index: 2;
 }
 
+.price {
+    font-size: 60px;
+    left: 58%;
+    bottom: 300px;
+}
+
 .name {
     position: relative;
     text-align: center;
@@ -114,10 +134,10 @@ a img {
     font-family: avenir-roman;
 }
 
-
-.merch {
-    margin-bottom: 50px;
-    width: 100%;
+.name {
+    font-size: 20px;
+    padding-top: 10px;
+    font-weight: 25;
 }
 
 .merchImage {
@@ -127,25 +147,22 @@ a img {
 
 .cartButton {
     position: relative;
-    left: 59%;
+    left: 203px;
     height: 80px;
     width: 80px;
-    top: 45px;
-}
-
-.price {
-    font-size: 60px;
-    left: 58%;
-    bottom: 300px;
-}
-
-.name {
-    font-size: 20px;
-    padding-top: 10px;
+    top: 91px;
 }
 
 .shopItem {
     margin-top: 6%;
+}
+
+.visibleItemDescription {
+    display: block;
+    position: relative;
+    left: 95px;
+    top: 50px;
+    width: 1000px;
 }
 
 .sizeButtonGroup {

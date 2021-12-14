@@ -35,7 +35,9 @@
 			</a>
 			<div class="rightSideNav">
 				{% for page in pages %}
-					<li class="pageLink"><a href="{{url_for(page.link)}}" class="navbarHeading">{{page.name}}</a></li>
+					<li class="pageLink">
+						<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
+					</li>
 				{% endfor %}
 				<!-- button to open the cart -->
 				<li>
@@ -106,4 +108,12 @@
 		{% block content %}
 		{% endblock %}
     </body>
+	<script>
+		currentLinks = document.getElementsByClassName('navbarHeading')
+		for(var i = 0; i < currentLinks.length; i++){
+			if (window.location.href == currentLinks[i].href){
+				currentLinks[i].className += ' currentHeading';
+			}
+		}
+	</script>
 </html>
