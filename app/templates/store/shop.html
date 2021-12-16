@@ -9,7 +9,7 @@
     <!-- Background text and shop buttons -->
     <div class="shopItem">
         <div class="addRemoveButtons">
-            <input id="addButton" class="cartButton" type="image" onclick="selectSize()"
+            <input id="addButton" class="cartButton" type="image" onclick="getParamsAndAddToCart()"
                    src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
         </div>
 
@@ -19,6 +19,7 @@
         <div id = "merchList">
         {% if available_merch|length > 0 %}
         {% for item in available_merch %}
+            {% set merch_index = loop.index %}
             <div class="merch">
                 <div class="itemProperties">
                     <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
@@ -28,23 +29,34 @@
                     <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
                     <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
                 </div>
-                <div class="visibleItemDescription">
+                <div class="visibleItemDescription" id="visibleDescriptions">
                     <h2 class="descriptionText" id="itemDescription">{{item.description}}</h2><br>
                     <h2 class="descriptionText" id="itemLongDescription">{{item.long_description}}</h2><br>
                     <h2 class="descriptionText" id="itemManufacturingDescription">{{item.manufacturing_description}}</h2><br>
                     <h2 class="descriptionText" id="itemCareInstructions">{{item.care_instructions}}</h2><br>
-                </div>
-
-                <!-- To position buttons relative to merch item, but not impact space -->
-                <div id="sizeButtonContainer" style="position: relative; width: 100%;  height: 0%; display: block;">
-                    <div class="sizeButtonGroup" id="itemSizeButtons">
+                    <div class="sizeButtonGroup" id="itemSizeButtonGroup">
                         <!-- Determine size buttons based on available sizes -->
                         {% for size_object in item.sizes %}
-                        {% if size_object is defined and size_object.size|length %}
-                        <button class="sizeButton" value={{size_object.size}} onclick="sizeButtonPressed(this.value)">{{size_object.size}}</button>
-                        {% endif %}
+                            {% if size_object is defined and size_object.size|length %}
+                                {% if loop.index == 1 %}
+                        <label class="sizeButtonLabel firstSizeButton">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton" checked="checked">
+                            <div class="sizeButtonStyle firstSizeButton">
+                                {% elif loop.index == item.sizes|length %}
+                        <label class="sizeButtonLabel lastSizeButton">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton">
+                            <div class="sizeButtonStyle lastSizeButton">
+                                {% else %}
+                        <label class="sizeButtonLabel">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton">
+                            <div class="sizeButtonStyle">
+                                {% endif %}
+                                <h4 class="sizeButtonText">{{size_object.size}}</h4>
+                            </div>
+                        </label>
+                            {% endif %}
                         {% endfor %}
-                    </div>
+				    </div>
                 </div>
                 {% if item.quantity <= 0 %}
                 <h2 class="soldOutText" id="soldText">SOLD OUT</h2>

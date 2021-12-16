@@ -3,7 +3,16 @@
 {% block content %}
     <link rel="stylesheet" href="{{url_for('static', filename='styles/about.css')}}">
     <div class="aboutPage">
-        <h1 class="aboutPageHeading">Our Mission</h1><br>
+        <h1 class="aboutPageHeading">Our Mission</h1><br><br>
+        {% autoescape false%}
         <h2 class="aboutPageText">{{mission_text}}</h2>
+        {% endautoescape %}
+
+        <!-- Image links of all Sank socials -->
+        <div class="socials">
+        {% for social in socials %}
+            <a href="{{social.link}}"><img src="{{url_for('static', filename=social.logo)}}" class="socialImage"></a>
+        {% endfor %}
+        </div>
     </div>
 {% endblock %}

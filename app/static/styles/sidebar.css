@@ -116,6 +116,8 @@ body{
 .closebtn {
     position: relative;
     top: 0;
+    left: 0;
+    left: 0;
     right: 345px;
     font-size: 40px;
     width: 50px;
@@ -184,8 +186,6 @@ body{
 
 #cartListIcon {
     display: block;
-    margin-left: 1px;
-    margin-right: auto;
 }
 
 .cartListButton h3{
@@ -215,7 +215,6 @@ and (min-device-height : 600px){
 
 .cartItem {
     display: flex;
-    flex-direction: row-reverse;
 }
 
 .cartItem h4 {
@@ -234,7 +233,6 @@ and (min-device-height : 600px){
 /* cartName contains cartItemName and cartItemPrice */
 .cartName {
     display: flex;
-    flex-direction: row-reverse;
     justify-content: space-between;
 }
 
@@ -254,7 +252,6 @@ and (min-device-height : 600px){
 /* cartSpecificInfo contains cartItemDescription and cartQuantity */
 .cartSpecificInfo{
     display: flex;
-    flex-direction: row-reverse;
     justify-content: space-between;
 }
 
@@ -283,8 +280,8 @@ and (min-device-height : 600px){
 
 .cartQuantity {
     display: flex;
-    direction: row-reverse;
     justify-content: space-between;
+    direction: rtl;
 }
 
 .cartQuantity input {
@@ -407,10 +404,10 @@ and (min-device-height : 600px) {
     }
 
     #newNotificationCircle {
-        width: 30px;
-        height: 30px;
-        top: 0%;
-        right: 60%;
+        width: 15px;
+        height: 15px;
+        top: 5%;
+        right: 55%;
     }
 
     .cartListButton {
@@ -446,7 +443,7 @@ and (min-device-height : 600px) {
     .cartItemName {
         font-size: 21px;
         width: 66%;
-        text-align: end;
+        text-align: start;
     }
 
     .cartItemPrice {
@@ -463,7 +460,6 @@ and (min-device-height : 600px) {
     .cartItemDescription {
         font-size: 13px;
         margin-top: -15px;
-        margin-left: 10px;
     }
 
     .cartItemSize {

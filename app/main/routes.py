@@ -104,11 +104,20 @@ def about():
                     'selflessness and collective dedication. It is a haven for culture and like minded ' \
                     'people. SankChewAir-E is an organization that is focused on creating and maintaining a community' \
                     ' of artists from all social backgrounds to spread hip-hop culture through teaching, events and ' \
-                    'activities including dance, video games, fashion and music'
+                    'activities including dance, video games, fashion and music <br><br>We’re a community full of dancers,' \
+                    ' gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times ' \
+                    'with one another.<br><br>For more content, check out our YouTube channel: SankTV. Join our discord and '\
+                    'connect with us on any or all of the social platforms listed below!' \
+                    '<br><br><br>Contact us<br>info@sankchewaire.com'
     rep_the_sank_text = ""
     our_story_text = ""
+    socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
+               {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
+               {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
+               {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
+               {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterIcon.svg'}]
 
-    return render_template('about.html', title='SankChewAir-E', mission_text=mission_text,
+    return render_template('about.html', title='SankChewAir-E', mission_text=mission_text, socials=socials,
                            rep_the_sank_text=rep_the_sank_text, our_story_text=our_story_text)
 
 

@@ -165,23 +165,62 @@ a img {
     width: 1000px;
 }
 
-.sizeButtonGroup {
-    top: -43%;
-    left: 60%;
+/* Size radio button styles */
+.sizeButtonText {
+    position: relative;
+    font-family: avenir;
+    margin-top: 20%;
+    font-size: 14px;
+}
+
+.sizeButtonStyle{
+   width: 100%;
+   height: 100%;
+   border: 1px solid #d8241a;
+}
+
+.sizeButton {
+    width: 100%;
+    height: 100%;
+}
+
+.sizeButton {
+    font-size: 20px;
+    background-color: #FFFFFF;
+    color: #d8241a;
+    height: 100%;
+    width: 100%;
+}
+
+.sizeButtonLabel {
+    display: flex;
+    position: relative;
+    width: 33%;
+    text-align: center;
+    justify-content: center;
+    background-color: #FCFCFC;
+    border-color: #d8241a;
 }
 
 .sizeButtonGroup {
     display: flex;
-    position: absolute;
-    flex-direction: column;
+    position: relative;
+    width: 200px;
+    height: 30px;
     font-size: 0;
-    visibility: hidden;
+    justify-content: center;
 }
 
-.sizeButton {
-    background-color: #FFFFFF;
-    color: #d8241a;
-    border-color:  #d8241a;
+input[class="sizeButton"]:hover + div,
+input[class="sizeButton"]:focus + div,
+input[class="sizeButton"]:checked + div {
+    background-color: #d8241a;
+    color: #FFFFFF;
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
 }
 
 .sizeButton:hover,
@@ -191,18 +230,12 @@ a img {
 }
 
 .firstSizeButton {
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
 }
 
 .lastSizeButton {
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
 }
 
-
-.sizeButton {
-    font-size: 20px;
-    height: 60px;
-    width: 80px;
-}

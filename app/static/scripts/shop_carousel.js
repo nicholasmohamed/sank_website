@@ -44,6 +44,7 @@ function updateUI(index){
         var price = merch[i].querySelector("#itemPrice");
         var soldOut = merch[i].querySelector("#soldText");
         var size = merch[i].querySelector("#itemSizeButtons");
+        var itemDescriptions = merch[i].querySelector("#visibleDescriptions")
 
         if (i == shopCarousel.activeIndex){
             name.style.visibility = "visible";
@@ -51,13 +52,17 @@ function updateUI(index){
             if (soldOut != null){
                 soldOut.style.visibility = "visible";
             }
+            itemDescriptions.style.visibility = "visible";
         } else {
             name.style.visibility = "hidden";
             price.style.visibility = "hidden";
-            size.style.visibility = "hidden";
+            if (size != null) {
+                 size.style.visibility = "hidden";
+            }
             if (soldOut != null){
                 soldOut.style.visibility = "hidden";
             }
+            itemDescriptions.style.visibility = "hidden";
         }
     }
 }

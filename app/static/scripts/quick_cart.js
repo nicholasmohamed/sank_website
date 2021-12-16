@@ -35,7 +35,27 @@ function sizeButtonPressed(size) {
 
     // Hide the size buttons
     var sizeButtons = merch[index].querySelector("#itemSizeButtons");
-    sizeButtons.style.visibility = "hidden";
+    if (sizeButtons){
+       sizeButtons.style.visibility = "hidden";
+    }
+
+    quickAddItem();
+}
+
+// Add params and add to cart (desktop)
+function getParamsAndAddToCart(){
+    var index = shopCarousel.activeIndex;
+    var merch = document.getElementsByClassName("merch");
+
+    // Get size data
+    var sizeButtons = merch[index].querySelector("#itemSizeButtonGroup");
+
+    sizeButtonName = "sizeOption" + String(index + 1);
+    sizeValue = sizeButtons.querySelector('input[name=\"'+ sizeButtonName +'\"]:checked').value;
+
+    // Set size corresponding to button pressed
+    var sizeText = merch[index].querySelector("#itemSize");
+    sizeText.textContent = sizeValue;
 
     quickAddItem();
 }

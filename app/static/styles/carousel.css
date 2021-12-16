@@ -47,21 +47,6 @@ and (min-device-height : 280px) {
         margin-right: auto;
     }
 
-    .socials{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        bottom: 2%;
-        right: 2%;
-    }
-
-    .socialImage{
-        height: 80px;
-        width: 96px;
-        padding-left: 30px;
-    }
-
     /* Landing Page */
     .landing {
         display: block;
@@ -217,12 +202,6 @@ and (min-device-height : 600px)
 
     .aboutText {
         font-size: 22px;
-    }
-
-    .socialImage{
-        height: 90px;
-        width: 108px;
-        padding-left: 30px;
     }
 
     /* landing page */

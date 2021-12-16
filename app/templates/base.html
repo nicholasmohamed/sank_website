@@ -51,22 +51,21 @@
 					</div>
 				</div>
 				</li>
-				<div id="rightSidebar" class="sidebar">
-					<button class="closebtn" onclick="closeCart()">&times;</button>
-					<!-- list all items in the cart -->
-					<div class="cartListContainer" id="cartList"></div>
-					<div class="checkoutBox">
-						<hr class="totalLine" size="5px" width="80%" color="#FF9933">
-						<div class="totalBox">
-							<h2 class="totalLabel">Subtotal: </h2>
-							<h2 id="cartTotal">$0<h2>
-						</div>
-						<button id="checkoutButton" onclick="checkoutClicked()">Checkout</button>
-					</div>
-				</div>
 			</div>
 			</ul>
-
+			<div id="rightSidebar" class="sidebar">
+				<button class="closebtn" onclick="closeCart()">&times;</button>
+				<!-- list all items in the cart -->
+				<div class="cartListContainer" id="cartList"></div>
+				<div class="checkoutBox">
+					<hr class="totalLine" size="5px" width="80%" color="#FF9933">
+					<div class="totalBox">
+						<h2 class="totalLabel">Subtotal: </h2>
+						<h2 id="cartTotal">$0<h2>
+					</div>
+					<button id="checkoutButton" onclick="checkoutClicked()">Checkout</button>
+				</div>
+			</div>
 		</header>
 		<!-- Modal for showing deliver options before checkout -->
 		<div id="checkoutModal" class="checkoutModalBg">

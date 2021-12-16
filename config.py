@@ -39,5 +39,5 @@ class Config(object):
     CORS_HEADERS = 'Content-Type'
 
     PAGE_LIST = [{"name": "about", "link": "main.about"},
-                 {"name": "shop", "link": "store.shop"},
-                 {"name": "contact", "link": "main.contact"}]
+                 {"name": "shop", "link": "store.shop"}]#,
+                # {"name": "contact", "link": "main.contact"}]
