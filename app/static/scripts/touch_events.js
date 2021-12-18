@@ -22,6 +22,13 @@ function yResult(increment) {
     }
 }
 
+function xResultClick(increment) {
+}
+
+function yResultClick(increment) {
+    advanceMerch(increment);
+}
+
 // Simple click
 //document.addEventListener('click', function(){xResult(0);}, false);
 
@@ -54,14 +61,31 @@ function handleTouchEnd(evt) {
         var xThreshold = 20;
         var yThreshold = 20;
     }
-  handleEnd(evt.touches[0].clientX, evt.touches[0].clientY, xThreshold, yThreshold);
+    handleEnd(evt.touches[0].clientX, evt.touches[0].clientY, xThreshold, yThreshold);
 }
 
 function handleDragEnd(evt) {
     var xThreshold = 30;
-    var yThreshold = 20;
+    var yThreshold = 5;
 
-    handleEnd(evt.clientX, evt.clientY, xThreshold, yThreshold);
+    handleClickEnd(evt.clientX, evt.clientY, xThreshold, yThreshold);
+}
+
+// Handle what happens on click end
+function handleClickEnd(xUp, yUp, xThreshold, yThreshold){
+      // If there is no ending x
+      if ( !xDown ) { return; }
+
+      // Calculate difference (ending x minus starting x)
+      var xDiff = xDown - xUp;
+      var yDiff = yDown - yUp;
+      // if large enough swipe, change image
+      if ( xDiff > xThreshold ) xResultClick(1);
+      else if ( xDiff < -xThreshold ) xResultClick(-1);
+      else if ( yDiff > yThreshold ) yResultClick(1);
+      else if ( yDiff < -yThreshold ) yResultClick(-1);
+      xDown = null;
+      yDown = null;
 }
 
 function handleEnd(xUp, yUp, xThreshold, yThreshold) {

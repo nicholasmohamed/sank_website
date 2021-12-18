@@ -25,6 +25,10 @@ function resetTimeout(milliseconds, index){
     timeouts.push(setTimeout(showMerch, milliseconds, index));
 }
 
+function advanceMerch(increment){
+    showMerch(shopCarousel.activeIndex + increment);
+}
+
 function showMerch(index){
     shopCarousel.advanceCarousel(index);
 

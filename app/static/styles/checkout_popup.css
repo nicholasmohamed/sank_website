@@ -30,7 +30,7 @@
 
 /* The Close Button */
 .close {
-    color: #FF9933;
+    color: #d8241a;
     float: left;
     font-size: 50px;
     font-weight: bold;
@@ -40,7 +40,7 @@
 
 .deliveryWindowHeading {
     font-family: avenir;
-    color: #FF9933;
+    color: #d8241a;
 }
 
 .deliveryText {
@@ -96,7 +96,7 @@
 input[class="radioButton"]:hover + div,
 input[class="radioButton"]:focus + div,
 input[class="radioButton"]:checked + div {
-    background-color: #FF9933;
+    background-color: #d8241a;
     color: #FFFFFF;
 }
 

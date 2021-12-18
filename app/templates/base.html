@@ -58,7 +58,7 @@
 				<!-- list all items in the cart -->
 				<div class="cartListContainer" id="cartList"></div>
 				<div class="checkoutBox">
-					<hr class="totalLine" size="5px" width="80%" color="#FF9933">
+					<hr class="totalLine" size="5px" width="80%" color="#d8241a">
 					<div class="totalBox">
 						<h2 class="totalLabel">Subtotal: </h2>
 						<h2 id="cartTotal">$0<h2>
@@ -114,5 +114,11 @@
 				currentLinks[i].className += ' currentHeading';
 			}
 		}
+		if (cartItems != null) {
+        	regenerateCartList();
+        	setCheckoutButton();
+    	} else {
+        	setCheckoutButton();
+    	}
 	</script>
 </html>

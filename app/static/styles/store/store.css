@@ -83,7 +83,7 @@ a img {
 }
 
 .cartButton {
-    position: absolute;
+    position: relative;
     margin-left: auto;
     margin-right: auto;
     padding: 16px;
@@ -95,6 +95,17 @@ a img {
     user-select: none;
 }
 
+.cartButton {
+    left: 203px;
+    height: 80px;
+    width: 80px;
+    top: 91px;
+}
+
+.cartButton:hover {
+    opacity: 0.4;
+}
+
 #addButton {
     z-index: 1;
 }
@@ -104,9 +115,7 @@ a img {
     z-index: 1;
 }
 
-.cartButton:hover {
-    opacity: 0.4;
-}
+
 
 .itemDescriptor {
     display: none;
@@ -145,16 +154,9 @@ a img {
     height: 350px;
 }
 
-.cartButton {
-    position: relative;
-    left: 203px;
-    height: 80px;
-    width: 80px;
-    top: 91px;
-}
-
 .shopItem {
     margin-top: 6%;
+    margin-left: 24%;
 }
 
 .visibleItemDescription {
@@ -163,13 +165,53 @@ a img {
     left: 95px;
     top: 50px;
     width: 1000px;
+    font-family: avenir-roman;
+}
+
+.descriptionText {
+    font-weight: 25;
+}
+
+br + h2 {
+    margin-top: -8px;
+}
+
+/* Merch buttons style */
+.merchTransitionButton {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 7px;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    border: none;
+    user-select: none;
+    z-index: 1;
+}
+
+.merchTransitionButton:hover {
+    color: white;
+    background-color: #d8241a;
+}
+
+#previousArrow{
+    top: 50px;
+    right: 45px;
+}
+
+#advanceArrow{
+    top: 365px;
+    right: 72px;
 }
 
 /* Size radio button styles */
 .sizeButtonText {
     position: relative;
     font-family: avenir;
-    margin-top: 20%;
+    margin-top:  8px;
     font-size: 14px;
 }
 

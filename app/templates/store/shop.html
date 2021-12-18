@@ -30,10 +30,10 @@
                     <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
                 </div>
                 <div class="visibleItemDescription" id="visibleDescriptions">
-                    <h2 class="descriptionText" id="itemDescription">{{item.description}}</h2><br>
-                    <h2 class="descriptionText" id="itemLongDescription">{{item.long_description}}</h2><br>
-                    <h2 class="descriptionText" id="itemManufacturingDescription">{{item.manufacturing_description}}</h2><br>
-                    <h2 class="descriptionText" id="itemCareInstructions">{{item.care_instructions}}</h2><br>
+                    <h2 class="descriptionText" id="itemDescription">{% if item.description == 'None' %}&nbsp{% else %}{{item.description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemLongDescription">{% if item.long_description == 'None' %}&nbsp{% else %}{{item.long_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemManufacturingDescription">{% if item.manufacturing_description =='None' %}&nbsp{% else %}{{item.manufacturing_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemCareInstructions">{% if item.care_instructions == 'None' %}&nbsp{% else %}{{item.care_instructions}}{% endif %}</h2><br>
                     <div class="sizeButtonGroup" id="itemSizeButtonGroup">
                         <!-- Determine size buttons based on available sizes -->
                         {% for size_object in item.sizes %}

@@ -47,17 +47,25 @@ function getParamsAndAddToCart(){
     var index = shopCarousel.activeIndex;
     var merch = document.getElementsByClassName("merch");
 
-    // Get size data
-    var sizeButtons = merch[index].querySelector("#itemSizeButtonGroup");
+    // check size
+    var size = merch[index].querySelector("#itemSize").textContent;
+    size.replace("\n", "")
+    size = size.trim();
 
-    sizeButtonName = "sizeOption" + String(index + 1);
-    sizeValue = sizeButtons.querySelector('input[name=\"'+ sizeButtonName +'\"]:checked').value;
+    if (size == "None") {
+        quickAddItem();
+    } else {
+        // Get size data
+        var sizeButtons = merch[index].querySelector("#itemSizeButtonGroup");
 
-    // Set size corresponding to button pressed
-    var sizeText = merch[index].querySelector("#itemSize");
-    sizeText.textContent = sizeValue;
+        sizeButtonName = "sizeOption" + String(index + 1);
+        sizeValue = sizeButtons.querySelector('input[name=\"'+ sizeButtonName +'\"]:checked').value;
 
-    quickAddItem();
+        // Set size corresponding to button pressed
+        var sizeText = merch[index].querySelector("#itemSize");
+        sizeText.textContent = sizeValue;
+        quickAddItem();
+    }
 }
 
 // Add item to cart
