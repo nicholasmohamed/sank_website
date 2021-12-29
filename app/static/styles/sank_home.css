@@ -84,11 +84,11 @@ p {
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    left: -6%;
+    left: -1%;
 }
 
 .homepageText{
-    width: 25%;
+    width: 480px;
     height: 60%;
 }
 
@@ -138,12 +138,13 @@ p {
 }
 
 .sloganText{
+    position: relative;
     font-family: subway-berlin-sc;
     white-space: nowrap;
     text-align: right;
     font-size: 23px;
-    margin-left: 117px;
     margin-top: -15px;
+    right: 100px;
 }
 
 .homeDescription{

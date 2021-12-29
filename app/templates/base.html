@@ -30,26 +30,25 @@
 		<header class = "nav">
 			<ul class="pageLinkList">
 			<a href="{{url_for('main.home')}}" class="leftSideNav">
-					<h1 class="navText">SANK<br>CHEW<br>AIR-E</h1>
-					<img class="navLogo" src="{{url_for('static', filename='assets/SANK_TV_LOGO.svg')}}">
+				<img class="navLogo" src="{{url_for('static', filename='assets/sank_tv_home_logo.svg')}}">
 			</a>
 			<div class="rightSideNav">
 				{% for page in pages %}
-					<li class="pageLink">
+				<li class="pageLink">
 						<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
 					</li>
 				{% endfor %}
 				<!-- button to open the cart -->
 				<li>
-				<div class = cartListButton>
-					<div id="cartListIcon">
-						<button onclick="openCart('{{sidebar_width}}')"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
-						</button>
-						<div id="newNotificationCircle">
-							<img src="{{url_for('static', filename='assets/circle.svg')}}">
+					<div class = cartListButton>
+						<div id="cartListIcon">
+							<button onclick="openCart('{{sidebar_width}}')"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
+							</button>
+							<div id="newNotificationCircle">
+								<img src="{{url_for('static', filename='assets/circle.svg')}}">
+							</div>
 						</div>
 					</div>
-				</div>
 				</li>
 			</div>
 			</ul>
