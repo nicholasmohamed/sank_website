@@ -17,11 +17,18 @@ logger = logging.getLogger('app_logger')
 pending_orders = {}
 
 
-@bp.route('/shop')
-def shop():
+@bp.route('/store')
+def store():
     logger.info("Rendering shop.")
 
-    return render_template('store/shop.html', title='SankChewAir-E')
+    return render_template('store/store.html', title='SankChewAir-E')
+
+
+@bp.route('/shop/<index>')
+def shop(index):
+    logger.info("Rendering shop.")
+
+    return render_template('store/shop.html', index=index, title='SankChewAir-E')
 
 
 @bp.route('/database')
@@ -160,19 +167,6 @@ def parse_returned_array_property(items, item_name, index):
         properties = []
 
     return properties
-
-
-# store page
-@bp.route('/store')
-def store():
-    description = 'Check out some of the SankChewAir-E swag.'
-
-    # query items to sell in the store
-    items = SankMerch.query.all()
-    if not items:
-        items = {}
-    return render_template('store/store.html', title='SankChewAir-E', description=description, items=items,
-                           pages=current_app.config['PAGE_LIST'])
 
 
 @bp.route('/stripe-config')

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
@@ -19,6 +18,7 @@
         <div id = "merchList">
         {% if available_merch|length > 0 %}
         {% for item in available_merch %}
+            <!-- Merch_index used to determine which item the size options correspond to-->
             {% set merch_index = loop.index %}
             <div class="merch">
                 <div class="itemProperties">
@@ -67,7 +67,7 @@
     </div>
 </div>
 <!-- Start the shop carousel -->
-<script>showMerch(0);</script>
+<script>showMerch({{index}});</script>
 </div>
 
 <script>
@@ -83,5 +83,6 @@
     }
 
     shopCarousel.setTranslation();
+    //setScroll();
 </script>
 {% endblock %}

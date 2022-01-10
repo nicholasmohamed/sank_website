@@ -22,6 +22,25 @@ function yResult(increment) {
     }
 }
 
+/*
+var lastScrollTop = 0;
+function setScroll(){
+    // element should be replaced with the actual target element on which you have applied scroll, use window in case of no target element.
+    window.addEventListener("scroll", scrollEvent, false);
+}
+
+function scrollEvent(){
+    var increment = 0;
+    var st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
+    if (st > lastScrollTop){
+      increment = -1;
+    } else {
+      increment = 1;
+    }
+    advanceMerch(increment);
+    lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+}*/
+
 function xResultClick(increment) {
 }
 

@@ -35,8 +35,8 @@
 			<div class="rightSideNav">
 				{% for page in pages %}
 				<li class="pageLink">
-						<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
-					</li>
+					<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
+				</li>
 				{% endfor %}
 				<!-- button to open the cart -->
 				<li>

@@ -36,7 +36,8 @@ class Size(db.Model):
 class Variation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('sank_merch.id'), nullable=False)
+    price = db.Column(db.Float, index=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('sank_merch.id'), index=True, nullable=False)
     color = db.Column(db.String(256), index=True)
     Materials = db.Column(db.String(256), index=True)
 

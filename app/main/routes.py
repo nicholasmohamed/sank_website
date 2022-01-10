@@ -80,7 +80,7 @@ def home():
                {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
                {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
                {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
-               {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterIcon.svg'}]
+               {'link': 'https://twitter.com/SankChewAirE', 'logo': 'assets/twitterIcon.svg'}]
     logo = 'assets/Sank_Chew_Air_E_color_logo.svg'
 
     # determine which version of site to use: mobile or desktop

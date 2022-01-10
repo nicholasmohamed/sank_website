@@ -2,7 +2,7 @@
 * Requires carousel.js
 */
 
-const TIMEOUT_DURATION = 35000;
+const TIMEOUT_DURATION = -1;
 var timeouts = []
 var shopCarousel = new Carousel("merch", "merchList", true, true, true);
 shopCarousel.initialize(0);
@@ -36,7 +36,9 @@ function showMerch(index){
     updateUI(shopCarousel.activeIndex);
 
     // reset change merch timer
-    resetTimeout(TIMEOUT_DURATION, shopCarousel.activeIndex + 1);
+    if (TIMEOUT_DURATION > 0){
+        resetTimeout(TIMEOUT_DURATION, shopCarousel.activeIndex + 1);
+    }
 }
 
 function updateUI(index){
