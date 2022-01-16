@@ -58,7 +58,9 @@ function updateUI(index){
             if (soldOut != null){
                 soldOut.style.visibility = "visible";
             }
-            itemDescriptions.style.visibility = "visible";
+            if (itemDescriptions != null){
+                itemDescriptions.style.visibility = "visible";
+            }
         } else {
             name.style.visibility = "hidden";
             price.style.visibility = "hidden";
@@ -68,7 +70,9 @@ function updateUI(index){
             if (soldOut != null){
                 soldOut.style.visibility = "hidden";
             }
-            itemDescriptions.style.visibility = "hidden";
+            if (itemDescriptions != null){
+                itemDescriptions.style.visibility = "hidden";
+            }
         }
     }
 }

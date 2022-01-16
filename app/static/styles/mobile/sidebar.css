@@ -67,7 +67,7 @@ body{
   font-size: 80px;
   width: 110px;
   height: 110px;
-  color: #FF9933;
+  color: #d8241a;
   background: transparent;
   border-color: transparent;
 }
@@ -119,7 +119,7 @@ body{
     border-style: solid;
     border-radius: 50px;
     background-color: #d8241a;
-    color: #FF9933;
+    color: #d8241a;
     position: absolute;
 }
 
@@ -168,7 +168,7 @@ and (min-device-height : 600px){
 }
 
 .cartItem h4 {
-    color: #FF9933;
+    color: #d8241a;
 }
 
 .cartItem img {
@@ -243,6 +243,7 @@ and (min-device-height : 600px){
 }
 
 .cartItemQuantity {
+    font-family: avenir;
 }
 
 .shipRadioButton {
@@ -254,7 +255,7 @@ and (min-device-height : 600px){
     gap: 20%;
     top: 74%;
     font-size: 35px;
-    color: #FF9933;
+    color: #d8241a;
 }
 
 .shipRadioButton {
@@ -281,7 +282,7 @@ and (min-device-height : 600px){
 .totalBox{
     display: flex;
     direction: ltr;
-    color: #FF9933;
+    color: #d8241a;
     font-family: avenir;
 }
 
@@ -293,7 +294,7 @@ and (min-device-height : 600px){
 #checkoutButton {
     font-family: 'avenir-heavy';
     color: #FFFFFF;
-    background-color: #FF9933;
+    background-color: #d8241a;
     border-color: transparent;
     border-radius: 20px;
 }
