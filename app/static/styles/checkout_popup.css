@@ -1,8 +1,9 @@
 /* The Modal (background) */
 .checkoutModalBg {
   display: none; /* Hidden by default */
+  align-items: center;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 3; /* Sit on top */
   left: 0;
   top: 0;
   width: 100vw;
@@ -100,6 +101,11 @@ input[class="radioButton"]:checked + div {
     color: #FFFFFF;
 }
 
+.buttonText {
+    pointer-events: none;
+    background: transparent;
+}
+
 .close:hover,
 .close:focus {
   color: black;
@@ -150,8 +156,8 @@ and (min-device-height : 600px) {
     }
 
     .proceedToCheckoutButton {
-        left: 82%;
-        top: 50px;
+        left: 400px;
+        top: 35px;
     }
 
     .proceedToCheckoutIcon{
@@ -160,8 +166,7 @@ and (min-device-height : 600px) {
     }
 
     .checkoutModal {
-        width: 28%;
-        height: 45%;
-        margin-top: 10%;
+        width: 480px;
+        height: 330px;
     }
 }
