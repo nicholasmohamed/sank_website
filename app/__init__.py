@@ -11,6 +11,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
+from flask_login import LoginManager, login_required, UserMixin
 
 # Connect to database
 db = SQLAlchemy()
@@ -20,6 +21,8 @@ migrate = Migrate()
 bootstrap = Bootstrap()
 # mail var for mailing receipts
 mail = None
+# configure logins
+login_manager = LoginManager()
 
 
 def create_app(config_class=Config):
@@ -43,6 +46,13 @@ def create_app(config_class=Config):
     from app.store import bp as store_bp
     app.register_blueprint(store_bp)
     cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+    # configure logins
+    login_manager.init_app(app)
+
+    login_manager.blueprint_login_views = {
+        'store': '/database_login',
+    }
 
     # create database
     with app.app_context():
@@ -85,6 +95,17 @@ def configure_logging(app):
     if not app.debug and not app.testing:
         # ... configure logging setup
         print('Test')
+
+
+class User(UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    user = User()
+    user.id = user_id
+    return user
 
 
 from app import models

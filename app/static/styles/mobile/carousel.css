@@ -301,17 +301,17 @@ and (orientation: portrait)
 and (min-device-height : 900px)
 and (max-device-height : 1370px) {
     #pageHeading {
-        font-size: 60px;
+        font-size: 85px;
     }
 
     .slideshow-container {
-        margin-top: 10%;
+        margin-top: -15%;
     }
 
     /* Landing page */
     .landingImage {
-        height: 600px;
-        width: 600px;
+        height: 700px;
+        width: 700px;
     }
 
     .landingText {
@@ -320,16 +320,20 @@ and (max-device-height : 1370px) {
 
     /* Shop page */
     .merchImage {
-        width: 500px;
-        height: 500px;
+        width: 700px;
+        height: 700px;
     }
 
     .cartButton {
         position: absolute;
-        right: 35%;
-        height: 100px;
-        width: 100px;
+        right: 28%;
+        height: 130px;
+        width: 130px;
         margin-top: -2%;
+    }
+
+    .cartListButton {
+        padding-left: 4px;
     }
 
     .price {
@@ -344,16 +348,20 @@ and (max-device-height : 1370px) {
     }
 
     .shopItem {
-        margin-top: 20%;
+        margin-top: 480px;
     }
 
     /* about page */
     .aboutText {
-        font-size: 30px;
+        font-size: 45px;
     }
 
     .aboutPage {
-        margin-top: -75px;
+        margin-top: 200px;
+    }
+
+    .merch {
+        margin-bottom: 22%;
     }
 
     .sizeButtonGroup {

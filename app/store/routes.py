@@ -7,14 +7,43 @@ import logging
 
 from flask import render_template, redirect, url_for, current_app, jsonify, request
 from flask_mail import Message
-from app import db, mail
+from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
+from werkzeug.security import check_password_hash
+from app import db, mail, User
 from app.store import bp, Blueprint
 from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
 
 logger = logging.getLogger('app_logger')
 
+login_manager = LoginManager()
+
 pending_orders = {}
+
+
+@bp.route('/database_login')
+def database_login():
+    logger.info("database_login")
+    return render_template('store/database_login.html', domain=current_app.config['YOUR_DOMAIN'],
+                           title='SankChewAir-E')
+
+
+@bp.route('/database_login_check', methods=['POST', 'GET'])
+def database_login_check():
+    if request.method == 'POST':
+        logger.info("database_login_check: Checking login")
+        result = request.form
+        password = result.get('password')
+
+        if check_password_hash(current_app.config['DATABASE_PASSWORD_HASH'], password):
+            database_user = User()
+            database_user.id = "admin"
+            login_user(database_user)
+            logger.info('database_login_check: Password successful.')
+
+            return redirect("/database")
+        else:
+            return redirect("/database_login")
 
 
 @bp.route('/store')
@@ -31,7 +60,9 @@ def shop(index):
     return render_template('store/shop.html', index=index, title='SankChewAir-E')
 
 
+# Will redirect to login if not authenticated
 @bp.route('/database')
+@login_required
 def database():
     items = SankMerch.query.all()
     if not items:

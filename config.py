@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash
 
 load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -37,6 +38,10 @@ class Config(object):
     MAIL_USE_SSL = True
 
     CORS_HEADERS = 'Content-Type'
+
+    # Database password
+    DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD') or 'CultureIsEverything'
+    DATABASE_PASSWORD_HASH = generate_password_hash(DATABASE_PASSWORD)
 
     PAGE_LIST = [{"name": "about", "link": "main.about"},
                  {"name": "shop", "link": "store.store"}]#,
