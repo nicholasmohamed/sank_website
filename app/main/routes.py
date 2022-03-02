@@ -1,7 +1,8 @@
 import logging
+import csv
 
 # Flask imports
-from flask import render_template, redirect, url_for, current_app, request
+from flask import render_template, redirect, url_for, current_app, request, send_from_directory
 from flask_mail import Message
 from app.main import bp, Blueprint
 from app.models import SankMerch
@@ -11,6 +12,8 @@ logger = logging.getLogger('app_logger')
 ABOUT = 0
 SHOP = 1
 CONTACT = 2
+
+ABOUT_ROWS = 3
 
 
 # Add in variables used across all pages (base.html)
@@ -58,29 +61,18 @@ def inject_pages():
     return dict(pages=pages)
 
 
+@bp.app_context_processor
+def inject_site_dictionary():
+    site_dictionary = parse_tsv_file(bp.static_folder + '\\lang\\english_text.tsv')
+    return dict(site_text=site_dictionary)
+
+
 @bp.route('/')
 # home page
 @bp.route('/home')
 def home():
     logger.info("Rendering homepage.")
 
-    about_text = "<b>SankChewAir-E</b> is an organization that is focused on creating and maintaining a community of artists " \
-                 "from all social backgrounds to spread hip-hop culture through teaching, events and activities including dance," \
-                 " video games, fashion and music.<br><br>We’re a community full of dancers," \
-                 " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
-                 "with one another.<br><br>For more content, check out our YouTube channel: SankTV. Join our discord and " \
-                 "connect with us on any or all of the social platforms listed below!" \
-                 "<br><br><br>Contact us<br>info@sankchewaire.com"
-    home_text = "<b class=\"sankStyledText\">SankChewAir-E</b> is an organization that is focused on creating and maintaining a community of artists " \
-                 "from all social backgrounds to spread hip-hop culture through teaching, events and activities including dance," \
-                 " video games, fashion and music.<br><br>We’re a community full of dancers," \
-                 " gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times " \
-                 "with one another."
-    socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
-               {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
-               {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
-               {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
-               {'link': 'https://twitter.com/SankChewAirE', 'logo': 'assets/twitterIcon.svg'}]
     logo = 'assets/Sank_Chew_Air_E_color_logo.svg'
 
     # determine which version of site to use: mobile or desktop
@@ -93,32 +85,19 @@ def home():
     else:
         webpage = 'home.html'
 
-    return render_template(webpage, title='SankChewAir-E', about_text=about_text,
-                           logo=logo, socials=socials, home_text=home_text)
+    return render_template(webpage, title='SankChewAir-E', logo=logo)
 
 
 # about us page
 @bp.route('/about')
 def about():
-    mission_text = 'The aim of the SankChewAir-E is to spread the ideals of hip-hop culture, encouraging unity, ' \
-                    'selflessness and collective dedication. It is a haven for culture and like minded ' \
-                    'people. SankChewAir-E is an organization that is focused on creating and maintaining a community' \
-                    ' of artists from all social backgrounds to spread hip-hop culture through teaching, events and ' \
-                    'activities including dance, video games, fashion and music <br><br>We’re a community full of dancers,' \
-                    ' gamers, artists and creators. But most of all, we’re a group of friends that want to spend good times ' \
-                    'with one another.<br><br>For more content, check out our YouTube channel: SankTV. Join our discord and '\
-                    'connect with us on any or all of the social platforms listed below!' \
-                    '<br><br><br>Contact us<br>info@sankchewaire.com'
-    rep_the_sank_text = ""
-    our_story_text = ""
     socials = [{'link': 'https://discord.gg/ywVvEnkgjW', 'logo': 'assets/discordIcon.svg'},
                {'link': 'https://www.youtube.com/channel/UCgggw3qsvVx0_jVSkyGMSmw', 'logo': 'assets/youtubeIcon.svg'},
                {'link': 'https://www.instagram.com/sankchewaire/', 'logo': 'assets/instagramIcon.svg'},
                {'link': 'https://www.facebook.com/SankChewAirE', 'logo': 'assets/facebookIcon.svg'},
                {'link': 'https://twitter.com/SankChewAirE_', 'logo': 'assets/twitterIcon.svg'}]
 
-    return render_template('about.html', title='SankChewAir-E', mission_text=mission_text, socials=socials,
-                           rep_the_sank_text=rep_the_sank_text, our_story_text=our_story_text)
+    return render_template('about.html', title='SankChewAir-E', socials=socials)
 
 
 # programs page
@@ -136,3 +115,41 @@ def programs():
 @bp.route('/contact')
 def contact():
     return 3
+
+
+# parses tsv file to create dictionary of all text on website
+def parse_tsv_file(filename):
+    logger.info("parse_tsv_file: parsing tsv file.")
+    language_dictionary = {}
+    pages = ['about', 'home']
+
+    # initialize all pages
+    for page in pages:
+        language_dictionary[page] = {}
+
+    with open(filename) as tsvfile:
+        tsvreader = csv.reader(tsvfile, delimiter="\t", quotechar="\'", escapechar='\\')
+        for row, line in enumerate(tsvreader):
+            i = 1
+            # do not parse title row
+            if row > 0:
+                # set keys based on the row (ie. first x rows are for the about section, next y rows for landing)
+                if 0 < row < ABOUT_ROWS + 1:
+                    page = pages[0]
+                    keys = ['title', 'text']
+                else:
+                    page = pages[1]
+                    keys = ['slogan_text', 'text']
+                # for every key, record value listed in tsv
+                dict = {}
+                for key in keys:
+                    dict[key] = line[i].replace("â€™", "\'")
+                    i += 1
+                # add line to the corresponding page
+                language_dictionary[page][line[0]] = dict
+
+    # For use in debugging
+    # print(language_dictionary)
+
+    logger.info("parse_tsv_file: tsv parsed successfully.")
+    return language_dictionary

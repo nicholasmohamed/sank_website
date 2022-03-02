@@ -3,9 +3,9 @@
 {% block content %}
     <link rel="stylesheet" href="{{url_for('static', filename='styles/about.css')}}">
     <div class="aboutPage">
-        <h1 class="aboutPageHeading">Our Mission</h1><br><br>
+        <h1 class="aboutPageHeading">{{site_text.about.mission.title}}</h1><br><br>
         {% autoescape false%}
-        <h2 class="aboutPageText">{{mission_text}}</h2>
+        <h2 class="aboutPageText">{{site_text.about.mission.text}}</h2>
         {% endautoescape %}
 
         <!-- Image links of all Sank socials -->
