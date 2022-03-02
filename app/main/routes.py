@@ -63,7 +63,7 @@ def inject_pages():
 
 @bp.app_context_processor
 def inject_site_dictionary():
-    site_dictionary = parse_tsv_file(bp.static_folder + '\\lang\\english_text.tsv')
+    site_dictionary = parse_tsv_file(bp.static_folder + '/lang/english_text.tsv')
     return dict(site_text=site_dictionary)
 
 
