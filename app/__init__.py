@@ -55,6 +55,12 @@ def create_app(config_class=Config):
     def index():
         return redirect(app.config['YOUR_DOMAIN'] + '/en')
 
+    # set route for icons
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
+                                   'sank_tab_icon.ico', mimetype='image/png')
+
     login_manager.blueprint_login_views = {
         'store': '/database_login',
     }
