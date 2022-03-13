@@ -48,7 +48,7 @@ def before_request():
 
     if lang_code not in current_app.config['LANGUAGES'] or lang_code is None:
         logger.info(LANG + request.full_path.rstrip('/ ?'))
-        return redirect("/" + LANG + request.full_path.rstrip('/ ?'))
+        return redirect(current_app.config['YOUR_DOMAIN'] + "/" + LANG + request.full_path.rstrip('/ ?'))
     else:
         LANG = lang_code
         return
