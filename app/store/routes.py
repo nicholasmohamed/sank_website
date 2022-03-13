@@ -5,7 +5,7 @@ import os
 import json
 import logging
 
-from flask import render_template, redirect, url_for, current_app, jsonify, request
+from flask import render_template, redirect, url_for, current_app, jsonify, request, g
 from flask_mail import Message
 from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
 from werkzeug.security import check_password_hash
@@ -19,6 +19,26 @@ logger = logging.getLogger('app_logger')
 login_manager = LoginManager()
 
 pending_orders = {}
+
+
+# language processing
+@bp.url_defaults
+def add_language_code(endpoint, values):
+    values.setdefault('lang_code', g.lang_code)
+
+
+@bp.url_value_preprocessor
+def pull_lang_code(endpoint, values):
+    g.lang_code = values.pop('lang_code')
+
+
+@bp.before_request
+def before_request():
+    base_path = request.full_path.rstrip('/ ?')
+    logger.info('Checking language')
+
+    if base_path == '/favicon.ico':
+        return
 
 
 @bp.route('/database_login')

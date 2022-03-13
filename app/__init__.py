@@ -5,7 +5,7 @@ import logging
 import sys
 from logging.handlers import RotatingFileHandler
 import os
-from flask import Flask, current_app
+from flask import Flask, current_app, redirect
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -41,14 +41,19 @@ def create_app(config_class=Config):
 
     # register blueprints for different modules
     from app.main import bp as main_bp
-    app.register_blueprint(main_bp)
+    app.register_blueprint(main_bp, url_prefix='/<lang_code>')
 
     from app.store import bp as store_bp
-    app.register_blueprint(store_bp)
+    app.register_blueprint(store_bp, url_prefix='/<lang_code>')
     cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     # configure logins
     login_manager.init_app(app)
+
+    # set to default language
+    @app.route('/')
+    def index():
+        return redirect(app.config['YOUR_DOMAIN'] + '/en')
 
     login_manager.blueprint_login_views = {
         'store': '/database_login',

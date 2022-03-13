@@ -39,6 +39,9 @@ class Config(object):
 
     CORS_HEADERS = 'Content-Type'
 
+    # Language Settings
+    LANGUAGES = ['en', 'fr']
+    
     # Database password
     DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD') or 'CultureIsEverything'
     DATABASE_PASSWORD_HASH = generate_password_hash(DATABASE_PASSWORD)

@@ -15,7 +15,7 @@
             <img src="{{url_for('static', filename=logo)}}" class="aboutLogo">
             <br>
             {% autoescape false%}
-                <p class="aboutText">{{about_text}}</p>
+                <p class="aboutText">{{site_text.about.mission.text}}</p>
             {% endautoescape %}
             <br>
         </div>
@@ -30,7 +30,7 @@
     <div class="homeSlides fade">
         <div class = landing>
             <img src="{{url_for('static', filename=logo)}}" class="landingImage">
-            <h2 class="landingText carouselText">"Be happy. Have fun. Get Good."</h2>
+            <h2 class="landingText carouselText">{{site_text.home.landing.slogan_text}}</h2>
         </div>
     </div>
     <!-- Shop page -->

@@ -1,0 +1,18 @@
+{% macro change_lang_code(lang_code) %}
+	{% set path_split = request.path.split('/') %}
+	{% set path_url_array = [] %}
+	{% set count = [] %}
+
+	{% for path in path_split %}
+		{% if count | length > 1 %}
+			{% if path != '' %}
+				{%- do path_url_array.append(path) %}
+			{% endif %}
+		{% endif %}
+		{%- do count.append(1) %}
+	{% endfor %}
+
+	{% set path_url = '/' ~ path_url_array|join('/') %}
+	{% set new_url = request.url_root ~ lang_code ~ path_url %}
+	{{ new_url }}
+{% endmacro %}

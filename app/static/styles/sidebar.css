@@ -58,6 +58,46 @@ body{
     justify-content: flex-end;
 }
 
+.language {
+    margin-top: 44px;
+}
+
+.languageButton{
+    border-color: transparent;
+    border-style: solid;
+    background: transparent;
+}
+
+.languageLogo {
+    width: 25px;
+    height: 25px;
+    border-color: transparent;
+    border-style: solid;
+    background: transparent;
+}
+
+.languageLogo:hover {
+    opacity: 0.5;
+}
+
+.languageList {
+    display: flex;
+    position: absolute;
+    list-style-type: none;
+    direction: ltr;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-left: -7px;
+}
+
+#languageListMenu {
+    visibility: hidden;
+}
+
+.languageLink {
+    padding-right: 25px;
+}
+
 .navbarHeading {
     font-family: avenir;
     color: black;

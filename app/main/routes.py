@@ -2,7 +2,7 @@ import logging
 import csv
 
 # Flask imports
-from flask import render_template, redirect, url_for, current_app, request, send_from_directory
+from flask import render_template, redirect, url_for, current_app, request, send_from_directory, g, abort, session
 from flask_mail import Message
 from app.main import bp, Blueprint
 from app.models import SankMerch
@@ -14,6 +14,44 @@ SHOP = 1
 CONTACT = 2
 
 ABOUT_ROWS = 3
+
+LANG = 'en'
+
+
+# language processing
+@bp.url_defaults
+def add_language_code(endpoint, values):
+    if current_app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
+        values['lang_code'] = LANG
+    values.setdefault('lang_code', g.lang_code)
+
+
+@bp.url_value_preprocessor
+def pull_lang_code(endpoint, values):
+    g.lang_code = values.pop('lang_code')
+
+
+@bp.before_request
+def before_request():
+    base_path = request.full_path.rstrip('/ ?')
+    logger.info('Checking language')
+
+    # ignore icon calls
+    if '/sank_tab_icon.ico' in base_path or 'favicon.ico' in base_path:
+        return
+
+    # check base path language code
+    lang_code = base_path.lstrip('/').split('/')[0]
+    logger.info('Language code:' + lang_code)
+
+    global LANG
+
+    if lang_code not in current_app.config['LANGUAGES'] or lang_code is None:
+        logger.info(LANG + request.full_path.rstrip('/ ?'))
+        return redirect("/" + LANG + request.full_path.rstrip('/ ?'))
+    else:
+        LANG = lang_code
+        return
 
 
 # Add in variables used across all pages (base.html)
@@ -62,13 +100,18 @@ def inject_pages():
 
 
 @bp.app_context_processor
+def inject_languages():
+    languages = current_app.config['LANGUAGES']
+    return dict(languages=languages)
+
+
+@bp.app_context_processor
 def inject_site_dictionary():
-    site_dictionary = parse_tsv_file(bp.static_folder + '/lang/english_text.tsv')
+    site_dictionary = parse_tsv_file(bp.static_folder + '/lang/' + LANG + '_text.tsv')
     return dict(site_text=site_dictionary)
 
 
-@bp.route('/')
-# home page
+@bp.route('/', defaults={'lang_code': 'en'})
 @bp.route('/home')
 def home():
     logger.info("Rendering homepage.")
@@ -143,7 +186,11 @@ def parse_tsv_file(filename):
                 # for every key, record value listed in tsv
                 dict = {}
                 for key in keys:
-                    dict[key] = line[i].replace("â€™", "\'")
+                    # fix quotes getting mixed up
+                    line[i] = line[i].replace("â€™", "\'")
+                    # fix french characters
+                    line[i] = line[i].replace("Ã©", "é").replace("Ãª", "ê")
+                    dict[key] = line[i]
                     i += 1
                 # add line to the corresponding page
                 language_dictionary[page][line[0]] = dict

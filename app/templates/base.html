@@ -1,6 +1,11 @@
+{% import 'macros/macros.j2' as function %}
+
 <html>
     <head>
 		<title>{{ title }}</title>
+		<!-- for the icon -->
+		<link rel="icon" href="static/assets/sank_tab_icon.ico" sizes="32x32">
+
 		<!-- TODO remove when not debugging -->
 		<!--
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
@@ -34,7 +39,21 @@
 			<a href="{{url_for('main.home')}}" class="leftSideNav">
 				<img class="navLogo" src="{{url_for('static', filename='assets/sank_tv_home_logo.svg')}}">
 			</a>
-			<div class="rightSideNav">
+			<ul class="rightSideNav">
+				<li>
+					<ul class="language">
+						<button onclick="openLanguageMenu()" class="languageButton">
+							<img class="languageLogo" src="{{url_for('static', filename='assets/world.svg')}}">
+						</button>
+						<div class="languageList" id="languageListMenu">
+						{% for language in languages %}
+							<li class="languageLink">
+								<a href="{{function.change_lang_code(language)}}" class="navbarHeading" id="{{language}}">{{language}}</a>
+							</li>
+						{% endfor %}
+						</div>
+					</ul>
+				</li>
 				{% for page in pages %}
 				<li class="pageLink">
 					<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
@@ -120,6 +139,16 @@
         	setCheckoutButton();
     	} else {
         	setCheckoutButton();
+    	}
+
+    	function openLanguageMenu() {
+			var language_list = document.getElementById("languageListMenu");
+
+			if (language_list.style.visibility == "hidden"){
+				language_list.style.visibility = "visible";
+			} else {
+				language_list.style.visibility = "hidden";
+			}
     	}
 	</script>
 </html>
