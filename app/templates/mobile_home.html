@@ -111,7 +111,6 @@
     setAssetPath("{{url_for('static', filename='assets/')}}");
     loadCart();
     setDomain("{{domain}}")
-    screen.lockOrientation("portrait-primary");
 
     if (cartItems != null) {
         regenerateCartList();
@@ -121,6 +120,7 @@
     }
 
     shopCarousel.setTranslation();
+    window.screen.orientation.lock("portrait");
 
     screen.orientation.onchange = function (){
         /* Reset Carousel */
