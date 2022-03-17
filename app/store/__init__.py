@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint('store', __name__, url_prefix='/<lang_code>')
+bp = Blueprint('store', __name__)
 
 from app.store import routes

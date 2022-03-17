@@ -14,6 +14,7 @@ SHOP = 1
 CONTACT = 2
 
 ABOUT_ROWS = 3
+HOME_ROWS = 1
 
 LANG = 'en'
 
@@ -160,11 +161,25 @@ def contact():
     return 3
 
 
+@bp.route('/store')
+def store():
+    logger.info("Rendering shop.")
+
+    return render_template('store.html', title='SankChewAir-E')
+
+
+@bp.route('/shop/<index>')
+def shop(index):
+    logger.info("Rendering shop.")
+
+    return render_template('shop.html', index=index, title='SankChewAir-E')
+
+
 # parses tsv file to create dictionary of all text on website
 def parse_tsv_file(filename):
     logger.info("parse_tsv_file: parsing tsv file.")
     language_dictionary = {}
-    pages = ['about', 'home']
+    pages = ['about', 'home', 'cart']
 
     # initialize all pages
     for page in pages:
@@ -180,9 +195,12 @@ def parse_tsv_file(filename):
                 if 0 < row < ABOUT_ROWS + 1:
                     page = pages[0]
                     keys = ['title', 'text']
-                else:
+                elif ABOUT_ROWS < row < ABOUT_ROWS + HOME_ROWS + 1:
                     page = pages[1]
                     keys = ['slogan_text', 'text']
+                else:
+                    page = pages[2]
+                    keys = ['total', 'checkout']
                 # for every key, record value listed in tsv
                 dict = {}
                 for key in keys:
@@ -196,7 +214,7 @@ def parse_tsv_file(filename):
                 language_dictionary[page][line[0]] = dict
 
     # For use in debugging
-    # print(language_dictionary)
+    print(language_dictionary)
 
     logger.info("parse_tsv_file: tsv parsed successfully.")
     return language_dictionary

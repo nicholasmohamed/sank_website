@@ -44,7 +44,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp, url_prefix='/<lang_code>')
 
     from app.store import bp as store_bp
-    app.register_blueprint(store_bp, url_prefix='/<lang_code>')
+    app.register_blueprint(store_bp)
     cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     # configure logins

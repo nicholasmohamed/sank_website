@@ -21,26 +21,6 @@ login_manager = LoginManager()
 pending_orders = {}
 
 
-# language processing
-@bp.url_defaults
-def add_language_code(endpoint, values):
-    values.setdefault('lang_code', g.lang_code)
-
-
-@bp.url_value_preprocessor
-def pull_lang_code(endpoint, values):
-    g.lang_code = values.pop('lang_code')
-
-
-@bp.before_request
-def before_request():
-    base_path = request.full_path.rstrip('/ ?')
-    logger.info('Checking language')
-
-    if base_path == '/favicon.ico':
-        return
-
-
 @bp.route('/database_login')
 def database_login():
     logger.info("database_login")
@@ -64,20 +44,6 @@ def database_login_check():
             return redirect("/database")
         else:
             return redirect("/database_login")
-
-
-@bp.route('/store')
-def store():
-    logger.info("Rendering shop.")
-
-    return render_template('store/store.html', title='SankChewAir-E')
-
-
-@bp.route('/shop/<index>')
-def shop(index):
-    logger.info("Rendering shop.")
-
-    return render_template('store/shop.html', index=index, title='SankChewAir-E')
 
 
 # Will redirect to login if not authenticated
@@ -263,7 +229,8 @@ def create_checkout_session():
                 line_items=merch_items,
                 mode='payment',
                 success_url=current_app.config['YOUR_DOMAIN'],
-                cancel_url=current_app.config['YOUR_DOMAIN']
+                cancel_url=current_app.config['YOUR_DOMAIN'],
+                locale='auto'
             )
         else:
             checkout_session = stripe.checkout.Session.create(

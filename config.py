@@ -47,5 +47,5 @@ class Config(object):
     DATABASE_PASSWORD_HASH = generate_password_hash(DATABASE_PASSWORD)
 
     PAGE_LIST = [{"name": "about", "link": "main.about"},
-                 {"name": "shop", "link": "store.store"}]#,
+                 {"name": "shop", "link": "main.store"}]#,
                 # {"name": "contact", "link": "main.contact"}]
