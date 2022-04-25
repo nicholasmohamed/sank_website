@@ -48,6 +48,7 @@
 						<div class="languageList" id="languageListMenu">
 						{% for language in languages %}
 							<li class="languageLink">
+								<!-- Apply macro to change language code -->
 								<a href="{{function.change_lang_code(language)}}" class="navbarHeading" id="{{language}}">{{language}}</a>
 							</li>
 						{% endfor %}

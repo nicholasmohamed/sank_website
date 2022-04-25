@@ -9,10 +9,11 @@ from flask import render_template, redirect, url_for, current_app, jsonify, requ
 from flask_mail import Message
 from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
 from werkzeug.security import check_password_hash
-from app import db, mail, User
+from app import mail, User
 from app.store import bp, Blueprint
 from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
+from app.database import db_session
 
 logger = logging.getLogger('app_logger')
 
@@ -80,10 +81,10 @@ def update_database_items(item_list):
             # check if needed to delete
             if 'remove' in client_item:
                 item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
-                db.session.delete(database_item)
+                db_session.delete(database_item)
                 for item_size in item_sizes:
-                    db.session.delete(item_size)
-                db.session.commit()
+                    db_session.delete(item_size)
+                db_session.commit()
             else:
                 # update the item with new values
                 database_item.id = client_item.get('id')
@@ -112,10 +113,10 @@ def update_database_items(item_list):
             database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
                                       description=client_item.get('description'), quantity=client_item.get('quantity'),
                                       isAvailable=client_item.get('isAvailable'), tags=client_item.get('tags'))
-            db.session.add(database_item)
+            db_session.add(database_item)
 
         # add items to database
-        db.session.commit()
+        db_session.commit()
 
         logger.info("Database updated.")
 
@@ -129,12 +130,12 @@ def update_related_table(table_name, item_properties, client_item, database_item
             if len(item_properties) != len(client_item.get(table_name)):
                 logger.info("Rewriting all " + table_name + " for merch_id: " + database_item.id)
                 for item_property in item_properties:
-                    db.session.delete(item_property)
+                    db_session.delete(item_property)
                 for i, property in enumerate(client_item.get(table_name)):
                     if table_name == "sizes":
-                        db.session.add(Size(size=property, merch_id=database_item.id))
+                        db_session.add(Size(size=property, merch_id=database_item.id))
                     elif table_name == "imageLink":
-                        db.session.add(Image(imageLink=property, merch_id=database_item.id))
+                        db_session.add(Image(imageLink=property, merch_id=database_item.id))
             else:
                 logger.info("Changing existing " + table_name + " for merch_id: " + database_item.id)
                 for i, property in enumerate(client_item.get(table_name)):
@@ -339,9 +340,9 @@ def generate_line_items(items):
 # create order object based on checkout items
 def construct_order(items):
     order = Order(status="In Progress")
-    db.session.add(order)
+    db_session.add(order)
     for item in items:
         purchased_item = pm(merch_id=item.id, size_id=item.size, order_id=order.id)
-        db.session.add(purchased_item)
-    db.session.commit()
+        db_session.add(purchased_item)
+    db_session.commit()
     return order.id

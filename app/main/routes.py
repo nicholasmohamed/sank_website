@@ -5,7 +5,10 @@ import csv
 from flask import render_template, redirect, url_for, current_app, request, send_from_directory, g, abort, session
 from flask_mail import Message
 from app.main import bp, Blueprint
-from app.models import SankMerch
+from app.models import SankMerch, SankMerchTranslations, Size
+from sqlalchemy import select
+from sqlalchemy.orm import joinedload, Load
+from app.database import db_session, engine
 
 logger = logging.getLogger('app_logger')
 
@@ -74,7 +77,9 @@ def inject_sidebar_width():
 def inject_available_merch():
     # query new arrivals from the shop for the shop carousel
     logger.info("Retrieving new arrivals")
-    available_merch = SankMerch.query.all()
+
+    available_merch = query_merch_and_convert_to_dict()
+
     return dict(available_merch=available_merch)
 
 
@@ -110,6 +115,50 @@ def inject_languages():
 def inject_site_dictionary():
     site_dictionary = parse_tsv_file(bp.static_folder + '/lang/' + LANG + '_text.tsv')
     return dict(site_text=site_dictionary)
+
+
+# Gather all data from queries and create the dictionary afterwards
+def query_merch_and_convert_to_dict():
+    # Create query strings
+    sql_merch_string = "SELECT * FROM sank_merch"
+    sql_merch_translation_string = "SELECT * FROM sank_merch_translations WHERE sank_merch_translations.language = \"" + LANG + "\""
+    sql_size_string = "SELECT * FROM size WHERE size.language = \"" + LANG + "\""
+    sql_image_string = "SELECT * FROM image"
+
+    with engine.connect() as conn:
+        # query data
+        merch_sql = conn.execute(sql_merch_string).fetchall()
+        merch_translation_sql = conn.execute(sql_merch_translation_string).fetchall()
+        sizes_sql = conn.execute(sql_size_string).fetchall()
+        images_sql = conn.execute(sql_image_string).fetchall()
+
+        # convert to dictionary
+        available_merch = [{column: value for column, value in rowproxy.items()} for rowproxy in merch_sql]
+        merch_translation = [{column: value for column, value in rowproxy.items()} for rowproxy in merch_translation_sql]
+        sizes = [{column: value for column, value in rowproxy.items()} for rowproxy in sizes_sql]
+        images = [{column: value for column, value in rowproxy.items()} for rowproxy in images_sql]
+
+        # check if matching item id, then add it to the dictionary
+        for item in available_merch:
+            index = item['id'] - 1
+
+            # declare one to many arrays
+            available_merch[index]['translations'] = []
+            available_merch[index]['sizes'] = []
+            available_merch[index]['images'] = []
+
+            # gather all items for each item id
+            for translation in merch_translation:
+                if translation['merch_id'] == item['id']:
+                    available_merch[index]['translations'] = translation
+                    break
+            for size in sizes:
+                if size['merch_id'] == item['id']:
+                    available_merch[index]['sizes'].append(size)
+            for image in images:
+                if image['merch_id'] == item['id']:
+                    available_merch[index]['images'].append(image)
+        return available_merch
 
 
 @bp.route('/', defaults={'lang_code': 'en'})
@@ -214,7 +263,7 @@ def parse_tsv_file(filename):
                 language_dictionary[page][line[0]] = dict
 
     # For use in debugging
-    print(language_dictionary)
+    #print(language_dictionary)
 
     logger.info("parse_tsv_file: tsv parsed successfully.")
     return language_dictionary

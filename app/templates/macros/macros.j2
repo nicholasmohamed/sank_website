@@ -1,3 +1,6 @@
+## List of jinja functions for use on the website
+
+## Function to change language code of an existing site
 {% macro change_lang_code(lang_code) %}
 	{% set path_split = request.path.split('/') %}
 	{% set path_url_array = [] %}
@@ -6,10 +9,10 @@
 	{% for path in path_split %}
 		{% if count | length > 1 %}
 			{% if path != '' %}
-				{%- do path_url_array.append(path) %}
+				{{ path_url_array.append(path) or ""}}
 			{% endif %}
 		{% endif %}
-		{%- do count.append(1) %}
+		{{ count.append(1) or ""}}
 	{% endfor %}
 
 	{% set path_url = '/' ~ path_url_array|join('/') %}

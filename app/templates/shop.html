@@ -22,7 +22,7 @@
             {% set merch_index = loop.index %}
             <div class="merch">
                 <div class="itemProperties">
-                    <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="merchImage" id="itemImage">
+                    <img src="{{url_for('static', filename=item.images[0].imageLink)}}" class="merchImage" id="itemImage">
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
                     <h2 class="name" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
                     <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
@@ -30,7 +30,8 @@
                     <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
                 </div>
                 <div class="visibleItemDescription" id="visibleDescriptions">
-                    <h2 class="descriptionText" id="itemDescription">{% if item.description == 'None' %}&nbsp{% else %}{{item.description}}{% endif %}</h2><br>
+                    {% set description = item.translations.description %}
+                    <h2 class="descriptionText" id="itemDescription">{% if description == 'None' %}&nbsp{% else %}{{description}}{% endif %}</h2><br>
                     <h2 class="descriptionText" id="itemLongDescription">{% if item.long_description == 'None' %}&nbsp{% else %}{{item.long_description}}{% endif %}</h2><br>
                     <h2 class="descriptionText" id="itemManufacturingDescription">{% if item.manufacturing_description =='None' %}&nbsp{% else %}{{item.manufacturing_description}}{% endif %}</h2><br>
                     <h2 class="descriptionText" id="itemCareInstructions">{% if item.care_instructions == 'None' %}&nbsp{% else %}{{item.care_instructions}}{% endif %}</h2><br>

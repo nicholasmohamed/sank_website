@@ -8,7 +8,7 @@
         <div class="storeItem">
             <div class="storeItemProperties">
                 <a href= {{url_for('main.shop', index=(loop.index-1))}} class="shopLink">
-                    <img src="{{url_for('static', filename=item.imageLink[0].imageLink)}}" class="storeImage" id="itemImage">
+                    <img src="{{url_for('static', filename=item.images[0].imageLink)}}" class="storeImage" id="itemImage">
                     <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
                     <h2 class="storeName" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
                 </a>

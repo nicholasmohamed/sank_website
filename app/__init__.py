@@ -6,19 +6,14 @@ import sys
 from logging.handlers import RotatingFileHandler
 import os
 from flask import Flask, current_app, redirect
-from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
 from flask_login import LoginManager, login_required, UserMixin
+from app.database import init_engine, init_db, db_session
 
-# Connect to database
-db = SQLAlchemy()
 # set db migration
 migrate = Migrate()
-# add bootstrap for aesthetics
-bootstrap = Bootstrap()
 # mail var for mailing receipts
 mail = None
 # configure logins
@@ -32,10 +27,10 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     # init database, bootstrap and mail
-    db.init_app(app)
-    migrate.init_app(app, db)
-    # Link bootstrap settings
-    bootstrap.init_app(app)
+    init_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    init_db()
+    migrate.init_app(app, db_session)
+
     global mail
     mail = Mail(app)
 
@@ -45,6 +40,7 @@ def create_app(config_class=Config):
 
     from app.store import bp as store_bp
     app.register_blueprint(store_bp)
+    # Set CORS headers
     cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     # configure logins
@@ -66,8 +62,9 @@ def create_app(config_class=Config):
     }
 
     # create database
-    with app.app_context():
-        db.create_all()
+    # TODO remove
+    # with app.app_context():
+    #    db.create_all()
 
     # import models
     from app import models
