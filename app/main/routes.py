@@ -79,7 +79,7 @@ def inject_available_merch():
     # query new arrivals from the shop for the shop carousel
     logger.info("Retrieving new arrivals")
 
-    available_merch = query_merch_and_convert_to_dict(LANG)
+    available_merch = query_merch_and_convert_to_dict()
 
     return dict(available_merch=available_merch)
 

@@ -39,10 +39,11 @@
                         <!-- Determine size buttons based on available sizes -->
                         <!-- For box rounding, get count of all sizes with language, and then check count (updated -->
                         <!-- on successful iteration) against the number of sizes for that language -->
-                        {% set number_sizes = function.get_num_items_for_lang(current_lang, item.sizes) %}
+                        {% set sizes_translation = item.sizes[current_lang] %}
                         {% set count = [] %}
-                        {% for size_object in item.sizes %}
-                            {% if size_object is defined and size_object.size|length and size_object.language == current_lang %}
+                        {% set number_sizes = function.get_num_items_for_lang(current_lang, sizes_translation) %}
+                        {% for size_object in sizes_translation %}
+                            {% if size_object is defined and size_object.size|length %}
                                 {{ count.append(1) }}
                                 {% if count|length == 1 %}
                         <label class="sizeButtonLabel firstSizeButton">

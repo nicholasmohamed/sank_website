@@ -5,7 +5,7 @@ from app.database import db_session, engine
 
 
 # Gather all data from queries and create the dictionary afterwards
-def query_merch_and_convert_to_dict(lang_code=None):
+def query_merch_and_convert_to_dict():
     # Create query strings
     sql_merch_string = "SELECT * FROM sank_merch"
     sql_image_string = "SELECT * FROM image"
@@ -31,7 +31,7 @@ def query_merch_and_convert_to_dict(lang_code=None):
 
             # declare one to many arrays
             merch[index]['translations'] = {}
-            merch[index]['sizes'] = []
+            merch[index]['sizes'] = {}
             merch[index]['images'] = []
 
             # gather all items for each item id
@@ -41,7 +41,10 @@ def query_merch_and_convert_to_dict(lang_code=None):
                     merch[index]['translations'][language] = translation
             for size in sizes:
                 if size['merch_id'] == item['id']:
-                    merch[index]['sizes'].append(size)
+                    language = size['language']
+                    if language not in merch[index]['sizes']:
+                        merch[index]['sizes'][language] = []
+                    merch[index]['sizes'][language].append(size)
             for image in images:
                 if image['merch_id'] == item['id']:
                     merch[index]['images'].append(image)

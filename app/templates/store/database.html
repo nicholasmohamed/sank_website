@@ -35,7 +35,8 @@
             <input type="text" name="imageLink" value="{{ images }}"><br>
 
             {% for lang in languages %}
-            {% set translation = item.translations[lang] %}
+                {% set translation = item.translations[lang] %}
+                {% set sizes_translation = item.sizes[lang] %}
             <div class="translation" id="translation_{{lang}}">
                 <label>Item Description:</label>
                 <input type="text" name="description_{{lang}}" value="{{translation.description}}"><br>
@@ -48,19 +49,19 @@
 
                 <label>Care Instructions:</label><br>
                 <textarea rows="2" cols="50" name="care_instructions_{{lang}}">{{translation.care_instructions}}</textarea><br>
-            </div>
-            {% endfor %}
 
-            <label>Available Sizes:</label>
-            <!-- Extract sizes -->
-            {% set x = [] %}
-            {% for size in item.sizes %}
-            <div style="display: none;">
-                {{ x.append(size.size) }}
+                <label>Available Sizes:</label>
+                <!-- Extract sizes -->
+                {% set x = [] %}
+                {% for size in sizes_translation %}
+                <div style="display: none;">
+                    {{ x.append(size.size) }}
+                </div>
+                {% endfor %}
+                {% set sizes = x|join(", ") %}
+                <input type="text" name="sizes_{{lang}}" value="{{ sizes }}"><br>
             </div>
             {% endfor %}
-            {% set sizes = x|join(", ") %}
-            <input type="text" name="sizes" value="{{ sizes }}"><br>
 
             <label>Item Quantity:</label>
             <input type="text" name="quantity" value="{{item.quantity}}"><br>

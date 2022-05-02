@@ -54,7 +54,7 @@ def database_login_check():
 @login_required
 def database():
     merch = query_merch_and_convert_to_dict()
-    print(merch)
+
     return render_template('store/database.html', title='SankChewAir-E', domain=current_app.config['YOUR_DOMAIN'],
                            merch=merch)
 
@@ -104,6 +104,13 @@ def update_database_items(item_list):
                                 'manufacturing_description':   client_item.get('mfg_description' + lang_suffix),
                                 'care_instructions': client_item.get('care_instructions_' + lang_suffix)
                                 })
+
+                    db_session.query(Size). \
+                        filter_by(merch_id=database_item['id'], language=lang_suffix).delete()
+
+                    for size in client_item.get('sizes_' + lang_suffix):
+                        db_session.add(Size(language=lang_suffix, size=size, measurement="", merch_id=database_item['id']))
+                    db_session.commit()
 
                 # handle image table (separate related database)
                 # item_images = Image.query.filter_by(merch_id=database_item.id).all()
@@ -160,12 +167,10 @@ def parse_returned_values(items):
 
     lang_suffixes = current_app.config['LANGUAGES']
     for i in range(length):
-        sizes = parse_returned_array_property(items, 'sizes', i)
         images = parse_returned_array_property(items, 'imageLink', i)
 
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
-                'imageLink': images,
-                'sizes': sizes, 'quantity': items.getlist('quantity')[i],
+                'imageLink': images, 'quantity': items.getlist('quantity')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
 
         # Get all language dependant fields
@@ -174,6 +179,8 @@ def parse_returned_values(items):
             item['long_description_'+ lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
             item['mfg_description_' + lang_suffix] = items.getlist('mfg_description_' + lang_suffix)[i]
             item['care_instructions_' + lang_suffix] = items.getlist('care_instructions_' + lang_suffix)[i]
+
+            item['sizes_' + lang_suffix] = parse_returned_array_property(items, 'sizes_' + lang_suffix, i)
 
         logger.info(item)
         # check for removal
