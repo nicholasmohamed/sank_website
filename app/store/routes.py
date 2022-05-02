@@ -101,7 +101,7 @@ def update_database_items(item_list):
                         filter_by(merch_id=database_item['id'], language=lang_suffix). \
                         update({'description': client_item.get('description_' + lang_suffix),
                                 'long_description': client_item.get('long_description_' + lang_suffix),
-                                'manufacturing_description':   client_item.get('mfg_description' + lang_suffix),
+                                'manufacturing_description':   client_item.get('manufacturing_description_' + lang_suffix),
                                 'care_instructions': client_item.get('care_instructions_' + lang_suffix)
                                 })
 
@@ -175,9 +175,9 @@ def parse_returned_values(items):
 
         # Get all language dependant fields
         for lang_suffix in lang_suffixes:
-            item['description_'+ lang_suffix] = items.getlist('description_' + lang_suffix)[i]
-            item['long_description_'+ lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
-            item['mfg_description_' + lang_suffix] = items.getlist('mfg_description_' + lang_suffix)[i]
+            item['description_' + lang_suffix] = items.getlist('description_' + lang_suffix)[i]
+            item['long_description_' + lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
+            item['manufacturing_description_' + lang_suffix] = items.getlist('manufacturing_description_' + lang_suffix)[i]
             item['care_instructions_' + lang_suffix] = items.getlist('care_instructions_' + lang_suffix)[i]
 
             item['sizes_' + lang_suffix] = parse_returned_array_property(items, 'sizes_' + lang_suffix, i)
