@@ -30,20 +30,25 @@
                     <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
                 </div>
                 <div class="visibleItemDescription" id="visibleDescriptions">
-                    {% set description = item.translations.description %}
-                    <h2 class="descriptionText" id="itemDescription">{% if description == 'None' %}&nbsp{% else %}{{description}}{% endif %}</h2><br>
-                    <h2 class="descriptionText" id="itemLongDescription">{% if item.long_description == 'None' %}&nbsp{% else %}{{item.long_description}}{% endif %}</h2><br>
-                    <h2 class="descriptionText" id="itemManufacturingDescription">{% if item.manufacturing_description =='None' %}&nbsp{% else %}{{item.manufacturing_description}}{% endif %}</h2><br>
-                    <h2 class="descriptionText" id="itemCareInstructions">{% if item.care_instructions == 'None' %}&nbsp{% else %}{{item.care_instructions}}{% endif %}</h2><br>
+                    {% set translation = item.translations[current_lang] %}
+                    <h2 class="descriptionText" id="itemDescription">{% if translation.description == 'None' %}&nbsp{% else %}{{translation.description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemLongDescription">{% if translation.long_description == 'None' %}&nbsp{% else %}{{translation.long_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemManufacturingDescription">{% if translation.manufacturing_description =='None' %}&nbsp{% else %}{{translation.manufacturing_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemCareInstructions">{% if translation.care_instructions == 'None' %}&nbsp{% else %}{{translation.care_instructions}}{% endif %}</h2><br>
                     <div class="sizeButtonGroup" id="itemSizeButtonGroup">
                         <!-- Determine size buttons based on available sizes -->
+                        <!-- For box rounding, get count of all sizes with language, and then check count (updated -->
+                        <!-- on successful iteration) against the number of sizes for that language -->
+                        {% set number_sizes = function.get_num_items_for_lang(current_lang, item.sizes) %}
+                        {% set count = [] %}
                         {% for size_object in item.sizes %}
-                            {% if size_object is defined and size_object.size|length %}
-                                {% if loop.index == 1 %}
+                            {% if size_object is defined and size_object.size|length and size_object.language == current_lang %}
+                                {{ count.append(1) }}
+                                {% if count|length == 1 %}
                         <label class="sizeButtonLabel firstSizeButton">
                             <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton" checked="checked">
                             <div class="sizeButtonStyle firstSizeButton">
-                                {% elif loop.index == item.sizes|length %}
+                                {% elif count|length == number_sizes|int %}
                         <label class="sizeButtonLabel lastSizeButton">
                             <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton">
                             <div class="sizeButtonStyle lastSizeButton">

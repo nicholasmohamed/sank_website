@@ -14,6 +14,7 @@ from app.store import bp, Blueprint
 from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
 from app.database import db_session
+from app.common import *
 
 logger = logging.getLogger('app_logger')
 
@@ -22,6 +23,7 @@ login_manager = LoginManager()
 pending_orders = {}
 
 
+# login to protect the database
 @bp.route('/database_login')
 def database_login():
     logger.info("database_login")
@@ -51,11 +53,10 @@ def database_login_check():
 @bp.route('/database')
 @login_required
 def database():
-    items = SankMerch.query.all()
-    if not items:
-        items = {}
+    merch = query_merch_and_convert_to_dict()
+    print(merch)
     return render_template('store/database.html', title='SankChewAir-E', domain=current_app.config['YOUR_DOMAIN'],
-                           items=items)
+                           merch=merch)
 
 
 @bp.route('/update-database', methods=['POST', 'GET'])
@@ -71,42 +72,48 @@ def update_database():
 
 
 def update_database_items(item_list):
-    database_items = SankMerch.query.all()
+    database_items = query_merch_and_convert_to_dict()
+    lang_suffixes = current_app.config['LANGUAGES']
     for client_item in item_list:
         # get item from database that corresponds to item returned from client
         try:
             # check for id in database items
-            database_item = next(item for item in database_items if int(item.id) == int(client_item['id']))
+            database_item = next(item for item in database_items if int(item['id']) == int(client_item['id']))
 
             # check if needed to delete
             if 'remove' in client_item:
-                item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
-                db_session.delete(database_item)
-                for item_size in item_sizes:
-                    db_session.delete(item_size)
+                Size.query.filter_by(merch_id=database_item['id']).delete()
+                Image.query.filter_by(merch_id=database_item['id']).delete()
+                SankMerchTranslations.query.filter_by(merch_id=database_item['id']).delete()
                 db_session.commit()
             else:
-                # update the item with new values
-                database_item.id = client_item.get('id')
-                database_item.name = client_item.get('name')
-                database_item.price = client_item.get('price')
-                database_item.description = client_item.get('description')
-                database_item.long_description = client_item.get('long_description')
-                database_item.manufacturing_description = client_item.get('mfg_description')
-                database_item.care_instructions = client_item.get('care_instructions')
-                database_item.quantity = client_item.get('quantity')
-                database_item.isAvailable = client_item.get('isAvailable')
-                database_item.tags = client_item.get('tags')
+                for lang_suffix in lang_suffixes:
+                    # update the item with new values
+                    db_session.query(SankMerch).filter_by(id=database_item['id']).\
+                        update({'name': client_item.get('name'),
+                                'price': client_item.get('price'),
+                                'quantity': client_item.get('quantity'),
+                                'isAvailable': client_item.get('isAvailable'),
+                                'tags': client_item.get('tags')
+                                })
+
+                    db_session.query(SankMerchTranslations).\
+                        filter_by(merch_id=database_item['id'], language=lang_suffix). \
+                        update({'description': client_item.get('description_' + lang_suffix),
+                                'long_description': client_item.get('long_description_' + lang_suffix),
+                                'manufacturing_description':   client_item.get('mfg_description' + lang_suffix),
+                                'care_instructions': client_item.get('care_instructions_' + lang_suffix)
+                                })
 
                 # handle image table (separate related database)
-                item_images = Image.query.filter_by(merch_id=database_item.id).all()
+                # item_images = Image.query.filter_by(merch_id=database_item.id).all()
 
                 # handle size table (separate related database)
-                item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
+                # item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
 
-                update_related_table('sizes', item_sizes, client_item, database_item)
+                # update_related_table('sizes', item_sizes, client_item, database_item)
 
-                update_related_table('imageLink', item_images, client_item, database_item)
+                # update_related_table('imageLink', item_images, client_item, database_item)
 
         except StopIteration:
             # create new item
@@ -116,7 +123,7 @@ def update_database_items(item_list):
             db_session.add(database_item)
 
         # add items to database
-        db_session.commit()
+        #db_session.commit()
 
         logger.info("Database updated.")
 
@@ -151,17 +158,22 @@ def parse_returned_values(items):
     length = len(items.getlist('id'))
     item_list = []
 
+    lang_suffixes = current_app.config['LANGUAGES']
     for i in range(length):
         sizes = parse_returned_array_property(items, 'sizes', i)
         images = parse_returned_array_property(items, 'imageLink', i)
 
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
-                'imageLink': images, 'description': items.getlist('description')[i],
+                'imageLink': images,
                 'sizes': sizes, 'quantity': items.getlist('quantity')[i],
-                'long_description': items.getlist('long_description')[i],
-                'mfg_description': items.getlist('mfg_description')[i],
-                'care_instructions': items.getlist('care_instructions')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
+
+        # Get all language dependant fields
+        for lang_suffix in lang_suffixes:
+            item['description_'+ lang_suffix] = items.getlist('description_' + lang_suffix)[i]
+            item['long_description_'+ lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
+            item['mfg_description_' + lang_suffix] = items.getlist('mfg_description_' + lang_suffix)[i]
+            item['care_instructions_' + lang_suffix] = items.getlist('care_instructions_' + lang_suffix)[i]
 
         logger.info(item)
         # check for removal

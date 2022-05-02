@@ -9,19 +9,24 @@
 
     <form action = "{{domain}}/update-database" method = "POST">
         <div id = item-container>
-        {% for i in range(0, items|length) %}
+        {% for item in merch %}
             <label>Item Id:</label>
-            <input type="text" name="id" value="{{items[i].id}}" readonly><br>
+            <input type="text" name="id" value="{{item.id}}" readonly><br>
+
+            {% for lang in languages %}
+            <input type="button" onclick="switchLanguageFields('{{lang}}')" value="{{lang}}">
+            {% endfor %}
+            <br>
 
             <label>Item Name:</label>
-            <input type="text" name="name" value="{{items[i].name}}"><br>
+            <input type="text" name="name" value="{{item.name}}"><br>
 
             <label>Item Price:</label>
-            <input type="text" name="price" value="{{items[i].price}}"><br>
+            <input type="text" name="price" value="{{item.price}}"><br>
 
             <label>Item Image Sources:</label>
             {% set y = [] %}
-            {% for image in items[i].imageLink %}
+            {% for image in item.images %}
             <div style="display: none;">
                 {{ y.append(image.imageLink) }}
             </div>
@@ -29,22 +34,27 @@
             {% set images = y|join(", ") %}
             <input type="text" name="imageLink" value="{{ images }}"><br>
 
-            <label>Item Description:</label>
-            <input type="text" name="description" value="{{items[i].description}}"><br>
+            {% for lang in languages %}
+            {% set translation = item.translations[lang] %}
+            <div class="translation" id="translation_{{lang}}">
+                <label>Item Description:</label>
+                <input type="text" name="description_{{lang}}" value="{{translation.description}}"><br>
 
-            <label>Item Long Description:</label><br>
-            <textarea rows="2" cols="50" name="long_description">{{items[i].long_description}}</textarea><br>
+                <label>Item Long Description:</label><br>
+                <textarea rows="2" cols="50" name="long_description_{{lang}}">{{translation.long_description}}</textarea><br>
 
-            <label>Manufacturing Description:</label><br>
-            <textarea rows="2" cols="50" name="mfg_description">{{items[i].manufacturing_description}}</textarea><br>
+                <label>Manufacturing Description:</label><br>
+                <textarea rows="2" cols="50" name="mfg_description_{{lang}}">{{translation.manufacturing_description}}</textarea><br>
 
-            <label>Care Instructions:</label><br>
-            <textarea rows="2" cols="50" name="care_instructions">{{items[i].care_instructions}}</textarea><br>
+                <label>Care Instructions:</label><br>
+                <textarea rows="2" cols="50" name="care_instructions_{{lang}}">{{translation.care_instructions}}</textarea><br>
+            </div>
+            {% endfor %}
 
             <label>Available Sizes:</label>
             <!-- Extract sizes -->
             {% set x = [] %}
-            {% for size in items[i].sizes %}
+            {% for size in item.sizes %}
             <div style="display: none;">
                 {{ x.append(size.size) }}
             </div>
@@ -53,10 +63,10 @@
             <input type="text" name="sizes" value="{{ sizes }}"><br>
 
             <label>Item Quantity:</label>
-            <input type="text" name="quantity" value="{{items[i].quantity}}"><br>
+            <input type="text" name="quantity" value="{{item.quantity}}"><br>
 
             <label>Availability:</label>
-            <input type="text" name="isAvailable" value="{{items[i].isAvailable}}"><br>
+            <input type="text" name="isAvailable" value="{{item.isAvailable}}"><br>
 
             <label>Remove:</label>
             <input type="text" name="remove" value="false"><br><br><br><br>
@@ -66,8 +76,10 @@
         <input type = "submit" value = "Submit" />
     </form>
     <script>
-        {% if items is defined and items|length %}
-            var i = {{items[items|length-1].id}} + 1;
+        switchLanguageFields('en')
+
+        {% if merch is defined and merch|length %}
+            var i = {{merch[merch|length-1].id}} + 1;
         {% else %}
             var i = 0;
         {% endif %}
@@ -114,6 +126,18 @@
             container.appendChild(div);
 
             i++;
+        }
+
+        // Set visible language fields
+        function switchLanguageFields(lang) {
+            var translation_container = document.getElementById('translation_' + lang);
+            var translations = document.getElementsByClassName('translation');
+
+            for (var i = 0; i < translations.length; i++) {
+                translations[i].style.display = "none";
+            }
+
+            translation_container.style.display = 'block';
         }
     </script>
 </body>

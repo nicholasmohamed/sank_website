@@ -19,3 +19,13 @@
 	{% set new_url = request.url_root ~ lang_code ~ path_url %}
 	{{ new_url }}
 {% endmacro %}
+
+{% macro get_num_items_for_lang(lang_code, items) %}
+	{% set count = [] %}
+	{% for item in items %}
+		{% if item.language == lang_code %}
+			{{ count.append(1) or ""}}
+		{% endif %}
+	{% endfor %}
+	{{ count|length }}
+{% endmacro %}
