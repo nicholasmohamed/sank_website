@@ -26,9 +26,7 @@ def query_merch_and_convert_to_dict():
         images = [{column: value for column, value in rowproxy.items()} for rowproxy in images_sql]
 
         # check if matching item id, then add it to the dictionary
-        for item in merch:
-            index = item['id'] - 1
-
+        for index, item in enumerate(merch):
             # declare one to many arrays
             merch[index]['translations'] = {}
             merch[index]['sizes'] = {}

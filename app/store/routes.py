@@ -71,6 +71,13 @@ def update_database():
         return redirect("/database")
 
 
+@bp.route('/add-item-to-database')
+def add_new_item():
+    create_new_merch_item()
+
+    return redirect("/database")
+
+
 def update_database_items(item_list):
     database_items = query_merch_and_convert_to_dict()
     lang_suffixes = current_app.config['LANGUAGES']
@@ -82,14 +89,15 @@ def update_database_items(item_list):
 
             # check if needed to delete
             if 'remove' in client_item:
-                Size.query.filter_by(merch_id=database_item['id']).delete()
-                Image.query.filter_by(merch_id=database_item['id']).delete()
-                SankMerchTranslations.query.filter_by(merch_id=database_item['id']).delete()
+                db_session.query(Size).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(Image).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(SankMerchTranslations).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(SankMerch).filter_by(id=database_item['id']).delete()
                 db_session.commit()
             else:
                 for lang_suffix in lang_suffixes:
                     # update the item with new values
-                    db_session.query(SankMerch).filter_by(id=database_item['id']).\
+                    db_session.query(SankMerch).filter_by(id=database_item['id']). \
                         update({'name': client_item.get('name'),
                                 'price': client_item.get('price'),
                                 'quantity': client_item.get('quantity'),
@@ -97,14 +105,17 @@ def update_database_items(item_list):
                                 'tags': client_item.get('tags')
                                 })
 
-                    db_session.query(SankMerchTranslations).\
+                    db_session.query(SankMerchTranslations). \
                         filter_by(merch_id=database_item['id'], language=lang_suffix). \
                         update({'description': client_item.get('description_' + lang_suffix),
                                 'long_description': client_item.get('long_description_' + lang_suffix),
-                                'manufacturing_description':   client_item.get('manufacturing_description_' + lang_suffix),
+                                'manufacturing_description': client_item.get(
+                                    'manufacturing_description_' + lang_suffix),
                                 'care_instructions': client_item.get('care_instructions_' + lang_suffix)
                                 })
 
+                    # Update one to many queries
+                    # Update sizes
                     db_session.query(Size). \
                         filter_by(merch_id=database_item['id'], language=lang_suffix).delete()
 
@@ -112,27 +123,43 @@ def update_database_items(item_list):
                         db_session.add(Size(language=lang_suffix, size=size, measurement="", merch_id=database_item['id']))
                     db_session.commit()
 
-                # handle image table (separate related database)
-                # item_images = Image.query.filter_by(merch_id=database_item.id).all()
+                    # Update images
+                    db_session.query(Image). \
+                        filter_by(merch_id=database_item['id']).delete()
 
-                # handle size table (separate related database)
-                # item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
-
-                # update_related_table('sizes', item_sizes, client_item, database_item)
-
-                # update_related_table('imageLink', item_images, client_item, database_item)
+                    for image_path in client_item.get('images'):
+                        db_session.add(Image(imageLink=image_path, merch_id=database_item['id']))
+                    db_session.commit()
 
         except StopIteration:
-            # create new item
-            database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
-                                      description=client_item.get('description'), quantity=client_item.get('quantity'),
-                                      isAvailable=client_item.get('isAvailable'), tags=client_item.get('tags'))
-            db_session.add(database_item)
-
-        # add items to database
-        #db_session.commit()
+            logger.error("Unknown item.")
 
         logger.info("Database updated.")
+
+
+# Add new SankMerch to database and all relationships
+def create_new_merch_item():
+    lang_suffixes = current_app.config['LANGUAGES']
+    default_sizes = ['S', 'M', 'L']
+
+    # create new item
+    merch_item = SankMerch(price=0.00, isAvailable=0, quantity=1, tags='None')
+
+    db_session.add(merch_item)
+    db_session.commit()
+    # Create new items for translations, sizes
+    for lang_suffix in lang_suffixes:
+        translation = SankMerchTranslations(language=lang_suffix, description="None", long_description="None",
+                                            manufacturing_description="None", care_instructions="None",
+                                            merch_id=merch_item.id)
+        db_session.add(translation)
+        for size in default_sizes:
+            db_session.add(Size(language=lang_suffix, size=size, measurement="", merch_id=merch_item.id))
+
+    # Create new items for images
+    db_session.add(Image(imageLink="", merch_id=merch_item.id))
+
+    db_session.commit()
 
 
 # updates related array table for sank_merch
@@ -170,16 +197,16 @@ def parse_returned_values(items):
         images = parse_returned_array_property(items, 'imageLink', i)
 
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
-                'imageLink': images, 'quantity': items.getlist('quantity')[i],
+                'images': images, 'quantity': items.getlist('quantity')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
 
         # Get all language dependant fields
         for lang_suffix in lang_suffixes:
+            # if it is a new item, will not have description for
             item['description_' + lang_suffix] = items.getlist('description_' + lang_suffix)[i]
             item['long_description_' + lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
             item['manufacturing_description_' + lang_suffix] = items.getlist('manufacturing_description_' + lang_suffix)[i]
             item['care_instructions_' + lang_suffix] = items.getlist('care_instructions_' + lang_suffix)[i]
-
             item['sizes_' + lang_suffix] = parse_returned_array_property(items, 'sizes_' + lang_suffix, i)
 
         logger.info(item)
