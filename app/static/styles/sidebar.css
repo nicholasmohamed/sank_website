@@ -1,0 +1,549 @@
+body{
+    overscroll-behavior: none;
+    }
+
+.nav {
+    display: block;
+    background-color: transparent;
+    height: 48px;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    margin-left: -10px;
+    z-index: 3;
+}
+.heading {
+    font-size: 15px;
+    color: white;
+    margin-top: -14px;
+    text-align: center;
+    transition: margin-right .5s;
+}
+
+/* Styles for the navigation */
+.pageLinkList {
+    display: flex;
+    list-style-type: none;
+    direction: ltr;
+    justify-content: space-between;
+}
+
+.pageLink {
+    margin-top: 50px;
+}
+
+.leftSideNav {
+    display: flex;
+    margin-top: 32px;
+    margin-left: 5%;
+    gap: 10px;
+}
+
+.navLogo {
+    width: 96px;
+    height: 50px;
+    margin-top: -5px;
+    transform: scale(1.7);
+}
+
+.navText {
+    font-family: avenir;
+    font-size: 19px;
+}
+
+.rightSideNav {
+    display: flex;
+    gap: 30px;
+    margin-right: 8%;
+    justify-content: flex-end;
+}
+
+.language {
+    margin-top: 44px;
+}
+
+.languageButton{
+    border-color: transparent;
+    border-style: solid;
+    background: transparent;
+}
+
+.languageLogo {
+    width: 25px;
+    height: 25px;
+    border-color: transparent;
+    border-style: solid;
+    background: transparent;
+}
+
+.languageLogo:hover {
+    opacity: 0.5;
+}
+
+.languageList {
+    display: flex;
+    position: absolute;
+    list-style-type: none;
+    direction: ltr;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-left: -7px;
+}
+
+#languageListMenu {
+    visibility: hidden;
+}
+
+.languageLink {
+    padding-right: 25px;
+}
+
+.navbarHeading {
+    font-family: avenir;
+    color: black;
+}
+
+.navbarHeading:hover {
+    font-family: subway-berlin-sc;
+    font-size: 20px;
+}
+
+.currentHeading {
+    font-family: subway-berlin-sc;
+    font-size: 20px;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 3px;
+}
+
+.heading a {
+    color: white;
+}
+
+/* The sidebar menu */
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar:hover, .closebtn:hover {
+  color: #f1f1f1;
+}
+
+.sidebarHeading{
+    font-family: kuunari;
+}
+
+/* Position and style the close button (top right corner) */
+.closebtn {
+    position: relative;
+    top: 0;
+    left: 0;
+    left: 0;
+    right: 345px;
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    color: #d8241a;
+    background: transparent;
+    border-color: transparent;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#sidebarButton {
+  transition: margin-left .5s; /* If you want a transition effect */
+  padding: 0px;
+}
+
+/* Search bar styles */
+.search {
+    display: none;
+    margin-top: 10px;
+    transition: 0.5s;
+}
+
+.cartBtn {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border-style: none;
+    margin-top: 5px;
+}
+
+.cartBtn:hover{
+    background-color: grey;
+}
+
+.cartListButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: transparent;
+    border-style: solid;
+    border-radius: 50px;
+    background-color: #d8241a;
+    color: #d8241a;
+    position: absolute;
+}
+
+.cartListButton button {
+    background-color: transparent;
+    border-color: transparent;
+    border-style: solid;
+}
+
+#cartListIcon {
+    display: block;
+}
+
+.cartListButton h3{
+}
+
+#newNotificationCircle {
+    position: absolute;
+    visibility: hidden;
+}
+
+
+/* Styling for cart items list */
+.cartListContainer {
+    margin-top: 30px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: scroll;
+}
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 1224px)
+and (min-device-height : 600px){
+
+}
+
+.cartItem {
+    display: flex;
+}
+
+.cartItem h4 {
+    color: #d8241a;
+}
+
+.cartItem img {
+    position: relative;
+    align-self: center;
+}
+
+/* cartInfo contains cartName and cartQuantity */
+.cartInfo {
+}
+
+/* cartName contains cartItemName and cartItemPrice */
+.cartName {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartItemName {
+    font-family: avenir-heavy;
+    align-self: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: clip;
+}
+
+.cartItemPrice {
+    font-family: avenir-heavy;
+    align-self: center;
+}
+
+/* cartSpecificInfo contains cartItemDescription and cartQuantity */
+.cartSpecificInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartDescription {
+    display: flex;
+    flex-direction: column;
+}
+
+.cartItemDescription {
+    font-family: avenir-book;
+    color: #332D26;
+    text-align: left;
+    width: 100%;
+    height: 50%;
+    overflow-y: clip;
+    margin-bottom: 0px;
+}
+
+.cartItemSize {
+    font-family: avenir-book;
+    color: #332D26;
+    text-align: left;
+    width: 100%;
+    height: 50%;
+}
+
+.cartQuantity {
+    display: flex;
+    justify-content: space-between;
+    direction: rtl;
+}
+
+.cartQuantity input {
+}
+
+.cartItemQuantity {
+    font-family: avenir;
+}
+
+.shipRadioButton {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    font-family: avenir-heavy;
+    gap: 20%;
+    top: 74%;
+    font-size: 35px;
+    color: #d8241a;
+}
+
+.shipRadioButton {
+    top: 74%;
+    font-size: 35px;
+}
+
+.shipButton {
+    height: 20px;
+    width: 20px;
+}
+
+.checkoutBox {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    left: 15%;
+}
+
+.totalLine {
+    margin-right: 81px;
+    margin-bottom: 15px;
+}
+
+.totalBox{
+    display: flex;
+    direction: ltr;
+    color: #d8241a;
+    font-family: avenir;
+}
+
+#cartTotal {
+    position: absolute;
+    right: 80px;
+}
+
+#checkoutButton {
+    font-family: 'avenir-heavy';
+    color: #FFFFFF;
+    background-color: #d8241a;
+    border-color: transparent;
+    border-radius: 20px;
+}
+
+#checkoutButton:disabled {
+    background-color: #F08884;
+}
+
+.closeSearchBtn {
+    font-size: 36px;
+    margin-top: -8px;
+    margin-left: 15px;
+    color: white;
+}
+
+.closeSearchBtn:hover {
+    color: grey;
+}
+
+#searchBar {
+  transition: margin-right .5s; /* If you want a transition effect */
+  padding: 0px;
+}
+
+@media only screen
+and (orientation: landscape){
+    #newNotificationCircle {
+        width: 20px;
+        height: 20px;
+        top: 105%;
+        right: 5.8%;
+    }
+
+    .cartListButton {
+        width: 38px;
+        height: 39px;
+        margin-top: 38px;
+        margin-right: 20px;
+    }
+
+    .cartItemSize {
+        margin-top: -30px;
+        font-size: 25px;
+    }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-device-width : 1224px)
+and (min-device-height : 600px) {
+    body {
+        margin-top: -12px;
+    }
+
+    .openCartIcon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .cartListContainer {
+        height: 63%;
+    }
+
+    #newNotificationCircle {
+        width: 15px;
+        height: 15px;
+        top: 5%;
+        right: 55%;
+    }
+
+    .cartListButton {
+        width: 40px;
+        height: 40px;
+        margin-top: 40px;
+        margin-right: 20px;
+    }
+
+    .cartItem {
+        height: 130px;
+        width: 100%;
+    }
+
+    .cartItem img {
+        height: 100px;
+        width: 100px;
+        margin-left: 20px;
+    }
+
+    /* cartInfo contains cartName and cartQuantity */
+    .cartInfo {
+        width: 62%;
+        margin-left: 20px;
+    }
+
+    /* cartName contains cartItemName and cartItemPrice */
+    .cartName {
+        width: 100%;
+        height: 50%;
+    }
+
+    .cartItemName {
+        font-size: 21px;
+        width: 66%;
+        text-align: start;
+    }
+
+    .cartItemPrice {
+        font-size: 21px;
+    }
+
+    /* cartSpecificInfo contains cartItemDescription and cartQuantity */
+    .cartSpecificInfo{
+        width: 100%;
+        height: 50%;
+        font-size: 25px;
+    }
+
+    .cartItemDescription {
+        font-size: 13px;
+        margin-top: -15px;
+    }
+
+    .cartItemSize {
+        margin-top: 0px;
+        font-size: 13px;
+    }
+
+    .cartQuantity input {
+        height: 20px;
+        width: 20px;
+    }
+
+    .cartItemQuantity {
+        margin-top: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 20px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    #checkoutButton {
+        display: block;
+        width: 80%;
+        height: 60px;
+        margin-right: auto;
+        margin-left: auto;
+        font-size: 30px;
+    }
+
+    .totalBox {
+        font-size: 20px;
+    }
+
+    #checkoutButton {
+        width: 80%;
+        height: 55px;
+        margin-left: 0px;
+        font-size: 23px;
+        display: block;
+    }
+}

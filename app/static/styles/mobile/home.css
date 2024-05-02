@@ -1,0 +1,107 @@
+@font-face {
+    font-family: graphic;
+    src: url('/static/fonts/Graphik/Graphik-Black.otf') format('opentype');
+}
+@font-face {
+    font-family: graphic;
+    font-weight: light;
+    src: url('/static/fonts/Graphik/Graphik-Light.otf') format('opentype');
+}
+
+@font-face {
+    font-family: kuunari;
+    src: url('/static/fonts/Kuunari_Black_Condensed/Kuunari_Black_Condensed.otf') format('opentype');
+}
+
+@font-face {
+    font-family: avenir;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Black.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir;
+    font-weight: light;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Light.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir-heavy;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Heavy.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir;
+    font-weight: medium;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Medium.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir-next;
+    src: url('/static/fonts/Avenir/Avenir_Next/Avenir_Next.ttc') format('truetype');
+}
+@font-face {
+    font-family: avenir-roman;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Roman.otf') format('opentype');
+}
+@font-face {
+    font-family: avenir-book;
+    src: url('/static/fonts/Avenir/Avenir_LT_Std/AvenirLTStd-Book.otf') format('opentype');
+}
+@font-face {
+    font-family: subway-berlin-sc;
+    src: url('/static/fonts/Subway_Berlin_SC/Subway_Berlin_SC.ttf') format('truetype');
+}
+
+html {
+  position: fixed;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+    background-color: #FFFFFF;
+    overflow-y: clip;
+    -webkit-font-smoothing : antialiased;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    margin-top: 0;
+    font-family: avenir-heavy;
+    font-size: 70px;
+}
+
+p {
+    font-family: avenir-book;
+    font-size: 40px;
+    font-weight: 45;
+    color: black;
+}
+
+/*
+h1{
+    font-family: kuunari;
+}
+
+h3{
+    font-family: graphic;
+    font-weight: light;
+}*/
+
+.homeDescription{
+    color: grey;
+}
+
+.videoHeading {
+    font-size: 40px;
+}
+
+a,
+a img {
+    text-decoration: none;
+    outline: none;
+    border: 0px none transparent;
+}
+
+footer {
+}
+

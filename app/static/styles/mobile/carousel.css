@@ -10,13 +10,13 @@
 
 .sizeButton {
     background-color: #FFFFFF;
-    color: #FF9933;
-    border-color:  #FF9933;
+    color: var(--menu-text-colour);
+    border-color: var(--menu-text-colour);
 }
 
 .sizeButton:hover,
 .sizeButton:focus {
-    background-color: #FF9933;
+    background-color: var(--menu-text-colour);
     color: #FFFFFF;
 }
 
@@ -32,9 +32,25 @@
 
 
 .sizeButton {
-    font-size: 20px;
-    height: 60px;
-    width: 80px;
+    font-size: 27px;
+    height: 90px;
+    width: 120px;
+}
+
+.carouselText {
+    color: black;
+}
+
+#pageHeading {
+    font-family: subway-berlin-sc;
+}
+
+.landingText {
+    font-family: subway-berlin-sc;
+}
+
+.slideshow-container {
+    margin-top: clamp(-15%, 10%, 40%);
 }
 
 /* For regular mobile screens*/
@@ -43,13 +59,17 @@ and (orientation: portrait)
 and (min-device-width : 360px)
 and (max-device-width : 499px)
 and (max-device-height : 739px) {
-    .slideshow-container {
-        margin-top: 25%;
+    .slideshow-containerf {
+        margin-top: 10%;
     }
 
     /* About Page */
     .aboutPage {
-        margin-top: -180px;
+        margin-top: -80px;
+    }
+
+    .aboutText {
+        font-size: 33px;
     }
 
     /* Landing Page */
@@ -59,7 +79,7 @@ and (max-device-height : 739px) {
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
     /* Shop page */
@@ -87,8 +107,8 @@ and (max-device-height : 739px) {
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -97,7 +117,7 @@ and (max-device-height : 739px) {
 and (orientation: portrait)
 and (min-device-width : 500px)
 and (max-device-width : 700px){
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: -2%;
     }
 
@@ -124,7 +144,7 @@ and (max-device-width : 700px){
     }
 
     .landingText {
-        font-size: 30px;
+        font-size: 47px;
     }
 
     /* Shop page */
@@ -156,8 +176,8 @@ and (max-device-width : 700px){
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -166,8 +186,8 @@ and (max-device-width : 700px){
 and (orientation: portrait)
 and (min-device-height : 740px)
 and (max-device-height : 899px) {
-    .slideshow-container {
-        margin-top: 35%;
+    .slideshow-containerf {
+        margin-top: 22%;
     }
 
     /* About Page */
@@ -182,7 +202,7 @@ and (max-device-height : 899px) {
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
     /* Shop Page */
@@ -210,8 +230,8 @@ and (max-device-height : 899px) {
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -221,26 +241,26 @@ and (orientation: portrait)
 and (min-device-width : 280px)
 and (max-device-width: 359px){
     .slideshow-container {
-        margin-top: 50%;
+        margin-top: 40%;
     }
 
     /* About Page */
     .aboutText {
-        font-size: 52px;
+        font-size: 47px;
     }
 
     .aboutPage {
-        margin-top: -370px;
+        margin-top: -320px;
     }
 
     /* Landing Page */
     .landingImage {
-        height: 700px;
-        width: 700px;
+        height: 650px;
+        width: 650px;
     }
 
     .landingText {
-        font-size: 40px;
+        font-size: 57px;
     }
 
 
@@ -252,6 +272,7 @@ and (max-device-width: 359px){
 
     .merch {
         padding-bottom: 80px;
+        margin-bottom: 130px;
     }
 
     .cartButton {
@@ -273,8 +294,8 @@ and (max-device-width: 359px){
     }
 
     .sizeButtonGroup {
-        top: -1020px;
-        left: 700px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -284,35 +305,39 @@ and (orientation: portrait)
 and (min-device-height : 900px)
 and (max-device-height : 1370px) {
     #pageHeading {
-        font-size: 60px;
+        font-size: 85px;
     }
 
-    .slideshow-container {
-        margin-top: 10%;
+    .slideshow-containerf {
+        margin-top: -15%;
     }
 
     /* Landing page */
     .landingImage {
-        height: 600px;
-        width: 600px;
+        height: 700px;
+        width: 700px;
     }
 
     .landingText {
-        font-size: 30px;
+        font-size: 47px;
     }
 
     /* Shop page */
     .merchImage {
-        width: 500px;
-        height: 500px;
+        width: 700px;
+        height: 700px;
     }
 
     .cartButton {
         position: absolute;
-        right: 35%;
-        height: 100px;
-        width: 100px;
+        right: 28%;
+        height: 130px;
+        width: 130px;
         margin-top: -2%;
+    }
+
+    .cartListButton {
+        padding-left: 4px;
     }
 
     .price {
@@ -327,21 +352,25 @@ and (max-device-height : 1370px) {
     }
 
     .shopItem {
-        margin-top: 20%;
+        margin-top: 480px;
     }
 
     /* about page */
     .aboutText {
-        font-size: 30px;
+        font-size: 45px;
     }
 
     .aboutPage {
-        margin-top: -75px;
+        margin-top: 200px;
+    }
+
+    .merch {
+        margin-bottom: 22%;
     }
 
     .sizeButtonGroup {
-        top: -765px;
-        left: 640px;
+        top: -82%;
+        left: 72%;
     }
 }
 
@@ -388,9 +417,13 @@ and (min-device-width : 280px) {
     }
 
     .aboutLogo {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
         margin-left: 40px;
+        padding-left: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
     }
 
     .aboutText {
@@ -402,6 +435,7 @@ and (min-device-width : 280px) {
         justify-content: center;
         align-items: center;
         margin-top: 30px;
+        gap: 20px;
     }
 
     .socialImage{
@@ -421,11 +455,9 @@ and (min-device-width : 280px) {
     }
 
     .landingText {
-        font-family: avenir-heavy;
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-weight: 85;
     }
 
@@ -443,7 +475,7 @@ and (min-device-width : 280px) {
         height: 35px;
         width: 35px;
         opacity: 40%;
-        background-color: #FFFFFF;
+        background-color: #000000;
         border-style: solid;
         border-color: transparent;
         border-radius: 50%;
@@ -454,7 +486,7 @@ and (min-device-width : 280px) {
     .dotText {
         font-family: avenir-heavy;
         position: relative;
-        top: 20%;
+        top: -15%;
         font-size: 18px;
     }
 
@@ -531,6 +563,7 @@ and (min-device-width : 280px) {
     .merch {
       max-width: auto;
       z-index: -2;
+      margin-bottom: 10%;
     }
 
     .merchSlider {
@@ -620,7 +653,6 @@ and (min-device-width : 280px) {
 
     .price {
         position: relative;
-        color: #FFFFFF;
         font-family: avenir;
         font-weight: bold;
         z-index: 2;
@@ -631,8 +663,8 @@ and (min-device-width : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-family: avenir-roman;
+        font-weight: 15;
     }
 }
 
@@ -684,7 +716,9 @@ and (min-device-height : 280px) {
         display: flex;
         justify-content: center;
         align-items: center;
-        position: absolute;
+        position: relative;
+        bottom: 0%;
+        right: 2%;
     }
 
     .socialImage{
@@ -705,11 +739,9 @@ and (min-device-height : 280px) {
     }
 
     .landingText {
-        font-family: avenir-heavy;
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-weight: 85;
     }
 
@@ -729,7 +761,7 @@ and (min-device-height : 280px) {
         height: 20px;
         width: 20px;
         opacity: 40%;
-        background-color: #FFFFFF;
+        background-color: #000000;
         border-style: solid;
         border-color: transparent;
         border-radius: 50%;
@@ -899,7 +931,6 @@ and (min-device-height : 280px) {
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
         font-family: avenir-roman;
     }
 
@@ -932,7 +963,7 @@ and (max-device-height : 739px){
         font-size: 40px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
       margin-top: -4%;
       max-width: 1000px;
     }
@@ -943,7 +974,7 @@ and (max-device-height : 739px){
     }
 
     .landingText {
-        font-size: 18px;
+        font-size: 35px;
     }
 
     .aboutLogo {
@@ -953,7 +984,7 @@ and (max-device-height : 739px){
     }
 
     .aboutText {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .socials {
@@ -999,8 +1030,8 @@ and (max-device-height : 739px){
     }
 
     .sizeButtonGroup {
-        top: -475px;
-        left: 655px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -1013,7 +1044,7 @@ and (max-device-height : 899px){
         font-size: 40px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 4%;
         max-width: 1000px;
     }
@@ -1025,7 +1056,7 @@ and (max-device-height : 899px){
     }
 
     .landingText {
-        font-size: 22px;
+        font-size: 39px;
     }
 
     /* about page */
@@ -1082,8 +1113,8 @@ and (max-device-height : 899px){
 
 
     .sizeButtonGroup {
-        top: -500px;
-        left: 655px;
+        top: -50%;
+        left: 72%;
     }
 }
 
@@ -1096,7 +1127,7 @@ and (min-device-height : 900px)
         font-size: 60px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 2%;
         max-width: 1500px;
     }
@@ -1133,7 +1164,7 @@ and (min-device-height : 900px)
     }
 
     .landingText {
-        font-size: 37px;
+        font-size: 54px;
     }
 
     /* Shop page */
@@ -1171,7 +1202,99 @@ and (min-device-height : 900px)
     }
 
     .sizeButtonGroup {
-        top: -770px;
-        left: 865px;
+        top: -50%;
+        left: 72%;
     }
 }
+
+@media only screen
+and (orientation: landscape)
+and (min-device-width : 1224px)
+and (min-device-height : 600px)
+{
+    #pageHeading {
+        margin-top: 20px;
+        font-size: 60px;
+    }
+
+    .slideshow-container {
+        margin-top: 2%;
+        max-width: 1500px;
+    }
+
+     /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+
+    .aboutText {
+        font-size: 28px;
+    }
+
+    .aboutPage {
+        margin-left: 0px;
+    }
+
+    .socials {
+        margin-left: 23%;
+        bottom: 36%;
+    }
+
+    .socialImage{
+        height: 120px;
+        width: 144px;
+        padding-left: 30px;
+    }
+
+    /* landing page */
+    .landingImage {
+        height: 600px;
+        width: 600px;
+    }
+
+    .landingText {
+        font-size: 54px;
+    }
+
+    /* Shop page */
+    .merchImage {
+        width: 400px;
+        height: 400px;
+    }
+
+    .cartButton {
+        position: absolute;
+        right: 37%;
+        height: 100px;
+        width: 100px;
+        margin-top: -2%;
+    }
+
+    .price {
+        font-size: 60px;
+        left: 58%;
+        bottom: 300px;
+    }
+
+    .name {
+        font-size: 30px;
+        padding-top: 10px;
+    }
+
+    .shopItem {
+        margin-top: 8%;
+    }
+
+    .merchImage {
+        width: 500px;
+        height: 500px;
+    }
+
+    .sizeButtonGroup {
+        top: -50%;
+        left: 72%;
+    }
+}
+

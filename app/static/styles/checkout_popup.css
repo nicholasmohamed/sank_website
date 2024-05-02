@@ -1,8 +1,9 @@
 /* The Modal (background) */
 .checkoutModalBg {
   display: none; /* Hidden by default */
+  align-items: center;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 3; /* Sit on top */
   left: 0;
   top: 0;
   width: 100vw;
@@ -30,7 +31,7 @@
 
 /* The Close Button */
 .close {
-    color: #FF9933;
+    color: #d8241a;
     float: left;
     font-size: 50px;
     font-weight: bold;
@@ -40,7 +41,7 @@
 
 .deliveryWindowHeading {
     font-family: avenir;
-    color: #FF9933;
+    color: #d8241a;
 }
 
 .deliveryText {
@@ -96,8 +97,13 @@
 input[class="radioButton"]:hover + div,
 input[class="radioButton"]:focus + div,
 input[class="radioButton"]:checked + div {
-    background-color: #FF9933;
+    background-color: #d8241a;
     color: #FFFFFF;
+}
+
+.buttonText {
+    pointer-events: none;
+    background: transparent;
 }
 
 .close:hover,
@@ -123,126 +129,44 @@ input[type="radio"] {
 }
 
 @media only screen
-and (orientation: portrait)
-and (max-device-height: 899px){
-    .checkoutModal {
-        width: 70%;
-        height: 45%;
-        margin-top: 50%;
-    }
-
+and (min-device-width : 1224px)
+and (min-device-height : 600px) {
     .deliveryWindowHeading {
-        font-size: 50px;
-        padding-top: 50px;
-    }
-
-    .deliveryText {
         font-size: 35px;
-        padding-top: 30px;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    .buttonText {
-        font-size: 30px;
-        top: -10%;
-    }
-
-    .radioButtonGroup {
-        top: 10%;
-        height: 18%;
-    }
-
-    .proceedToCheckoutButton {
-        left: 85%;
-        top: 130px;
-    }
-}
-
-@media only screen
-and (orientation: portrait)
-and (min-device-height : 900px)
-and (max-device-height : 1370px){
-    .checkoutModal {
-        width: 70%;
-        height: 58%;
-        margin-top: 25%;
-    }
-
-    .deliveryWindowHeading {
-        font-size: 50px;
         padding-top: 50px;
     }
 
     .deliveryText {
-        font-size: 35px;
-        padding-top: 30px;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    .buttonText {
-        font-size: 30px;
-        top: -10%;
-    }
-
-    .radioButtonGroup {
-        top: 10%;
-        height: 18%;
-    }
-
-    .proceedToCheckoutButton {
-        left: 85%;
-        top: 130px;
-    }
-}
-
-@media only screen
-and (orientation: landscape){
-    .deliveryWindowHeading {
-        font-size: 50px;
-        padding-top: 50px;
-    }
-
-    .deliveryText {
-        font-size: 25px;
+        font-size: 15px;
         padding-left: 30px;
         padding-right: 30px;
         height: 60px;
+        padding-top: 20px;
     }
 
     .buttonText {
-        font-size: 25px;
-        top: -10%;
+        font-size: 14px;
+        top: 25%;
     }
 
     .radioButtonGroup {
         top: 10%;
         height: 15%;
+        margin-top: 4%;
     }
 
     .proceedToCheckoutButton {
-        left: 86%;
-        top: 80px;
+        left: 400px;
+        top: 35px;
     }
-}
 
-@media only screen
-and (orientation: landscape)
-and (min-device-height : 280px)
-and (max-device-height : 899px)
-{
-    .checkoutModal {
-        width: 70%;
-        height: 95%;
+    .proceedToCheckoutIcon{
+        height: 25px;
+        width: 60px;
     }
-}
 
-@media only screen
-and (orientation: landscape)
-and (min-device-height : 900px)
-{
     .checkoutModal {
-        width: 70%;
-        height: 72%;
-        margin-top: 10%;
+        width: 480px;
+        height: 330px;
     }
 }

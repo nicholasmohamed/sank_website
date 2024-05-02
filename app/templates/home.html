@@ -1,141 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='styles/home.css')}}">
+
 <br><br>
-<script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
-
-<h1 id="pageHeading" class="fade">ABOUT</h1>
-<!-- Slideshow container -->
-<div class="slideshow-container" id="slideList">
-    <!-- About page -->
-    <div class="homeSlides slideInRight">
-        <!-- Text for the about page -->
-        <div class="aboutPage">
-            <img src="{{url_for('static', filename=logo)}}" class="aboutLogo">
-            <br>
-            {% autoescape false%}
-                <p class="aboutText">{{about_text}}</p>
-            {% endautoescape %}
-            <br>
-        </div>
-        <!-- Image links of all Sank socials -->
-        <div class="socials">
-        {% for social in socials %}
-            <a href="{{social.link}}"><img src="{{url_for('static', filename=social.logo)}}" class="socialImage"></a>
-        {% endfor %}
-        </div>
-    </div>
-    <!-- Landing page -->
-    <div class="homeSlides fade">
-        <div class = landing>
-            <img src="{{url_for('static', filename=logo)}}" class="landingImage">
-            <h2 class="landingText">Be happy. Have fun. Get Good.</h2>
-        </div>
-    </div>
-    <!-- Shop page -->
-    <div class="homeSlides slideInLeft">
-        <!-- Background text and shop buttons -->
-        <div class="shopItem">
-            <div class="addRemoveButtons">
-                <input id="addButton" class="cartButton" type="image" onclick="selectSize()"
-                       src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
-            </div>
-            <!-- Shop carousel items -->
-            <div id = "merchList">
-            {% if available_merch|length > 0 %}
-            {% for item in available_merch %}
-                <div class="merch">
-                    <!-- If image is unavailable (no quantity on hand) -->
-                    {% if item.quantity <= 0 %}
-                    <div class="soldOut">
-                    {% endif %}
-                    <img src="{{url_for('static', filename=item.imageLink)}}" class="merchImage" id="itemImage">
-                    {% if item.quantity <= 0 %}
-                    </div>
-                    {% endif %}
-                    <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
-                    <h2 class="name" id="itemName">{{item.name}}</h2>
-                    <h2 class="price" id="itemPrice">${{item.price}}</h2>
-                    <h2 class="itemDescriptor" id="itemDescription">{{item.description}}</h2>
-                    <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
-                    <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}
-                    </h2>
-
-                    <!-- To position buttons relative to merch item, but not impact space -->
-                    <div style="position: relative; width: 0; height: 0">
-                        <div class="sizeButtonGroup" id="itemSizeButtons">
-                            <!-- Determine size buttons based on available sizes -->
-                            {% for size_object in item.sizes %}
-                            <button class="sizeButton" value={{size_object.size}} onclick="sizeButtonPressed(this.value)">{{size_object.size}}</button>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% if item.quantity <= 0 %}
-                    <h2 class="soldOutText" id="soldText">SOLD OUT</h2>
-                    {% endif %}
+<div class = "homepage">
+    <img src="{{url_for('static', filename=logo)}}" class="homeImage">
+    <div class="homepageText">
+        <div class="leadInTextContainer">
+            <h1 class="flavorNumber">1</h1>
+            <div>
+                <h1 class="leadInText">HUMBLE PILL</h1><br>
+                <div style="display: flex; margin-top: -10px;">
+                    <h1 class="leadInText">A DAY</h1>
+                    <h1 class="endLeadInText">TAKES THE EGO AWAY</h1>
                 </div>
-            {% endfor %}
-            {% endif %}
+            </div>
         </div>
-        <!-- Start the shop carousel -->
-        <script>showMerch(0);</script>
+        {% autoescape false%}
+        <h2 class="homeText">{{site_text.home.landing.text}}</h2>
+        {% endautoescape %}
+        <h2 class="sloganText">{{site_text.home.landing.slogan_text}}</h2>
     </div>
-    </div>
+
 </div>
-
-<!-- The dots/circles -->
-<div style="text-align:center" class="dotContainer">
-    <div class="dot">
-        <h6 class="dotText">about</h6>
-        <div class="dotIcon" onclick="dotClick(0);"></div>
-    </div>
-    <div class="dot">
-        <h6 class="dotText">&nbsp</h6>
-        <div class="dotIcon" onclick="dotClick(1);"></div>
-    </div>
-    <div class="dot">
-        <h6 class="dotText">shop</h6>
-        <div class="dotIcon" onclick="dotClick(2);"></div>
-    </div>
-</div>
-
-<script>showSlides(1);</script>
-<script>
-
-    setAssetPath("{{url_for('static', filename='assets/')}}");
-    loadCart();
-
-    if (cartItems != null) {
-        regenerateCartList();
-        setCheckoutButton();
-    } else {
-        setCheckoutButton();
-    }
-
-    shopCarousel.setTranslation();
-
-    screen.orientation.onchange = function (){
-        /* Reset Carousel */
-        var slideList = document.getElementById("merchList");
-        slideList.style.transform = "translate(0%,  0%)";
-        shopCarousel.activeIndex = 0;
-        showMerch(0);
-
-        /* Set translation amount */
-        shopCarousel.setTranslation();
-    };
-
-    function dotClick(index){
-        currentSlide(index);
-
-        var merch_index = shopCarousel.activeIndex;
-        resetTimeout(35000, merch_index + 1);
-
-        if (index == 2) {
-            updateUI(merch_index);
-        }
-    }
-</script>
-<br>
 {% endblock %}
 

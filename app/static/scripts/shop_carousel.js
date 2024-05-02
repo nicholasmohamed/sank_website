@@ -2,7 +2,7 @@
 * Requires carousel.js
 */
 
-const TIMEOUT_DURATION = 35000;
+const TIMEOUT_DURATION = -1;
 var timeouts = []
 var shopCarousel = new Carousel("merch", "merchList", true, true, true);
 shopCarousel.initialize(0);
@@ -25,6 +25,10 @@ function resetTimeout(milliseconds, index){
     timeouts.push(setTimeout(showMerch, milliseconds, index));
 }
 
+function advanceMerch(increment){
+    showMerch(shopCarousel.activeIndex + increment);
+}
+
 function showMerch(index){
     shopCarousel.advanceCarousel(index);
 
@@ -32,7 +36,9 @@ function showMerch(index){
     updateUI(shopCarousel.activeIndex);
 
     // reset change merch timer
-    resetTimeout(TIMEOUT_DURATION, shopCarousel.activeIndex + 1);
+    if (TIMEOUT_DURATION > 0){
+        resetTimeout(TIMEOUT_DURATION, shopCarousel.activeIndex + 1);
+    }
 }
 
 function updateUI(index){
@@ -44,6 +50,7 @@ function updateUI(index){
         var price = merch[i].querySelector("#itemPrice");
         var soldOut = merch[i].querySelector("#soldText");
         var size = merch[i].querySelector("#itemSizeButtons");
+        var itemDescriptions = merch[i].querySelector("#visibleDescriptions")
 
         if (i == shopCarousel.activeIndex){
             name.style.visibility = "visible";
@@ -51,12 +58,20 @@ function updateUI(index){
             if (soldOut != null){
                 soldOut.style.visibility = "visible";
             }
+            if (itemDescriptions != null){
+                itemDescriptions.style.visibility = "visible";
+            }
         } else {
             name.style.visibility = "hidden";
             price.style.visibility = "hidden";
-            size.style.visibility = "hidden";
+            if (size != null) {
+                 size.style.visibility = "hidden";
+            }
             if (soldOut != null){
                 soldOut.style.visibility = "hidden";
+            }
+            if (itemDescriptions != null){
+                itemDescriptions.style.visibility = "hidden";
             }
         }
     }

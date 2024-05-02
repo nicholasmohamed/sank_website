@@ -1,6 +1,10 @@
-var domain = 'http://127.0.0.1:5000';
+var domain = '';
 
 var cartItems = [];
+
+function setDomain(new_domain){
+    domain = new_domain;
+}
 
 //clear cart
 function clearCart(){
@@ -29,12 +33,16 @@ function addToCart(item) {
     var itemImage = item.querySelector("#itemImage").src;
     var itemSize =  item.querySelector("#itemSize").textContent;
 
+    // Extract item size
     itemSize.replace("\n", "")
     itemSize = itemSize.trim();
 
     if (itemSize == "None") {
         itemSize = "";
     }
+
+    // Extract item name
+    itemName = itemName.split(/\u2013/g)[0].trim()
 
     var cartItem = {
         id: itemId,

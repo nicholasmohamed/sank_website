@@ -1,0 +1,42 @@
+
+/* About page */
+.aboutPage {
+    width: 50%;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: block;
+}
+
+.aboutPageHeading {
+    font-family:  subway-berlin-sc;
+}
+
+.aboutPageText {
+    font-family: avenir;
+    font-weight: 25;
+    font-size: 19px;
+}
+
+.socials{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 30px;
+    right: 2%;
+}
+
+.socialImage{
+    height: 80px;
+    width: 96px;
+    padding-left: 30px;
+}
+
+.socialImage{
+    height: 90px;
+    width: 108px;
+    padding-left: 30px;
+}
+

@@ -1,9 +1,16 @@
+{% import 'macros/macros.j2' as function %}
+
 <html>
     <head>
 		<title>{{ title }}</title>
+		<!-- for the icon -->
+		<link rel="icon" href="static/assets/sank_tab_icon.ico" sizes="32x32">
+
 		<!-- TODO remove when not debugging -->
+		<!--
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="-1">
+		-->
 		<!-- add scripts if needed -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
@@ -13,39 +20,71 @@
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/home_carousel.js')}}"></script>
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/touch_events.js')}}"></script>
 
-		<!-- scripts for handling cart -->
+		<!-- scripts for handling cart (item management) -->
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_shop.js')}}"></script>
-		<!-- scripts for opening side menu -->
+		<!-- scripts for opening side menu/cart -->
 		<script type="text/javascript" src="{{url_for('static', filename='scripts/quick_cart.js')}}"></script>
+		<!-- scripts for handling modal -->
+		<script type="text/javascript" src="{{url_for('static', filename='scripts/checkout_modal.js')}}"></script>
     </head>
 	<!-- url_for finds filepath for stylesheet -->
-	<link rel="stylesheet" href="{{url_for('static', filename='sank_home.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='sidebar.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='carousel.css')}}">
-		<link rel="stylesheet" href="{{url_for('static', filename='checkout_popup.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/reset.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/sidebar.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/carousel.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/checkout_popup.css')}}">
     <body>
 		<header class = "nav">
-			<!-- button to search site -->
-			<div class = cartListButton>
-				<div id="cartListIcon">
-					<button onclick="openCart()"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
-					</button>
-				</div>
-				<div id="newNotificationCircle">
-					<img src="{{url_for('static', filename='assets/circle.svg')}}">
-				</div>
+			<ul class="pageLinkList">
+			<a href="{{url_for('main.home')}}" class="leftSideNav">
+				<img class="navLogo" src="{{url_for('static', filename='assets/sank_tv_home_logo.svg')}}">
+			</a>
+			<ul class="rightSideNav">
+				<li>
+					<ul class="language">
+						<button onclick="openLanguageMenu()" class="languageButton">
+							<img class="languageLogo" src="{{url_for('static', filename='assets/world.svg')}}">
+						</button>
+						<div class="languageList" id="languageListMenu">
+						{% for language in languages %}
+							<li class="languageLink">
+								<!-- Apply macro to change language code -->
+								<a href="{{function.change_lang_code(language)}}" class="navbarHeading" id="{{language}}">{{language}}</a>
+							</li>
+						{% endfor %}
+						</div>
+					</ul>
+				</li>
+				{% for page in pages %}
+				<li class="pageLink">
+					<a href="{{url_for(page.link)}}" class="navbarHeading" id="{{page.name}}">{{page.name}}</a>
+				</li>
+				{% endfor %}
+				<!-- button to open the cart -->
+				<li>
+					<div class = cartListButton>
+						<div id="cartListIcon">
+							<button onclick="openCart('{{sidebar_width}}')"><img src="{{url_for('static', filename='assets/shopping_bag.svg')}}" class="openCartIcon">
+							</button>
+							<div id="newNotificationCircle">
+								<img src="{{url_for('static', filename='assets/circle.svg')}}">
+							</div>
+						</div>
+					</div>
+				</li>
 			</div>
+			</ul>
 			<div id="rightSidebar" class="sidebar">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
+				<button class="closebtn" onclick="closeCart()">&times;</button>
 				<!-- list all items in the cart -->
 				<div class="cartListContainer" id="cartList"></div>
 				<div class="checkoutBox">
-					<hr class="totalLine" size="5px" width="90%" color="#FF9933">
+					<hr class="totalLine" size="5px" width="80%" color="#d8241a">
 					<div class="totalBox">
-						<h2 class="totalLabel">Subtotal: </h2>
+						<h2 class="totalLabel">{{site_text.cart.cart.total}}: </h2>
 						<h2 id="cartTotal">$0<h2>
 					</div>
-					<button id="checkoutButton" onclick="checkoutClicked()">Checkout</button>
+					<button id="checkoutButton" onclick="checkoutClicked()">{{site_text.cart.cart.checkout}}</button>
 				</div>
 			</div>
 		</header>
@@ -54,9 +93,11 @@
 			<div id="deliveryOptionsWindow" class="checkoutModal">
 				<a href="javascript:void(0)" class="close" onclick="closeShippingModal()">&times;</a>
 				<h1 class="deliveryWindowHeading">Select your Method of Shipping</h1>
+				{% autoescape false %}
 				<h2 class="deliveryText" id="pickupText">{{delivery_text.pickup}}</h2>
 				<h2 class="deliveryText" id="deliveryMtlText">{{delivery_text.deliveryMtl}}</h2>
 				<h2 class="deliveryText" id="deliveryCanText">{{delivery_text.deliveryCan}}</h2>
+				{% endautoescape %}
 				<div class="radioButtonGroup" id="deliveryOptionsGroup">
 					<label class="buttonLabel firstButton">
 						<input type="radio" name="deliveryOption" id="pickupButton" autocomplete="off" value="0" class="radioButton">
@@ -87,4 +128,28 @@
 		{% block content %}
 		{% endblock %}
     </body>
+	<script>
+		currentLinks = document.getElementsByClassName('navbarHeading')
+		for(var i = 0; i < currentLinks.length; i++){
+			if (window.location.href == currentLinks[i].href){
+				currentLinks[i].className += ' currentHeading';
+			}
+		}
+		if (cartItems != null) {
+        	regenerateCartList();
+        	setCheckoutButton();
+    	} else {
+        	setCheckoutButton();
+    	}
+
+    	function openLanguageMenu() {
+			var language_list = document.getElementById("languageListMenu");
+
+			if (language_list.style.visibility == "hidden"){
+				language_list.style.visibility = "visible";
+			} else {
+				language_list.style.visibility = "hidden";
+			}
+    	}
+	</script>
 </html>

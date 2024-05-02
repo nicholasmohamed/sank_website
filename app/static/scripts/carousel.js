@@ -230,6 +230,6 @@ class Carousel {
         }
 
         dots[this.activeIndex].className += " active";
-        dotLabels[this.activeIndex].style.color = "white";
+        dotLabels[this.activeIndex].style.color = "black";
     }
 }

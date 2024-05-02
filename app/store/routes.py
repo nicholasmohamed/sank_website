@@ -5,23 +5,58 @@ import os
 import json
 import logging
 
-from flask import render_template, redirect, url_for, current_app, jsonify, request
+from flask import render_template, redirect, url_for, current_app, jsonify, request, g
 from flask_mail import Message
-from app import db, mail
-from app.store import bp
-from app.models import SankMerch, Size, Order
+from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
+from werkzeug.security import check_password_hash
+from app import mail, User
+from app.store import bp, Blueprint
+from app.models import SankMerch, Size, Order, Image
 from app.models import PurchasedMerch as pm
+from app.database import db_session
+from app.common import *
 
 logger = logging.getLogger('app_logger')
 
+login_manager = LoginManager()
 
-# TODO adding and removing items from database
+pending_orders = {}
+
+
+# login to protect the database
+@bp.route('/database_login')
+def database_login():
+    logger.info("database_login")
+    return render_template('store/database_login.html', domain=current_app.config['YOUR_DOMAIN'],
+                           title='SankChewAir-E')
+
+
+@bp.route('/database_login_check', methods=['POST', 'GET'])
+def database_login_check():
+    if request.method == 'POST':
+        logger.info("database_login_check: Checking login")
+        result = request.form
+        password = result.get('password')
+
+        if check_password_hash(current_app.config['DATABASE_PASSWORD_HASH'], password):
+            database_user = User()
+            database_user.id = "admin"
+            login_user(database_user)
+            logger.info('database_login_check: Password successful.')
+
+            return redirect("/database")
+        else:
+            return redirect("/database_login")
+
+
+# Will redirect to login if not authenticated
 @bp.route('/database')
+@login_required
 def database():
-    items = SankMerch.query.all()
-    if not items:
-        items = {}
-    return render_template('store/database.html', title='SankChewAir-E', items=items, length=len(items))
+    merch = query_merch_and_convert_to_dict()
+
+    return render_template('store/database.html', title='SankChewAir-E', domain=current_app.config['YOUR_DOMAIN'],
+                           merch=merch)
 
 
 @bp.route('/update-database', methods=['POST', 'GET'])
@@ -36,72 +71,145 @@ def update_database():
         return redirect("/database")
 
 
+@bp.route('/add-item-to-database')
+def add_new_item():
+    create_new_merch_item()
+
+    return redirect("/database")
+
+
 def update_database_items(item_list):
-    database_items = SankMerch.query.all()
+    database_items = query_merch_and_convert_to_dict()
+    lang_suffixes = current_app.config['LANGUAGES']
     for client_item in item_list:
         # get item from database that corresponds to item returned from client
         try:
             # check for id in database items
-            database_item = next(item for item in database_items if int(item.id) == int(client_item['id']))
+            database_item = next(item for item in database_items if int(item['id']) == int(client_item['id']))
 
             # check if needed to delete
             if 'remove' in client_item:
-                db.session.delete(database_item)
-                db.session.commit()
+                db_session.query(Size).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(Image).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(SankMerchTranslations).filter_by(merch_id=database_item['id']).delete()
+                db_session.query(SankMerch).filter_by(id=database_item['id']).delete()
+                db_session.commit()
             else:
-                # update the item with new values
-                database_item.id = client_item.get('id')
-                database_item.name = client_item.get('name')
-                database_item.price = client_item.get('price')
-                database_item.description = client_item.get('description')
-                database_item.imageLink = client_item.get('imageLink')
-                database_item.quantity = client_item.get('quantity')
-                database_item.isAvailable = client_item.get('isAvailable')
-                database_item.tags = client_item.get('tags')
+                for lang_suffix in lang_suffixes:
+                    # update the item with new values
+                    db_session.query(SankMerch).filter_by(id=database_item['id']). \
+                        update({'name': client_item.get('name'),
+                                'price': client_item.get('price'),
+                                'quantity': client_item.get('quantity'),
+                                'isAvailable': client_item.get('isAvailable'),
+                                'tags': client_item.get('tags')
+                                })
 
-                # handle size table (separate related database)
-                item_sizes = Size.query.filter_by(merch_id=database_item.id).all()
+                    db_session.query(SankMerchTranslations). \
+                        filter_by(merch_id=database_item['id'], language=lang_suffix). \
+                        update({'description': client_item.get('description_' + lang_suffix),
+                                'long_description': client_item.get('long_description_' + lang_suffix),
+                                'manufacturing_description': client_item.get(
+                                    'manufacturing_description_' + lang_suffix),
+                                'care_instructions': client_item.get('care_instructions_' + lang_suffix)
+                                })
 
-                # if there is same number in db, replace data. If not, replace everything
-                if len(item_sizes) != len(client_item.get('sizes')):
-                    for item_size in item_sizes:
-                        db.session.delete(item_size)
-                    for i, size in enumerate(client_item.get('sizes')):
-                        db.session.add(Size(id=i+1, size=size, merch_id=database_item.id))
-                else:
-                    for i, size in enumerate(client_item.get('sizes')):
-                        item_sizes[i].size = size
+                    # Update one to many queries
+                    # Update sizes
+                    db_session.query(Size). \
+                        filter_by(merch_id=database_item['id'], language=lang_suffix).delete()
+
+                    for size in client_item.get('sizes_' + lang_suffix):
+                        db_session.add(Size(language=lang_suffix, size=size, measurement="", merch_id=database_item['id']))
+                    db_session.commit()
+
+                    # Update images
+                    db_session.query(Image). \
+                        filter_by(merch_id=database_item['id']).delete()
+
+                    for image_path in client_item.get('images'):
+                        db_session.add(Image(imageLink=image_path, merch_id=database_item['id']))
+                    db_session.commit()
 
         except StopIteration:
-            # create new item
-            database_item = SankMerch(id=client_item.get('id'), name=client_item.get('name'), price=client_item.get('price'),
-                                      imageLink=client_item.get('imageLink'), description=client_item.get('description'),
-                                      quantity=client_item.get('quantity'), isAvailable=client_item.get('isAvailable'),
-                                      tags=client_item.get('tags'))
-            db.session.add(database_item)
+            logger.error("Unknown item.")
 
-        # add items to database
-        db.session.commit()
+        logger.info("Database updated.")
+
+
+# Add new SankMerch to database and all relationships
+def create_new_merch_item():
+    lang_suffixes = current_app.config['LANGUAGES']
+    default_sizes = ['S', 'M', 'L']
+
+    # create new item
+    merch_item = SankMerch(price=0.00, isAvailable=0, quantity=1, tags='None')
+
+    db_session.add(merch_item)
+    db_session.commit()
+    # Create new items for translations, sizes
+    for lang_suffix in lang_suffixes:
+        translation = SankMerchTranslations(language=lang_suffix, description="None", long_description="None",
+                                            manufacturing_description="None", care_instructions="None",
+                                            merch_id=merch_item.id)
+        db_session.add(translation)
+        for size in default_sizes:
+            db_session.add(Size(language=lang_suffix, size=size, measurement="", merch_id=merch_item.id))
+
+    # Create new items for images
+    db_session.add(Image(imageLink="", merch_id=merch_item.id))
+
+    db_session.commit()
+
+
+# updates related array table for sank_merch
+def update_related_table(table_name, item_properties, client_item, database_item):
+    # first check if there are changes
+    # then if there is same number in db, replace data. If not, replace everything
+    if len(client_item.get(table_name)) > 0:
+        if client_item.get(table_name)[0] != '':
+            if len(item_properties) != len(client_item.get(table_name)):
+                logger.info("Rewriting all " + table_name + " for merch_id: " + database_item.id)
+                for item_property in item_properties:
+                    db_session.delete(item_property)
+                for i, property in enumerate(client_item.get(table_name)):
+                    if table_name == "sizes":
+                        db_session.add(Size(size=property, merch_id=database_item.id))
+                    elif table_name == "imageLink":
+                        db_session.add(Image(imageLink=property, merch_id=database_item.id))
+            else:
+                logger.info("Changing existing " + table_name + " for merch_id: " + database_item.id)
+                for i, property in enumerate(client_item.get(table_name)):
+                    if table_name == "sizes":
+                        item_properties[i].size = property
+                    elif table_name == "imageLink":
+                        item_properties[i].imageLink = property
 
 
 # Returns all items in a usable format (python dictionary)
 def parse_returned_values(items):
+    logger.info("Parsing values.")
     length = len(items.getlist('id'))
     item_list = []
 
+    lang_suffixes = current_app.config['LANGUAGES']
     for i in range(length):
-        if i < len(items.getlist('sizes')):
-            sizes = items.getlist('sizes')[i].split(",")
-            # remove leading white-spaces
-            for x, size in enumerate(sizes):
-                sizes[x] = size.lstrip(' ')
-        else:
-            sizes = []
+        images = parse_returned_array_property(items, 'imageLink', i)
 
         item = {'id': items.getlist('id')[i], 'name': items.getlist('name')[i], 'price': items.getlist('price')[i],
-                'imageLink': items.getlist('imageLink')[i], 'description': items.getlist('description')[i],
-                'sizes': sizes, 'quantity': items.getlist('quantity')[i],
+                'images': images, 'quantity': items.getlist('quantity')[i],
                 'isAvailable': items.getlist('isAvailable')[i].lower() in ['True', 'true', 't', 'T']}
+
+        # Get all language dependant fields
+        for lang_suffix in lang_suffixes:
+            # if it is a new item, will not have description for
+            item['description_' + lang_suffix] = items.getlist('description_' + lang_suffix)[i]
+            item['long_description_' + lang_suffix] = items.getlist('long_description_' + lang_suffix)[i]
+            item['manufacturing_description_' + lang_suffix] = items.getlist('manufacturing_description_' + lang_suffix)[i]
+            item['care_instructions_' + lang_suffix] = items.getlist('care_instructions_' + lang_suffix)[i]
+            item['sizes_' + lang_suffix] = parse_returned_array_property(items, 'sizes_' + lang_suffix, i)
+
+        logger.info(item)
         # check for removal
         if i < len(items.getlist('remove')):
             if items.getlist('remove')[i] in ['True', 'true', 't', 'T']:
@@ -111,17 +219,18 @@ def parse_returned_values(items):
     return item_list
 
 
-# store page
-@bp.route('/store')
-def store():
-    description = 'Check out some of the SankChewAir-E swag.'
+# parse array property
+def parse_returned_array_property(items, item_name, index):
+    logger.info(len(items.getlist(item_name)))
+    if index < len(items.getlist(item_name)):
+        properties = items.getlist(item_name)[index].split(",")
+        # remove leading white-spaces
+        for x, property in enumerate(properties):
+            properties[x] = property.lstrip(' ')
+    else:
+        properties = []
 
-    # query items to sell in the store
-    items = SankMerch.query.all()
-    if not items:
-        items = {}
-    return render_template('store/store.html', title='SankChewAir-E', description=description, items=items,
-                           pages=current_app.config['PAGE_LIST'])
+    return properties
 
 
 @bp.route('/stripe-config')
@@ -147,15 +256,13 @@ def create_checkout_session():
             if merch:
                 items.append(convert_database_to_cart_item(merch, item))
 
-        # construct_order(items)
-
         merch_items = generate_line_items(items)
 
         # Determine shipping rate 1 - Delivery MTl, 2- Delivery CAN
         if int(data['shipping']) == 1:
-            shipping_rate = "shr_1JvpKLBUeaWrljhjmVH3xPjK"
+            shipping_rate = current_app.config['STRIPE_SHIPPING_RATE_1']
         elif int(data['shipping']) == 2:
-            shipping_rate = "shr_1JqkJLBUeaWrljhjNqjTaOrk"
+            shipping_rate = current_app.config['STRIPE_SHIPPING_RATE_2']
         else:
             shipping_rate = ""
 
@@ -169,7 +276,8 @@ def create_checkout_session():
                 line_items=merch_items,
                 mode='payment',
                 success_url=current_app.config['YOUR_DOMAIN'],
-                cancel_url=current_app.config['YOUR_DOMAIN']
+                cancel_url=current_app.config['YOUR_DOMAIN'],
+                locale='auto'
             )
         else:
             checkout_session = stripe.checkout.Session.create(
@@ -179,6 +287,9 @@ def create_checkout_session():
                 success_url=current_app.config['YOUR_DOMAIN'],
                 cancel_url=current_app.config['YOUR_DOMAIN']
             )
+        logger.info('Checkout session created')
+
+        pending_orders[checkout_session['payment_intent']] = {"line_items": items}
         return jsonify({'sessionId': checkout_session['id']})
 
     except:
@@ -228,13 +339,23 @@ def webhook():
 
 
 # save into database and send customer a receipt
-def handle_order(session):
-    recipient_email = session['charges']['data'][0]['billing_details']['email']
+def handle_order(payment_intent):
+    recipient_email = payment_intent['charges']['data'][0]['billing_details']['email']
     source_email = "info@sankchewaire.com"
+
+    # get line items
+    items = pending_orders[payment_intent['id']]['line_items']
+
+    # format string for list of items
+    item_string = "\n"
+    for line_item in items:
+        item_string += "\n" + str(line_item['name']) + "\t\t" + str(line_item['price']) + "\n"
+
+    # send e-mail
     logger.info('Sending e-mail to ' + recipient_email)
     msg = Message('SankChewAir-E Order Confirmation', sender=current_app.config['MAIL_USERNAME'],
                   recipients=[recipient_email, source_email])
-    msg.body = 'Thank you for your purchase! We have attached your receipt.'
+    msg.body = 'Thank you for your purchase! We have attached your receipt.' + item_string
     mail.send(msg)
 
 
@@ -249,13 +370,13 @@ def generate_line_items(items):
         line_item = {
             'price_data': {
                 'currency': 'cad',
-                'unit_amount': item['price'] * 100,
+                'unit_amount_decimal': item['price'] * 100,
                 'product_data': {
                     'name': item['name'],
                     'images': [],
                 },
             },
-            'tax_rates': ['txr_1Jvq5HBUeaWrljhjQJmRXlTj', 'txr_1Jvq63BUeaWrljhjNOGjB1K1'],
+            'tax_rates': [current_app.config['STRIPE_PROVINCIAL_TAX'], current_app.config['STRIPE_FEDERAL_TAX']],
             'quantity': item['quantity'],
         }
         line_items.append(line_item)
@@ -265,9 +386,9 @@ def generate_line_items(items):
 # create order object based on checkout items
 def construct_order(items):
     order = Order(status="In Progress")
-    db.session.add(order)
+    db_session.add(order)
     for item in items:
         purchased_item = pm(merch_id=item.id, size_id=item.size, order_id=order.id)
-        db.session.add(purchased_item)
-    db.session.commit()
+        db_session.add(purchased_item)
+    db_session.commit()
     return order.id

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript" src="{{url_for('static', filename='scripts/shop_carousel.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='styles/store/store.css')}}">
+
+<div class="shop">
+    <!-- Background text and shop buttons -->
+    <div class="shopItem">
+        <div class="addRemoveButtons">
+            <input id="addButton" class="cartButton" type="image" onclick="getParamsAndAddToCart()"
+                   src="{{url_for('static', filename='assets/math_plus.svg')}}"/>
+        </div>
+
+        <img src="{{url_for('static', filename='assets/circle_and_line.svg')}}" class="descriptorLine">
+
+        <!-- Shop carousel items -->
+        <div id = "merchList">
+        {% if available_merch|length > 0 %}
+        {% for item in available_merch %}
+            <!-- Merch_index used to determine which item the size options correspond to-->
+            {% set merch_index = loop.index %}
+            <div class="merch">
+                <div class="itemProperties">
+                    <img src="{{url_for('static', filename=item.images[0].imageLink)}}" class="merchImage" id="itemImage">
+                    <h2 class="itemDescriptor" id="itemId">{{item.id}}</h2>
+                    <h2 class="name" id="itemName">{{item.name}}&ndash; <b>${{'%0.2f' % item.price}}</b></h2>
+                    <h2 class="itemDescriptor price" id="itemPrice">${{'%0.2f' % item.price}}</h2>
+                    <h2 class="itemDescriptor" id="itemMaxQuantity">{{item.quantity}}</h2>
+                    <h2 class="itemDescriptor" id="itemSize">{% if item.sizes|length == 0 %} None {% else %} Undetermined {% endif %}</h2>
+                </div>
+                <div class="visibleItemDescription" id="visibleDescriptions">
+                    {% set translation = item.translations[current_lang] %}
+                    <h2 class="descriptionText" id="itemDescription">{% if translation.description == 'None' %}&nbsp{% else %}{{translation.description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemLongDescription">{% if translation.long_description == 'None' %}&nbsp{% else %}{{translation.long_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemManufacturingDescription">{% if translation.manufacturing_description =='None' %}&nbsp{% else %}{{translation.manufacturing_description}}{% endif %}</h2><br>
+                    <h2 class="descriptionText" id="itemCareInstructions">{% if translation.care_instructions == 'None' %}&nbsp{% else %}{{translation.care_instructions}}{% endif %}</h2><br>
+                    <div class="sizeButtonGroup" id="itemSizeButtonGroup">
+                        <!-- Determine size buttons based on available sizes -->
+                        <!-- For box rounding, get count of all sizes with language, and then check count (updated -->
+                        <!-- on successful iteration) against the number of sizes for that language -->
+                        {% set sizes_translation = item.sizes[current_lang] %}
+                        {% set count = [] %}
+                        {% set number_sizes = function.get_num_items_for_lang(current_lang, sizes_translation) %}
+                        {% for size_object in sizes_translation %}
+                            {% if size_object is defined and size_object.size|length %}
+                                {{ count.append(1) }}
+                                {% if count|length == 1 %}
+                        <label class="sizeButtonLabel firstSizeButton">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton" checked="checked">
+                            <div class="sizeButtonStyle firstSizeButton">
+                                {% elif count|length == number_sizes|int %}
+                        <label class="sizeButtonLabel lastSizeButton">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton">
+                            <div class="sizeButtonStyle lastSizeButton">
+                                {% else %}
+                        <label class="sizeButtonLabel">
+                            <input type="radio" name="sizeOption{{merch_index}}" autocomplete="off" value="{{size_object.size}}" class="sizeButton">
+                            <div class="sizeButtonStyle">
+                                {% endif %}
+                                <h4 class="sizeButtonText">{{size_object.size}}</h4>
+                            </div>
+                        </label>
+                            {% endif %}
+                        {% endfor %}
+				    </div>
+                </div>
+                {% if item.quantity <= 0 %}
+                <h2 class="soldOutText" id="soldText">SOLD OUT</h2>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<!-- Start the shop carousel -->
+<script>showMerch({{index}});</script>
+</div>
+
+<script>
+    setAssetPath("{{url_for('static', filename='assets/')}}");
+    loadCart();
+    setDomain("{{domain}}")
+
+    if (cartItems != null) {
+        regenerateCartList();
+        setCheckoutButton();
+    } else {
+        setCheckoutButton();
+    }
+
+    shopCarousel.setTranslation();
+    //setScroll();
+</script>
+{% endblock %}

@@ -1,2 +1,2 @@
-web: waitress-serve --call "sankchewaire:app"
+web: waitress-serve --port=$PORT "sankchewaire:app"
 heroku ps:scale web=1

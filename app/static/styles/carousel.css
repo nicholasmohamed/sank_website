@@ -1,0 +1,216 @@
+* {box-sizing:border-box}
+
+.carouselText {
+    color: black;
+}
+
+#pageHeading {
+    font-family: subway-berlin-sc;
+}
+
+.landingText {
+    font-family: subway-berlin-sc;
+}
+
+@media only screen
+and (min-device-height : 280px) {
+    #pageHeading {
+        position: relative;
+        right: 38%;
+        z-index: 2;
+    }
+
+    /* Slideshow container */
+    .slideshow-container {
+      position: relative;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+      margin-top: -4%;
+    }
+
+    /* Hide the images by default */
+    .homeSlides {
+      display: none;
+      height: 1000px;
+      width: 100%;
+      z-index: -1;
+      margin-top: 20px;
+    }
+
+    .carouselImage{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Landing Page */
+    .landing {
+        display: block;
+    }
+
+    .landingImage {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landingText {
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-weight: 85;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        margin-right: 20px;
+        right: 50%;
+        width: 30px;
+    }
+
+    .dotIcon {
+        height: 20px;
+        width: 20px;
+        opacity: 40%;
+        background-color: #000000;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .dotText {
+        font-family: avenir-heavy;
+        position: relative;
+        top: -15%;
+        font-size: 14px;
+    }
+
+    .dotContainer {
+        display: flex;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+    }
+
+    .active, .dotIcon:hover {
+        opacity: 100%;
+    }
+
+    .dotIcon:active {
+    }
+
+    /* Fading animation */
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.5s;
+      animation-name: fade;
+      animation-duration: 0.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+
+    /* Slide animation */
+    .slideInLeft {
+      animation-name: slideInLeft;
+      animation-duration: 0.5s;
+    }
+
+
+    @keyframes slideInLeft {
+      from {
+        margin-left: 100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    .slideInRight {
+      animation-name: slideInRight;
+      animation-duration: 0.5s;
+    }
+
+    @keyframes slideInRight {
+      from {
+        margin-left: -100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+
+    .soldOut {
+         opacity: 70%;
+    }
+
+    .soldOutText {
+        position: absolute;
+        color: #FFFFFF;
+        font-family: avenir;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .soldOutText {
+        top: 5%;
+        left: 42%;
+        font-size: 30px;
+    }
+}
+
+@media only screen
+and (min-device-width : 1224px)
+and (min-device-height : 600px)
+{
+    #pageHeading {
+        margin-top: 20px;
+        font-size: 60px;
+    }
+
+    .slideshow-container {
+        margin-top: 6%;
+        max-width: 1500px;
+    }
+
+     /* about page */
+    .aboutLogo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+
+    .aboutText {
+        font-size: 22px;
+    }
+
+    /* landing page */
+    .landingImage {
+        height: 350px;
+        width: 350px;
+    }
+
+    .landingText {
+        font-size: 40px;
+    }
+}

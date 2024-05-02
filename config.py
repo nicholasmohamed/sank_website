@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash
 
 load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -19,10 +20,14 @@ class Config(object):
     SQLALCHEMY_ECHO = True
 
     # Stripe settings
-    YOUR_DOMAIN = 'http://127.0.0.1:5000'
+    YOUR_DOMAIN = os.environ.get('WEBSITE_DOMAIN') or "http://127.0.0.1:5000/"
     STRIPE_API_PUBLIC_KEY = os.environ.get('STRIPE_API_PUBLIC_KEY')
     STRIPE_API_SECRET_KEY = os.environ.get('STRIPE_API_SECRET_KEY')
     STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
+    STRIPE_PROVINCIAL_TAX = os.environ.get('STRIPE_PROVINCIAL_TAX')
+    STRIPE_FEDERAL_TAX = os.environ.get('STRIPE_FEDERAL_TAX')
+    STRIPE_SHIPPING_RATE_1 = os.environ.get('STRIPE_SHIPPING_RATE_1')
+    STRIPE_SHIPPING_RATE_2 = os.environ.get('STRIPE_SHIPPING_RATE_2')
 
     # Mail settings
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
@@ -34,11 +39,13 @@ class Config(object):
 
     CORS_HEADERS = 'Content-Type'
 
-    PAGE_LIST = [{"name": "PROGRAMS", "link": "main.programs"},
-                 {"name": "ABOUT", "link": "main.about"},
-                 {"name": "STORE", "link": "store.store"},
-                 {"name": "CONTACT", "link": "main.contact"}]
+    # Language Settings
+    LANGUAGES = ['en', 'fr']
+    
+    # Database password
+    DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD') or 'CultureIsEverything'
+    DATABASE_PASSWORD_HASH = generate_password_hash(DATABASE_PASSWORD)
 
-    # Links for assets
-    LOGO = './static/assets/Sank_Chew_Air_E_color.svg'
-    STYLES = '/static/sank_home.css'
+    PAGE_LIST = [{"name": "about", "link": "main.about"},
+                 {"name": "shop", "link": "main.store"}]#,
+                # {"name": "contact", "link": "main.contact"}]

@@ -7,88 +7,85 @@
 <body>
     <h1>Current Merchandise</h1>
 
-    <form action = "http://127.0.0.1:5000/update-database" method = "POST">
-        {% for i in range(0, length) %}
+    <form action = "{{domain}}/update-database" method = "POST">
         <div id = item-container>
+        {% for item in merch %}
             <label>Item Id:</label>
-            <input type="text" name="id" value="{{items[i].id}}" readonly></br>
+            <input type="text" name="id" value="{{item.id}}" readonly><br>
+
+            {% for lang in languages %}
+            <input type="button" onclick="switchLanguageFields('{{lang}}','{{item.id}}')" value="{{lang}}">
+            {% endfor %}
+            <br>
 
             <label>Item Name:</label>
-            <input type="text" name="name" value="{{items[i].name}}"></br>
+            <input type="text" name="name" value="{{item.name}}"><br>
 
             <label>Item Price:</label>
-            <input type="text" name="price" value="{{items[i].price}}"></br>
+            <input type="text" name="price" value="{{item.price}}"><br>
 
-            <label>Item Image Source:</label>
-            <input type="text" name="imageLink" value="{{items[i].imageLink}}"></br>
-
-            <label>Item Description:</label>
-            <input type="text" name="description" value="{{items[i].description}}"></br>
-
-            <label>Available Sizes:</label>
-            <!-- Extract sizes -->
-            {% set x = [] %}
-            {% for size in items[i].sizes %}
+            <label>Item Image Sources:</label>
+            {% set y = [] %}
+            {% for image in item.images %}
             <div style="display: none;">
-                {{ x.append(size.size) }}
+                {{ y.append(image.imageLink) }}
             </div>
             {% endfor %}
-            {% set sizes = x|join(", ") %}
-            <input type="text" name="sizes" value="{{ sizes }}"></br>
+            {% set images = y|join(", ") %}
+            <input type="text" name="imageLink" value="{{ images }}"><br>
+
+            {% for lang in languages %}
+                {% set translation = item.translations[lang] %}
+                {% set sizes_translation = item.sizes[lang] %}
+            <div class="translation_{{item.id}}" id="translation_{{lang}}_{{item.id}}" style="display: None">
+                <label>Item Description:</label>
+                <input type="text" name="description_{{lang}}" value="{{translation.description}}"><br>
+
+                <label>Item Long Description:</label><br>
+                <textarea rows="2" cols="50" name="long_description_{{lang}}">{{translation.long_description}}</textarea><br>
+
+                <label>Manufacturing Description:</label><br>
+                <textarea rows="2" cols="50" name="manufacturing_description_{{lang}}">{{translation.manufacturing_description}}</textarea><br>
+
+                <label>Care Instructions:</label><br>
+                <textarea rows="2" cols="50" name="care_instructions_{{lang}}">{{translation.care_instructions}}</textarea><br>
+
+                <label>Available Sizes:</label>
+                <!-- Extract sizes -->
+                {% set x = [] %}
+                {% for size in sizes_translation %}
+                <div style="display: none;">
+                    {{ x.append(size.size) }}
+                </div>
+                {% endfor %}
+                {% set sizes = x|join(", ") %}
+                <input type="text" name="sizes_{{lang}}" value="{{ sizes }}"><br>
+            </div>
+            {% endfor %}
 
             <label>Item Quantity:</label>
-            <input type="text" name="quantity" value="{{items[i].quantity}}"></br>
+            <input type="text" name="quantity" value="{{item.quantity}}"><br>
 
             <label>Availability:</label>
-            <input type="text" name="isAvailable" value="{{items[i].isAvailable}}"></br>
+            <input type="text" name="isAvailable" value="{{item.isAvailable}}"><br>
 
             <label>Remove:</label>
-            <input type="text" name="remove" value="false"></br>
-        </div></br></br>
+            <input type="text" name="remove" value="false"><br><br><br><br>
         {% endfor %}
-        <input type="button" onclick="addItem()" value="Add">
+        </div><br><br>
+        <input type="button" onclick="window.location.href='{{domain}}/add-item-to-database'" value="Add" >
         <input type = "submit" value = "Submit" />
     </form>
     <script>
-        if (length > 0){
-            var i = {{items[length-1].id}} + 1;
-        } else {
-            var i = 0;
-        }
+        // Set visible language fields
+        function switchLanguageFields(lang, id) {
+            var translation_container = document.getElementById('translation_' + lang + '_' + id);
+            var translations = document.getElementsByClassName('translation_' + id);
 
-        function addItem() {
-            let template = `
-            <br><br>
-            <label>Item Id:</label>
-            <input type="text" name="id" value="${i}"readonly></br>
-
-            <label>Item Name:</label>
-            <input type="text" name="name"></br>
-
-            <label>Item Price:</label>
-            <input type="text" name="price"></br>
-
-            <label>Item Image Source:</label>
-            <input type="text" name="imageLink"></br>
-
-            <label>Item Description:</label>
-            <input type="text" name="description"></br>
-
-            <label>Available Sizes:</label>
-            <input type="text" name="sizes"></br>
-
-            <label>Item Quantity:</label>
-            <input type="text" name="quantity"></br>
-
-            <label>Availability:</label>
-            <input type="text" name="isAvailable"></br>`;
-
-            let container = document.getElementById('item-container');
-            let div = document.createElement('div');
-            div.innerHTML = template;
-            container.appendChild(div);
-
-            i++;
+            for (var i = 0; i < translations.length; i++) {
+                translations[i].style.display = "none";
+            }
+            translation_container.style.display = 'block';
         }
     </script>
 </body>

@@ -19,7 +19,9 @@ function selectSize() {
         quickAddItem();
     } else {
         var sizeButtons = merch[index].querySelector("#itemSizeButtons");
+        var sizingFactor = -0.95;
         sizeButtons.style.visibility = "visible";
+        sizeButtons.style.top = String(sizingFactor * merch[index].getBoundingClientRect().height) + "px";
     }
 }
 
@@ -33,9 +35,37 @@ function sizeButtonPressed(size) {
 
     // Hide the size buttons
     var sizeButtons = merch[index].querySelector("#itemSizeButtons");
-    sizeButtons.style.visibility = "hidden";
+    if (sizeButtons){
+       sizeButtons.style.visibility = "hidden";
+    }
 
     quickAddItem();
+}
+
+// Add params and add to cart (desktop)
+function getParamsAndAddToCart(){
+    var index = shopCarousel.activeIndex;
+    var merch = document.getElementsByClassName("merch");
+
+    // check size
+    var size = merch[index].querySelector("#itemSize").textContent;
+    size.replace("\n", "")
+    size = size.trim();
+
+    if (size == "None") {
+        quickAddItem();
+    } else {
+        // Get size data
+        var sizeButtons = merch[index].querySelector("#itemSizeButtonGroup");
+
+        sizeButtonName = "sizeOption" + String(index + 1);
+        sizeValue = sizeButtons.querySelector('input[name=\"'+ sizeButtonName +'\"]:checked').value;
+
+        // Set size corresponding to button pressed
+        var sizeText = merch[index].querySelector("#itemSize");
+        sizeText.textContent = sizeValue;
+        quickAddItem();
+    }
 }
 
 // Add item to cart
@@ -108,60 +138,6 @@ function clearCartList(){
     cart.innerHTML = '';
 }
 
-// Opens delivery modal window on checkoutClicked
-function checkoutClicked(){
-    // Get the modal window for checkout
-    var modal = document.getElementById("checkoutModal");
-
-    modal.style.display = "block";
-
-    //Set initial modal text
-    var pickupButton = document.getElementById("pickupButton");
-    pickupButton.checked = true;
-
-    var deliveryMtlText = document.getElementById("deliveryMtlText");
-    var deliveryCanText = document.getElementById("deliveryCanText");
-    deliveryMtlText.style.display = "none";
-    deliveryCanText.style.display = "none";
-
-    // Set on click function for radio buttons
-    var radioButtonGroup = document.getElementById("deliveryOptionsGroup");
-    radioButtonGroup.addEventListener("click", onRadioButtonGroupClick);
-    radioButtonGroup.addEventListener("touchend", onRadioButtonGroupClick);
-}
-
-// Closes open shipping modal
-function closeShippingModal() {
-    var modal = document.getElementById("checkoutModal");
-    modal.style.display = "none";
-}
-
-// Changes modal text of radio button click
-function onRadioButtonGroupClick(){
-    var pickupButton = document.getElementById("pickupButton");
-    var deliveryMtlButton = document.getElementById("deliveryMtlButton");
-    var deliveryCanButton = document.getElementById("deliveryCanButton");
-
-    var pickupText = document.getElementById("pickupText");
-    var deliveryMtlText = document.getElementById("deliveryMtlText");
-    var deliveryCanText = document.getElementById("deliveryCanText");
-
-    // Based on radio button checked, change the text of the modal
-    if (pickupButton.checked == true){
-        pickupText.style.display = "block";
-        deliveryMtlText.style.display = "none";
-        deliveryCanText.style.display = "none";
-    } else if (deliveryMtlButton.checked == true){
-        pickupText.style.display = "none";
-        deliveryMtlText.style.display = "block";
-        deliveryCanText.style.display = "none";
-    } else {
-        pickupText.style.display = "none";
-        deliveryMtlText.style.display = "none";
-        deliveryCanText.style.display = "block";
-    }
-}
-
 //  Add cart notification dot in nav bar
 function setCartNotification(isVisible){
     var notificationDot = document.getElementById("newNotificationCircle");
@@ -173,8 +149,8 @@ function setCartNotification(isVisible){
     }
 }
 
-function openCart() {
-    document.getElementById("rightSidebar").style.width = "700px";
+function openCart(width) {
+    document.getElementById("rightSidebar").style.width = width;
     var cart = document.getElementById("cartList");
 
     cart.style.display = "block";
@@ -327,7 +303,7 @@ function updateCartTotal() {
     }
 
     var totalText = document.getElementById("cartTotal");
-    totalText.textContent = "$" + total;
+    totalText.textContent = "$" + total.toFixed(2);
 }
 
 // Disables checkout button if no items in cart
