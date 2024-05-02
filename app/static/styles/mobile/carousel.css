@@ -10,13 +10,13 @@
 
 .sizeButton {
     background-color: #FFFFFF;
-    color: #d8241a;
-    border-color:  #d8241a;
+    color: var(--menu-text-colour);
+    border-color: var(--menu-text-colour);
 }
 
 .sizeButton:hover,
 .sizeButton:focus {
-    background-color: #d8241a;
+    background-color: var(--menu-text-colour);
     color: #FFFFFF;
 }
 
@@ -49,13 +49,17 @@
     font-family: subway-berlin-sc;
 }
 
+.slideshow-container {
+    margin-top: clamp(-15%, 10%, 40%);
+}
+
 /* For regular mobile screens*/
 @media only screen
 and (orientation: portrait)
 and (min-device-width : 360px)
 and (max-device-width : 499px)
 and (max-device-height : 739px) {
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 10%;
     }
 
@@ -113,7 +117,7 @@ and (max-device-height : 739px) {
 and (orientation: portrait)
 and (min-device-width : 500px)
 and (max-device-width : 700px){
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: -2%;
     }
 
@@ -182,7 +186,7 @@ and (max-device-width : 700px){
 and (orientation: portrait)
 and (min-device-height : 740px)
 and (max-device-height : 899px) {
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 22%;
     }
 
@@ -304,7 +308,7 @@ and (max-device-height : 1370px) {
         font-size: 85px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: -15%;
     }
 
@@ -959,7 +963,7 @@ and (max-device-height : 739px){
         font-size: 40px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
       margin-top: -4%;
       max-width: 1000px;
     }
@@ -1040,7 +1044,7 @@ and (max-device-height : 899px){
         font-size: 40px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 4%;
         max-width: 1000px;
     }
@@ -1123,7 +1127,7 @@ and (min-device-height : 900px)
         font-size: 60px;
     }
 
-    .slideshow-container {
+    .slideshow-containerf {
         margin-top: 2%;
         max-width: 1500px;
     }

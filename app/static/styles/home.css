@@ -1,0 +1,106 @@
+button {
+    cursor: pointer;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    margin-top: 0;
+    font-family: avenir-heavy;
+    font-size: 70px;
+}
+
+p {
+    font-family: avenir-book;
+    font-size: 40px;
+    font-weight: 45;
+    color: black;
+}
+
+.homepage {
+    display: flex;
+    justify-content: center;
+    margin-top: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: -1%;
+}
+
+.homepageText{
+    width: 480px;
+    height: 60%;
+}
+
+.leadInTextContainer {
+    display: flex;
+    font-family: avenir;
+}
+
+.leadInText{
+    text-align: left;
+    font-size: 55px;
+    white-space: nowrap;
+}
+
+.flavorNumber{
+    font-size: 140px;
+    margin-top: -11px;
+}
+
+.endLeadInText {
+    font-size: 18px;
+    text-align: center;
+    font-family: avenir;
+    width: 115px;
+    margin-left: 40px;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+.homeImage{
+    height: 370px;
+    width: 370px;
+    margin-top: -5px;
+}
+
+.sankStyledText{
+    font-family: subway-berlin-sc;
+    font-size: 23px;
+}
+
+.homeText {
+    font-family: avenir;
+    font-weight: 45;
+    font-size: 20px;
+    width: 480px;
+    line-height: 1.1;
+}
+
+.sloganText{
+    position: relative;
+    font-family: subway-berlin-sc;
+    white-space: nowrap;
+    text-align: right;
+    font-size: 23px;
+    right: 100px;
+}
+
+.homeDescription{
+    color: grey;
+}
+
+.videoHeading {
+    font-size: 40px;
+}
+
+a,
+a img {
+    text-decoration: none;
+    outline: none;
+    border: 0px none transparent;
+}
+
+footer {
+}
+

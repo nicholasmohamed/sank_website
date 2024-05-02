@@ -5,7 +5,7 @@ import logging
 import sys
 from logging.handlers import RotatingFileHandler
 import os
-from flask import Flask, current_app, redirect
+from flask import Flask, current_app, redirect, send_from_directory
 from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_cors import CORS
