@@ -60,6 +60,7 @@ def database():
 
 
 @bp.route('/update-database', methods=['POST', 'GET'])
+@bp.route('//update-database', methods=['POST', 'GET'])
 def update_database():
     if request.method == 'POST':
         logger.info("Updating database")
