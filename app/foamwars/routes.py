@@ -22,7 +22,8 @@ logger = logging.getLogger('app_logger')
 def challenge_request():
     payload = request.data
     logger.info(payload)
-    logger.info(payload.text)
+    data = json.loads(payload)
+    
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
