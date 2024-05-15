@@ -46,6 +46,10 @@ class Config(object):
     DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD') or 'CultureIsEverything'
     DATABASE_PASSWORD_HASH = generate_password_hash(DATABASE_PASSWORD)
 
+    ####################
+    # Foam Wars Settings
+    ####################
+
     PAGE_LIST = [{"name": "about", "link": "main.about"},
                  {"name": "shop", "link": "main.store"}]#,
                 # {"name": "contact", "link": "main.contact"}]

@@ -43,6 +43,10 @@ def create_app(config_class=Config):
     # Set CORS headers
     cors = CORS(app, resources={r"*": {"origins": "*"}})
 
+    # Foam war application websockets
+    from app.foamwars import bp as foamwars_bp
+    app.register_blueprint(foamwars_bp)
+
     # configure logins
     login_manager.init_app(app)
 
