@@ -23,7 +23,7 @@ def challenge_request():
     payload = request.data
 
     data = json.loads(payload)
-    send_token_push(data['notification']['title'], data['notification']['body'], data['token'])
+    send_token_push(data['notification']['title'], data['notification']['body'], data['receivingToken'])
 
     logger.info("Received data. Sending challenge request...")
     try:
