@@ -20,11 +20,11 @@ logger = logging.getLogger('app_logger')
 # webhook to handle payment responses
 @bp.route('/challenge_request', methods=['POST'])
 def challenge_request():
+    logger.info(request.text)
     payload = request.data
 
     logger.info("Received data. Sending challenge request...")
     try:
-        logger.info(request.content)
         data = json.loads(payload)
         logger.info("Parsed. Correctly.")
 
