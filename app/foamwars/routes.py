@@ -23,14 +23,14 @@ def challenge_request():
     payload = request.data
 
     data = json.loads(payload)
-    send_token_push(data['notification']['title'], data['notification']['body'], data['receivingToken'])
+    send_token_push(data['notification']['title'], data['notification']['body'], [data['receivingToken']])
 
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
         logger.info("Parsed. Correctly.")
 
-        send_token_push(data['notification']['title'], data['notification']['body'], data['token'])
+        send_token_push(data['notification']['title'], data['notification']['body'], [data['token']])
     except HTTPError as e:
         print(e.response.text)
     except:
