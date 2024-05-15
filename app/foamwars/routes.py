@@ -21,9 +21,10 @@ logger = logging.getLogger('app_logger')
 @bp.route('/challenge_request', methods=['POST'])
 def challenge_request():
     payload = request.data
-    logger.info(payload)
+
     data = json.loads(payload)
-    
+    send_token_push(data['notification']['title'], data['notification']['body'], data['token'])
+
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
