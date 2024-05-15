@@ -24,7 +24,7 @@ def challenge_request():
 
     logger.info("Received data. Sending challenge request...")
     try:
-        logger.info(request.text)
+        logger.info(request.content)
         data = json.loads(payload)
         logger.info("Parsed. Correctly.")
 
