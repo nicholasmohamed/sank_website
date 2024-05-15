@@ -4,6 +4,7 @@ import json
 import logging
 
 from flask import render_template, redirect, url_for, current_app, jsonify, request, g
+from requests.exceptions import HTTPError
 from app import mail, User
 from app.foamwars import bp, Blueprint
 from app.database import db_session
@@ -28,6 +29,8 @@ def challenge_request():
         logger.info("Parsed. Correctly.")
 
         send_token_push(data['notification']['title'], data['notification']['body'], data['token'])
+    except HTTPError as e:
+        print(e.response.text)
     except:
         logger.error('⚠️  Webhook error while parsing basic request.')
         return jsonify(success=False)
