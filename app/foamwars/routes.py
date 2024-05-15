@@ -21,9 +21,12 @@ logger = logging.getLogger('app_logger')
 def challenge_request():
     payload = request.data
 
-    logger.info("Recieved data. Sending challenge request...")
+    logger.info("Received data. Sending challenge request...")
     try:
+        logger.info(request.text)
         data = json.loads(payload)
+        logger.info("Parsed. Correctly.")
+
         send_token_push(data['notification']['title'], data['notification']['body'], data['token'])
     except:
         logger.error('⚠️  Webhook error while parsing basic request.')
