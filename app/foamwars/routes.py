@@ -25,7 +25,7 @@ def challenge_request():
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
-        send_token_push(data['notification']['title'], data['notification']['body'], data['playerName'], [data['receivingToken']])
+        send_token_push(data['notification']['title'], data['notification']['body'], data['playerName'], data['playerId'], [data['receivingToken']])
     except HTTPError as e:
         print(e.response.text)
     except:
@@ -34,8 +34,8 @@ def challenge_request():
     return jsonify(success=True)
 
 
-def send_token_push(title, body, player, tokens): 
-    data_dict = {'playerName': player}
+def send_token_push(title, body, playerName, playerId, tokens): 
+    data_dict = {'playerName': playerName, 'playerId' : playerId}
 
     message = messaging.MulticastMessage(
         notification=messaging.Notification(
