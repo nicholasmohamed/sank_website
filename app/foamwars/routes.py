@@ -22,9 +22,6 @@ logger = logging.getLogger('app_logger')
 def challenge_request():
     payload = request.data
 
-    data = json.loads(payload)
-    send_token_push(data['notification']['title'], data['notification']['body'], data['playerName'], [data['receivingToken']])
-
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
@@ -38,12 +35,14 @@ def challenge_request():
 
 
 def send_token_push(title, body, player, tokens): 
+    data_dict = {'playerName': player}
+
     message = messaging.MulticastMessage(
         notification=messaging.Notification(
             title=title,   
             body=body,
         ), 
         tokens=tokens,
-        playerName=player
+        data=data_dict
     ) 
     messaging.send_multicast(message)
