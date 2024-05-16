@@ -39,8 +39,8 @@ def send_token_push(title, body, player, tokens):
         notification=messaging.Notification(
             title=title,   
             body=body,
-            player=player
         ), 
-        tokens=tokens
+        tokens=tokens,
+        playerName=player
     ) 
     messaging.send_multicast(message)
