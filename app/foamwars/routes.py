@@ -22,15 +22,10 @@ logger = logging.getLogger('app_logger')
 def challenge_request():
     payload = request.data
 
-    data = json.loads(payload)
-    send_token_push(data['notification']['title'], data['notification']['body'], [data['receivingToken']])
-
     logger.info("Received data. Sending challenge request...")
     try:
         data = json.loads(payload)
-        logger.info("Parsed. Correctly.")
-
-        send_token_push(data['notification']['title'], data['notification']['body'], [data['token']])
+        send_token_push(data['notification']['title'], data['notification']['body'], data['playerName'], [data['receivingToken']])
     except HTTPError as e:
         print(e.response.text)
     except:
@@ -39,11 +34,12 @@ def challenge_request():
     return jsonify(success=True)
 
 
-def send_token_push(title, body, tokens): 
+def send_token_push(title, body, player, tokens): 
     message = messaging.MulticastMessage(
         notification=messaging.Notification(
             title=title,   
-            body=body
+            body=body,
+            player=player
         ), 
         tokens=tokens
     ) 
