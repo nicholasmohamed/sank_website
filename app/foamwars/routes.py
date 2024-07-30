@@ -26,6 +26,7 @@ def challenge_request():
     try:
         data = json.loads(payload)
         send_token_push(data['notification']['title'], data['notification']['body'], data['sendPlayerName'], data['sendPlayerId'], [data['receivingToken']])
+        logger.info("Message sent!")
     except HTTPError as e:
         print(e.response.text)
     except:
